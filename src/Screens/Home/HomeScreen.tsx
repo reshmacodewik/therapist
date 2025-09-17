@@ -16,8 +16,6 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Header from '../../components/Header';
-import Calendar from '../../components/Calendar';
 
 const HomeScreen = () => {
   const { wp, hp } = useResponsive();
@@ -101,7 +99,7 @@ const HomeScreen = () => {
     }
     setCurrentMonth(newMonth);
   };
-   const renderCalendar = () => (
+  const renderCalendar = () => (
     <View style={styles(wp, hp).calendarContainer}>
       <View style={styles(wp, hp).customCalendarHeader}>
         <Text style={styles(wp, hp).calendarHeaderYear}>
@@ -243,10 +241,33 @@ const HomeScreen = () => {
       <View style={styles(wp, hp).mainContainer}>
         <ScrollView
           style={styles(wp, hp).container}
-          contentContainerStyle={{ paddingBottom: hp(20) }}
+          contentContainerStyle={{ paddingBottom: hp(31) }}
           showsVerticalScrollIndicator={false}
         >
-          <Header showWelcomeText={true} />
+          {/* HEADER */}
+          <View style={styles(wp, hp).header}>
+            <View>
+              <Image
+                source={require('../../../assets/Image/logo1.png')}
+                style={styles(wp, hp).logo}
+              />
+            </View>
+            <View style={styles(wp, hp).headerIcons}>
+              <TouchableOpacity>
+                <Image
+                  source={require('../../../assets/icon/bell.png')}
+                  style={styles(wp, hp).bellIcon}
+                />
+              </TouchableOpacity>
+              <Image
+                source={require('../../../assets/Image/homeuser.png')}
+                style={styles(wp, hp).userIcon}
+              />
+            </View>
+          </View>
+          <Text style={styles(wp, hp).headerText}>
+            Welcome back, {'\n'}Susan
+          </Text>
 
           {/* INNER CONTENT — ALL VISIBLE & SCROLLABLE */}
           <View style={[styles(wp, hp).innercontainer, { flexGrow: 1 }]}>
@@ -561,18 +582,12 @@ const HomeScreen = () => {
               </View>
 
               <View style={styles(wp, hp).eventButtonsContainer}>
-                <TouchableOpacity 
-                  style={styles(wp, hp).createSessionBtn}
-                  onPress={() => navigation.navigate('CreateSessionScreen')}
-                >
+                <TouchableOpacity style={styles(wp, hp).createSessionBtn}>
                   <Text style={styles(wp, hp).sessionBtnText}>
                     Create Session
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
-                style={styles(wp, hp).mySessionsBtn}
-                onPress={() => navigation.navigate('SessionsScreen')}
-                >
+                <TouchableOpacity style={styles(wp, hp).mySessionsBtn}>
                   <Text style={styles(wp, hp).sessionBtnText}>My Sessions</Text>
                 </TouchableOpacity>
               </View>

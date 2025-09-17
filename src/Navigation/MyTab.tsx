@@ -7,6 +7,10 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useResponsive } from 'react-native-responsive-hook';
 import HomeScreen from '../Screens/Home/HomeScreen';
 import SessionsScreen from '../Screens/Sessions/SessionsScreen';
+import SendPaymentLink from '../Screens/Payment/SendPaymentLink';
+import SessionPaymentScreen from '../Screens/Sessions/SessionPaymentScreen';
+import TransactionHistory from '../Screens/Payment/TransactionHistory';
+import RefundPaymentScreen from '../Screens/Payment/RefundPaymentScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +49,7 @@ const BottomTabs = () => {
 
       <Tab.Screen
         name="MessagesScreen"
-        component={HomeScreen}
+        component={SendPaymentLink}
         options={{
           tabBarIcon: ({ focused }) => (
            <Image
@@ -65,16 +69,19 @@ const BottomTabs = () => {
 
       <Tab.Screen
         name="Sessions"
-        component={HomeScreen}
+        component={TransactionHistory}
         options={{
-          tabBarIcon: () => (
+          tabBarIcon: ({ focused }) => (
             <View
               style={[
                 styles.moodButton,
                 { width: wp(15), height: wp(15), borderRadius: wp(7.5) },
               ]}
             >
-              <Icon name="plus" size={wp(7)} color="#fff" />
+              <Image
+              source={require('../../assets/icon/sessions.png')}
+              style={{ width: wp(10), height: hp(10), resizeMode: 'contain', tintColor: focused ? '#FFA726' : '#B0B0B0' }}
+            />
             </View>
           ),
           tabBarLabel: ({ focused }) => (
@@ -87,7 +94,7 @@ const BottomTabs = () => {
 
       <Tab.Screen
         name="Tools"
-        component={HomeScreen}
+        component={RefundPaymentScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image

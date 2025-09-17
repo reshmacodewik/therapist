@@ -8,37 +8,45 @@ export const sessionsStyles = (wp: any, hp: any) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal: wp(4),
+
+      padding: 16,
+      marginTop: hp(1),
     },
+
     bgimg: {
       flex: 1,
       resizeMode: 'cover',
     },
     mainContainer: {
       flex: 1,
+      backgroundColor: '#FFFFFF',
+      borderRadius: wp(3),
+      padding: wp(2),
+       marginBottom: hp(2),
+       marginTop:hp(2)
     },
     headerText: {
-      fontSize: wp(6),
-      fontFamily: 'Urbanist-Bold',
-      color: '#264734',
-      marginTop: hp(2),
+      fontSize: 19,
+      fontFamily: 'Poppins-Bold',
+      color: '#000',
+      marginTop: hp(0),
       marginBottom: hp(1),
     },
-    innercontainer:{
-        flexDirection:'column'
+    innercontainer: {
+      flexDirection: 'column',
     },
     tabsContainer: {
-      backgroundColor: '#FFFFFF',
-      borderRadius: wp(5),
-      padding: wp(2),
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginBottom: hp(2),
+      marginBottom:hp(0.5),
+      gap:10,
+      marginRight:hp(2)
+     
     },
     tabButton: {
       flex: 1,
-      paddingVertical: hp(1.5),
-      borderRadius: wp(5),
+      paddingVertical: hp(1.1),
+      borderRadius: wp(8),
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -47,6 +55,10 @@ export const sessionsStyles = (wp: any, hp: any) =>
     },
     inactiveTabButton: {
       backgroundColor: 'transparent',
+      borderRadius: wp(8),
+      borderWidth:1,
+      borderColor:'#264734',
+   
     },
     tabText: {
       fontSize: wp(4),
@@ -67,9 +79,9 @@ export const sessionsStyles = (wp: any, hp: any) =>
       alignItems: 'center',
     },
     sessionImageContainer: {
-      width: wp(20),
-      height: wp(20),
-      borderRadius: wp(4),
+      width: wp(30),
+      height: wp(40),
+      borderRadius: wp(5),
       overflow: 'hidden',
       marginRight: wp(3),
     },
@@ -83,26 +95,28 @@ export const sessionsStyles = (wp: any, hp: any) =>
     },
     sessionTitle: {
       fontSize: wp(4),
-      fontFamily: 'Urbanist-Bold',
-      color: '#264734',
+      fontFamily: 'Poppins-Bold',
+      fontWeight: '700',
+      color: '#0000',
       marginBottom: hp(0.3),
     },
     sessionDescription: {
       fontSize: wp(3.5),
-      fontFamily: 'Urbanist-Regular',
-      color: '#264734',
-      marginBottom: hp(0.5),
+      fontFamily: 'Poppins-Medium',
+      color: '#0000',
+      marginBottom: hp(1.5),
     },
     sessionInfo: {
       fontSize: wp(3.5),
-      fontFamily: 'Urbanist-SemiBold',
-      color: '#264734',
+      fontFamily: 'Poppins-Bold',
+      fontWeight: '700',
+      color: '#000',
       marginBottom: hp(0.3),
     },
     sessionAttendees: {
       fontSize: wp(3.5),
-      fontFamily: 'Urbanist-Regular',
-      color: '#264734',
+      fontFamily: 'Poppins-Medium',
+      color: '#000',
       marginBottom: hp(1),
     },
     buttonRow: {
@@ -112,7 +126,7 @@ export const sessionsStyles = (wp: any, hp: any) =>
     },
     manageButton: {
       paddingVertical: hp(0.8),
-      paddingHorizontal: wp(5),
+      paddingHorizontal: wp(7),
       borderRadius: wp(5),
       borderWidth: 1,
       borderColor: '#264734',
@@ -122,7 +136,7 @@ export const sessionsStyles = (wp: any, hp: any) =>
     },
     conductButton: {
       paddingVertical: hp(0.8),
-      paddingHorizontal: wp(5),
+      paddingHorizontal: wp(7),
       borderRadius: wp(5),
       backgroundColor: '#264734',
       alignItems: 'center',

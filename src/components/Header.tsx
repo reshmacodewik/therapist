@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { 
+import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { headerStyles } from '../../style/headerStyles';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface HeaderProps {
   showBackButton?: boolean;
@@ -21,18 +22,19 @@ const Header: React.FC<HeaderProps> = ({
   userName = 'Susan',
 }) => {
   const navigation = useNavigation();
-  
+
   return (
     <>
       <View style={headerStyles(wp, hp).header}>
         <View style={headerStyles(wp, hp).leftContainer}>
           {showBackButton && (
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                 <Image
-                   source={require('../../assets/icon/arrow.png')} // replace with your green checkmark
-                      style={headerStyles(wp, hp).backIcon}
-                 />
-                 </TouchableOpacity>
+              <MaterialIcons
+                name="keyboard-arrow-left"
+                size={wp(10)}
+                color="#000"
+              />
+            </TouchableOpacity>
           )}
           {screenTitle ? (
             <Text style={headerStyles(wp, hp).screenTitle}>{screenTitle}</Text>
@@ -58,7 +60,8 @@ const Header: React.FC<HeaderProps> = ({
       </View>
       {showWelcomeText && (
         <Text style={headerStyles(wp, hp).headerText}>
-          Welcome back, {'\n'}{userName}
+          Welcome back, {'\n'}
+          {userName}
         </Text>
       )}
     </>

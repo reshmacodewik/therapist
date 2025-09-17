@@ -1,66 +1,36 @@
 import { StyleSheet } from 'react-native';
-import {
+import { 
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
 export const createSessionStyles = StyleSheet.create({
-  bgimg: {
-    flex: 1,
-    resizeMode: 'cover',
-  },
-    sectionTitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 8,
-  },
-  
-  placeholderStyle: {
-    fontSize: 14,
-    color: "#999",
-  },
-  selectedTextStyle: {
-    fontSize: 14,
-    color: "#000",
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 14,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
   container: {
     flex: 1,
+    backgroundColor: '#FFF8EE',
     padding: wp(5),
   },
   header: {
-       flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: wp(2),
-      paddingTop: hp(2),
-      paddingBottom: hp(1),
-      marginLeft:wp(-5)
-      
-    },
-    backButton: {
-      width: wp(10),
-      height: wp(10),
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: wp(5),
-    },
-    headerTitle: {
-      fontSize:  wp(5) ,
-      fontFamily: 'Poppins-Bold',
-      color: '#000',
-      fontWeight: '700',
-    },
-    headerSpacer: {
-      width: wp(10),
-    },
-
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: hp(2),
+    marginBottom: hp(3),
+  },
+  backButton: {
+    padding: wp(2),
+  },
+  headerTitle: {
+    fontSize: wp(5),
+    fontFamily: 'Urbanist-Bold',
+    color: '#000',
+    marginLeft: wp(3),
+  },
+  sectionTitle: {
+    fontSize: wp(4.5),
+    fontFamily: 'Urbanist-SemiBold',
+    color: '#000',
+    marginBottom: hp(1.5),
+  },
   inputContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: wp(3),
@@ -76,7 +46,7 @@ export const createSessionStyles = StyleSheet.create({
   input: {
     fontFamily: 'Urbanist-Regular',
     fontSize: wp(4),
-    color: '#5C8A78',
+    color: '#7D7D7D',
   },
   dropdownContainer: {
     backgroundColor: '#FFFFFF',
@@ -92,19 +62,11 @@ export const createSessionStyles = StyleSheet.create({
     paddingHorizontal: wp(4),
     paddingVertical: hp(1.8),
     borderRadius: wp(3),
-    backgroundColor:'#fff',
-    marginBottom:wp(4),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-    
   },
   dropdownText: {
     fontFamily: 'Urbanist-Regular',
     fontSize: wp(4),
-    color: '#5C8A78',
+    color: '#7D7D7D',
   },
   dropdownIcon: {
     width: wp(5),
@@ -121,7 +83,7 @@ export const createSessionStyles = StyleSheet.create({
     textAlignVertical: 'top',
     fontFamily: 'Urbanist-Regular',
     fontSize: wp(4),
-    color: '#5C8A78',
+    color: '#7D7D7D',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
@@ -134,8 +96,8 @@ export const createSessionStyles = StyleSheet.create({
     marginTop: hp(2),
   },
   cancelButton: {
-    backgroundColor: '#EBF2ED',
-    borderRadius: wp(10),
+    backgroundColor: '#F2F2F2',
+    borderRadius: wp(6),
     paddingVertical: hp(1.8),
     paddingHorizontal: wp(6),
     alignItems: 'center',
@@ -149,7 +111,7 @@ export const createSessionStyles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: '#1E5631',
-    borderRadius: wp(10),
+    borderRadius: wp(6),
     paddingVertical: hp(1.8),
     paddingHorizontal: wp(6),
     alignItems: 'center',
