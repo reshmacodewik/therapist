@@ -191,31 +191,10 @@ const styles = (wp: (v: number) => number, hp: (v: number) => number) =>
       justifyContent: 'space-between',
       marginBottom: hp(0.5),
     },
-    paymentLabeltitle: {
+    paymentLabel: {
       fontSize: wp(3),
       color: '#333',
 
-      marginBottom: hp(2),
-    },
-     paymentLabel: {
-      fontSize: wp(3),
-      color: '#333',
-
-    
-    },
-      paymentLabels: {
-      fontSize: wp(3),
-      color: '#333',
-
-      marginTop: hp(0),
-    },
-     paymentLabelValue: {
-      fontSize: wp(3),
-      color: '#000',
-      flexDirection:'row',
-      gap:15,
-      fontWeight:'700',
-      
       marginTop: hp(-0.5),
     },
     paymentValue: {

@@ -17,6 +17,17 @@ import SessionPaymentScreen from '../Screens/Sessions/SessionPaymentScreen';
 import SendPaymentLink from '../Screens/Payment/SendPaymentLink';
 import TransactionHistory from '../Screens/Payment/TransactionHistory';
 import RefundPaymentScreen from '../Screens/Payment/RefundPaymentScreen';
+import GrantAccess from '../Screens/Payment/GrantAccess';
+import NoteScreen from '../Screens/Sessions/NoteScreen';
+import UploadScreen from '../Screens/Sessions/UploadScreen';
+import ShareProgress from '../Screens/Sessions/ShareProgress';
+import PastSessionScreen from '../Screens/Sessions/PastSessionScreen';
+import SessionDetails from '../Screens/Sessions/SessionDetails';
+import BreakoutRooms from '../Screens/Sessions/Breakout';
+import Breakout from '../Screens/Sessions/Breakout';
+import RescheduleSession from '../Screens/Sessions/RescheduleSession';
+import EditSession from '../Screens/Sessions/EditSession';
+import SessionCancel from '../Screens/Sessions/SessionCancel';
 
 export type RootStackParamList = {
   splashScreen: undefined;
@@ -35,6 +46,17 @@ export type RootStackParamList = {
   SendPaymentLink: undefined;
   TransactionHistory: undefined;
   RefundPaymentScreen: undefined;
+  GrantAccess:undefined;
+  NoteScreen: undefined;
+  UploadScreen:undefined;
+  ShareProgress: undefined;
+  PastSessionScreen: undefined;
+  SessionDetails : undefined;
+  Breakout:undefined;
+  BreakoutRooms:undefined;
+  RescheduleSession:undefined;
+  EditSession:undefined;
+  SessionCancel: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -67,6 +89,17 @@ const RootStack = () => {
       <Stack.Screen name="SendPaymentLink" component={SendPaymentLink}/>
       <Stack.Screen name="TransactionHistory" component={TransactionHistory}/>
       <Stack.Screen name="RefundPaymentScreen"component={RefundPaymentScreen}/>
+      <Stack.Screen name="GrantAccess" component={GrantAccess}/>
+      <Stack.Screen name="NoteScreen" component={NoteScreen}/>
+      <Stack.Screen name="UploadScreen" component={UploadScreen}/>
+      <Stack.Screen name="ShareProgress" component={ShareProgress}/>
+      <Stack.Screen name="PastSessionScreen" component={PastSessionScreen}/>
+      <Stack.Screen name="SessionDetails" component={SessionDetails }/>
+      <Stack.Screen name="Breakout" component={Breakout}/>
+      <Stack.Screen name="BreakoutRooms" component={BreakoutRooms}/>
+      <Stack.Screen name="RescheduleSession" component={RescheduleSession}/>
+      <Stack.Screen name="EditSession" component={EditSession}/>
+      <Stack.Screen name="SessionCancel" component={SessionCancel}/>
     </Stack.Navigator>
   );
 };

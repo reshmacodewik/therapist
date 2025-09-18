@@ -7,9 +7,26 @@ import {
 export const createSessionStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF8EE',
+ 
     padding: wp(5),
   },
+   bgimg: {
+      flex: 1,
+      resizeMode: 'cover',
+    },
+     titleContainer: {
+      marginTop: hp(2),
+      marginBottom: hp(2),
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginLeft:wp(-2),
+      gap: 5,
+    },
+    title: {
+      fontSize: wp(5),
+      fontWeight: '700',
+      marginLeft: wp(1),
+    },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -97,7 +114,7 @@ export const createSessionStyles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: '#F2F2F2',
-    borderRadius: wp(6),
+    borderRadius: wp(8),
     paddingVertical: hp(1.8),
     paddingHorizontal: wp(6),
     alignItems: 'center',
@@ -111,7 +128,7 @@ export const createSessionStyles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: '#1E5631',
-    borderRadius: wp(6),
+    borderRadius: wp(8),
     paddingVertical: hp(1.8),
     paddingHorizontal: wp(6),
     alignItems: 'center',

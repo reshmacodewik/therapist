@@ -200,39 +200,6 @@ const HomeScreen = () => {
       </View>
     </View>
   );
-  const handleMenuSelect = (raw: string) => {
-    const value = raw.trim().toLowerCase();
-
-    switch (value) {
-      case 'profile':
-        navigation.navigate('ProfileScreen');
-        break;
-      case 'message':
-        navigation.navigate('MessagesScreen');
-        break;
-      case 'settings':
-        navigation.navigate('SettingsScreen');
-        break;
-      case 'my wallet':
-        navigation.navigate('PaymentsMainScreen');
-        break;
-      case 'calendar':
-        navigation.navigate('CalendarScreen');
-        break;
-      case 'help':
-        navigation.navigate('HelpSupportScreen');
-        break;
-      case 'logout':
-        console.log('Logging out...');
-        // await logout(); // if you have one
-        break;
-      default:
-        console.warn('Unknown menu value:', raw);
-    }
-
-    // DO NOT call handleMenuSelect again here!
-  };
-
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}
@@ -241,7 +208,7 @@ const HomeScreen = () => {
       <View style={styles(wp, hp).mainContainer}>
         <ScrollView
           style={styles(wp, hp).container}
-          contentContainerStyle={{ paddingBottom: hp(31) }}
+          contentContainerStyle={{ paddingBottom: hp(5) }}
           showsVerticalScrollIndicator={false}
         >
           {/* HEADER */}
@@ -582,12 +549,12 @@ const HomeScreen = () => {
               </View>
 
               <View style={styles(wp, hp).eventButtonsContainer}>
-                <TouchableOpacity style={styles(wp, hp).createSessionBtn}>
+                <TouchableOpacity style={styles(wp, hp).createSessionBtn} onPress={()=>navigation.navigate('CreateSessionScreen' as never)}>
                   <Text style={styles(wp, hp).sessionBtnText}>
                     Create Session
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles(wp, hp).mySessionsBtn}>
+                <TouchableOpacity style={styles(wp, hp).mySessionsBtn} onPress={()=>navigation.navigate('SessionsScreen' as never)}>
                   <Text style={styles(wp, hp).sessionBtnText}>My Sessions</Text>
                 </TouchableOpacity>
               </View>

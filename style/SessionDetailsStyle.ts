@@ -1,0 +1,131 @@
+import { StyleSheet } from 'react-native';
+
+const createStyles = (wp: any, hp: any) =>
+  StyleSheet.create({
+    bgimg: {
+      flex: 1,
+      width: '100%',
+      height: '100%',
+    },
+    container: {
+      flex: 1,
+      padding: 16,
+      marginTop: hp(1),
+    },
+    titleContainer: {
+      marginBottom: hp(2),
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 5,
+      marginLeft: wp(-2),
+    },
+    title: {
+      fontSize: wp(5),
+      fontWeight: 'bold',
+      color: '#000',
+      lineHeight: hp(2.8),
+      marginHorizontal: wp(2),
+      marginLeft: wp(-1),
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: hp(2),
+    },
+    headerTitle: {
+      fontSize: wp(5),
+      fontWeight: '600',
+      marginLeft: wp(2),
+    },
+    joinedContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: '#1C4E3F',
+      borderRadius: wp(5),
+      paddingVertical: hp(1.2),
+      paddingHorizontal: wp(4),
+      marginBottom: hp(2),
+    },
+    joinedText: {
+      color: '#fff',
+      fontSize: wp(4),
+      fontWeight: '600',
+    },
+    joinedBadge: {
+      backgroundColor: '#fff',
+      borderRadius: wp(4),
+      paddingHorizontal: wp(3),
+      paddingVertical: hp(0.3),
+    },
+    joinedCount: {
+      fontSize: wp(4),
+      fontWeight: '600',
+      color: '#1C4E3F',
+    },
+    messageRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: hp(2),
+    },
+    avatar: {
+      width: wp(10),
+      height: wp(10),
+      borderRadius: wp(5),
+      marginRight: wp(3),
+    },
+    messageContent: { flex: 1 },
+    messageName: { fontWeight: '700', fontSize: wp(4.2) },
+    messageText: { fontSize: wp(3.8), color: '#333' },
+    messageTime: { fontSize: wp(3.5), color: '#000',fontWeight:'700' },
+    inputBox: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      borderRadius: wp(8),
+      paddingHorizontal: wp(4),
+      paddingVertical: hp(1),
+      marginVertical: hp(2),
+      elevation: 2,
+    },
+    input: { flex: 1, fontSize: wp(3.8), color: '#000' },
+    notesCard: {
+      backgroundColor: '#FFD9B3',
+      borderRadius: wp(3),
+      padding: wp(4),
+      marginBottom: hp(2),
+    },
+    notesTitle: {
+      fontWeight: '700',
+      fontSize: wp(4),
+      marginBottom: hp(1.5),
+      color: '#1C4E3F',
+    },
+    notesText: { fontSize: wp(3.6), color: '#333' },
+    postUpdateButton: {
+      backgroundColor: '#1C4E3F',
+      borderRadius: wp(8),
+      paddingVertical: hp(1.2),
+      alignItems: 'flex-start',
+      paddingLeft: wp(5),
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: hp(1.5),
+    },
+    arrowIcon: {
+      marginRight: wp(2),
+    },
+    postUpdateText: { color: '#fff', fontSize: wp(4.2), fontWeight: '600' },
+    breakoutButton: {
+      borderRadius: wp(8),
+      alignItems: 'flex-start',
+      paddingLeft: wp(5),
+      paddingVertical: hp(1.2),
+      backgroundColor: '#fff',
+           flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    breakoutText: { fontSize: wp(4), fontWeight: '500', color: '#000' },
+  });
+
+export default createStyles;

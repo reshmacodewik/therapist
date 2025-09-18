@@ -47,6 +47,7 @@ const RefundPaymentScreen = () => {
        
 
           {/* Session Card */}
+         <View style={{marginHorizontal:wp(1)}}>
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Mindfulness Practices</Text>
             <Text style={styles.cardSubtitle}>
@@ -76,44 +77,12 @@ const RefundPaymentScreen = () => {
           <TouchableOpacity style={styles.refundBtn}>
             <Text style={styles.refundBtnText}>Refund</Text>
           </TouchableOpacity>
+          </View>
         </ScrollView>
-
-        {/* Bottom Nav */}
-        <View style={styles.bottomNav}>
-          <TouchableOpacity style={styles.navItem}>
-            <MaterialIcons name="home" size={wp(7)} color="#999" />
-            <Text style={styles.navText}>Home</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.navItem}>
-            <MaterialIcons
-              name="chat-bubble-outline"
-              size={wp(7)}
-              color="#999"
-            />
-            <Text style={styles.navText}>Messages</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.activeNav}>
-            <MaterialIcons name="groups" size={wp(7)} color="#fff" />
-            <Text style={styles.activeNavText}>Sessions</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.navItem}>
-            <MaterialIcons name="star-outline" size={wp(7)} color="#999" />
-            <Text style={styles.navText}>Tools</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.navItem}>
-            <MaterialIcons
-              name="account-balance-wallet"
-              size={wp(7)}
-              color="#999"
-            />
-            <Text style={styles.navText}>Wallet</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+</View>
+     
+        
+      
     </ImageBackground>
   );
 };

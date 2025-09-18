@@ -104,6 +104,10 @@ const SessionsScreen: React.FC = () => {
   const handleManage = () => {
     navigation.navigate('SessionPaymentScreen'); // ✅ simple navigate, no params
   };
+   const handleManagePast = () => {
+    navigation.navigate('PastSessionScreen' as never); // ✅ simple navigate, no params
+  };
+
 
   const handleConduct = (sessionId: string) => {
     // Handle conduct session
@@ -199,7 +203,7 @@ const SessionsScreen: React.FC = () => {
                   attendees={session.attendees}
                   image={session.image}
                   showConductButton={false}
-                  onManage={handleManage}
+                  onManage={handleManagePast}
                 />
               ))}
             </>

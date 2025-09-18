@@ -27,23 +27,12 @@ const Header: React.FC<HeaderProps> = ({
     <>
       <View style={headerStyles(wp, hp).header}>
         <View style={headerStyles(wp, hp).leftContainer}>
-          {showBackButton && (
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <MaterialIcons
-                name="keyboard-arrow-left"
-                size={wp(10)}
-                color="#000"
-              />
-            </TouchableOpacity>
-          )}
-          {screenTitle ? (
-            <Text style={headerStyles(wp, hp).screenTitle}>{screenTitle}</Text>
-          ) : (
+         
             <Image
               source={require('../../assets/Image/logo1.png')}
               style={headerStyles(wp, hp).logo}
             />
-          )}
+         
         </View>
         <View style={headerStyles(wp, hp).headerIcons}>
           <TouchableOpacity>

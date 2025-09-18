@@ -40,7 +40,7 @@ const EditSession = () => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <MaterialIcons name="keyboard-arrow-left" size={wp(10)} color="#000" />
           </TouchableOpacity>
-          <Text style={styles.title}>Create Sessions</Text>
+          <Text style={styles.title}>Edit Sessions</Text>
         </View>
       
 

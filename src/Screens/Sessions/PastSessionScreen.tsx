@@ -16,7 +16,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { mdiAccount } from '@mdi/js';
 
-
 import {
   Menu,
   MenuOptions,
@@ -27,14 +26,15 @@ import s from './sessionPaymentStyles';
 import { useResponsive } from 'react-native-responsive-hook';
 import Header from '../../components/Header';
 import Icon from 'react-native-vector-icons/Feather';
+import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 
-const SessionPaymentScreen = () => {
+const PastSessionScreen = () => {
   const { wp, hp } = useResponsive();
   const styles = s(wp, hp);
   const navigation = useNavigation();
 
   const handleConfirm = () => {
-
+    // Handle confirmation logic
     console.log('Confirm payment');
   };
 
@@ -64,7 +64,10 @@ const SessionPaymentScreen = () => {
           </View>
           <View style={styles.tagcardContainer}>
             <View style={styles.tagContainer}>
-              <Image source={require('../../../assets/icon/badge.png')} />
+              <Image
+                source={require('../../../assets/icon/free.png')}
+                style={{ width: wp(8), height: hp(3.5), marginRight: 5 }}
+              />
             </View>
             <Image
               source={require('../../../assets/Image/yoga.png')}
@@ -104,29 +107,16 @@ const SessionPaymentScreen = () => {
             <Text style={styles.paymentLabel}>
               Auto grant access after payment
             </Text>
-
-            {/* Payment Summary */}
-            <Text style={styles.sectionTitle}>Payout Summary</Text>
-            <View style={styles.paymentInfoContainer}>
-              <View style={styles.paymentRow}>
-                <Text style={styles.paymentLabel}>Collected:</Text>
-                <Text style={styles.paymentValue}>KES 2,500</Text>
-              </View>
-              <View style={styles.paymentRow}>
-                <Text style={styles.paymentLabel}>Platform Fee:</Text>
-                <Text style={styles.paymentValue}>KES 2,500</Text>
-              </View>
-              <View style={styles.paymentRow}>
-                <Text style={styles.paymentLabel}>Net Payout:</Text>
-                <Text style={styles.paymentValue}>KES 2,500</Text>
-              </View>
-            </View>
-
             {/* Action Buttons Section */}
             <View style={styles.actionButtonsContainer}>
               {/* Send Payment Link */}
               <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.primaryButton} onPress={()=>navigation.navigate('SendPaymentLink' as never)}>
+                <TouchableOpacity
+                  style={styles.primaryButton}
+                  onPress={() =>
+                    navigation.navigate('SendPaymentLink' as never)
+                  }
+                >
                   <Text style={styles.primaryButtonText}>
                     Send Payment Link
                   </Text>
@@ -139,7 +129,7 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
 
                 {/* Refund Participant */}
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('RefundPaymentScreen' as never)}>
+                <TouchableOpacity style={styles.outlineButton}>
                   <Text style={styles.outlineButtonText}>
                     Refund Participant
                   </Text>
@@ -153,7 +143,10 @@ const SessionPaymentScreen = () => {
               </View>
               {/* Grant Access */}
               <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('GrantAccess' as never)}>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() => navigation.navigate('GrantAccess' as never)}
+                >
                   <Text style={styles.outlineButtonText}>Grant Access</Text>
                   <Feather
                     name="check"
@@ -164,7 +157,7 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
 
                 {/* View All Transactions */}
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('TransactionHistory' as never)}>
+                <TouchableOpacity style={styles.outlineButton}>
                   <Text style={styles.outlineButtonText}>
                     View All Transactions
                   </Text>
@@ -177,10 +170,72 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
               </View>
             </View>
+            {/* Payment Summary */}
+            <Text style={styles.sectionTitle}>Payout Summary</Text>
+            <View style={styles.paymentInfoContainer}>
+              <View style={styles.paymentRow}>
+                <Text style={styles.paymentLabel}>Collected:</Text>
+                <View style={styles.paymentLabelValue}>
+                  <Text style={styles.paymentLabel}>Collected</Text>
+                  <Text style={styles.paymentValue}>KES 2,500</Text>
+                </View>
+              </View>
+              <View style={styles.paymentRow}>
+                <Text style={styles.paymentLabels}>Platform Fee:</Text>
+                <View style={styles.paymentLabelValue}>
+                  <Text style={styles.paymentLabel}>Pending</Text>
+                  <Text style={styles.paymentValue}>KES 2,500</Text>
+                </View>
+              </View>
+              <View style={styles.paymentRow}>
+                <Text style={styles.paymentLabel}>Net Payout:</Text>
+                <View style={styles.paymentLabelValue}>
+                  <Text style={styles.paymentLabel}>M-pesa</Text>
+                  <Text style={styles.paymentValue}>KES 2,500</Text>
+                </View>
+              </View>
+            </View>
           </View>
 
           <View style={styles.accessPaymentContainer}>
             <Text style={styles.sectionTitle}>Attendees & Resources</Text>
+            <Text style={styles.paymentLabeltitle}>
+              Effectively Mark the attendance
+            </Text>
+            <View style={styles.paymentInfoContainer}>
+              <View style={styles.paymentRow}>
+                <Text style={styles.paymentLabel}>Attendes</Text>
+                <View style={styles.paymentLabelValue}>
+                  <Text style={styles.paymentLabel}>Payment</Text>
+                  <Text style={styles.paymentValue}>Attendance</Text>
+                </View>
+              </View>
+              <View style={styles.paymentRow}>
+                <Text style={styles.paymentLabels}>Anima W.</Text>
+                <View style={styles.paymentLabelValue}>
+                  <Text style={styles.paymentLabel}>Paid</Text>
+                  <Text style={styles.paymentValue}>yes</Text>
+                </View>
+              </View>
+              <View style={styles.paymentRow}>
+                <Text style={styles.paymentLabel}>Prina S</Text>
+                <View style={styles.paymentLabelValue}>
+                  <Text style={styles.paymentLabel}>Pending</Text>
+                  <Text style={styles.paymentValue}>No</Text>
+                </View>
+              </View>
+              <View style={styles.paymentRow}>
+                <Text style={styles.paymentLabel}>Zeel R</Text>
+                <View style={styles.paymentLabelValue}>
+                  <Text style={styles.paymentLabel}>Paid</Text>
+                  <Text style={styles.paymentValue}>Yes</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.accessPaymentContainer}>
+            <Text style={styles.sectionTitle}>Session Tools</Text>
             <Text style={styles.paymentLabel}>
               Effectively Mark the attendance and resoures
             </Text>
@@ -189,8 +244,10 @@ const SessionPaymentScreen = () => {
               {/* Send Payment Link */}
               <View style={styles.actionButtonsinnerContainer}>
                 <TouchableOpacity style={styles.primaryButton}>
-                  <Text style={styles.primaryButtonText}>Mark Attendance</Text>
-                  <Ionicons
+                  <Text style={styles.primaryButtonText}>
+                    View Attendance Log
+                  </Text>
+                   <Ionicons
                     name="checkbox-outline"
                     size={wp(4.5)}
                     color="#fff"
@@ -199,9 +256,9 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
 
                 {/* Refund Participant */}
-                <TouchableOpacity style={styles.outlineButton}onPress={()=>navigation.navigate('NoteScreen' as never)}>
+                <TouchableOpacity style={styles.outlineButton}>
                   <Text style={styles.outlineButtonText}>Add Notes</Text>
-                  <Ionicons
+                   <Ionicons
                     name="bookmark-outline"
                     size={wp(4.5)}
                     color="#14532d"
@@ -211,8 +268,10 @@ const SessionPaymentScreen = () => {
               </View>
               {/* Grant Access */}
               <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('UploadScreen' as never)}>
-                  <Text style={styles.outlineButtonText}>Upload Resources</Text>
+                <TouchableOpacity style={styles.outlineButton}>
+                  <Text style={styles.outlineButtonText}>
+                    Upload Recap Material
+                  </Text>
                   <Feather
                     name="upload"
                     size={wp(4.5)}
@@ -220,16 +279,27 @@ const SessionPaymentScreen = () => {
                     style={{ marginLeft: wp(2) }}
                   />
                 </TouchableOpacity>
-
-                {/* View All Transactions */}
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('SessionDetails' as never)}>
-                  <Text style={styles.outlineButtonText}>Start Sessions</Text>
-                  <MaterialIcons
-                    name="arrow-right"
-                    size={wp(6)}
+                <TouchableOpacity style={styles.outlineButton}>
+                  <Text style={styles.outlineButtonText}>Export Report</Text>
+                  <Feather
+                    name="upload"
+                    size={wp(4.5)}
                     color="#14532d"
-                    style={{ marginLeft: wp(0) }}
+                    style={{ marginLeft: wp(2) }}
                   />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.actionButtonsinnerContainer}>
+                <TouchableOpacity style={styles.outlineButton}>
+                  <Text style={styles.outlineButtonText}>
+                    View Recording (if any)
+                  </Text>
+                  <MaterialIcons
+                                      name="arrow-right"
+                                      size={wp(6)}
+                                      color="#14532d"
+                                      style={{ marginLeft: wp(0) }}
+                                    />
                 </TouchableOpacity>
               </View>
             </View>
@@ -245,9 +315,11 @@ const SessionPaymentScreen = () => {
               {/* Send Payment Link */}
               <View style={styles.actionButtonsinnerContainer}>
                 <TouchableOpacity style={styles.primaryButton}>
-                  <Text style={styles.primaryButtonText}>Send Reminder</Text>
-                  <Fontisto
-                    name="bell"
+                  <Text style={styles.primaryButtonText}>
+                    View Chat Histroy
+                  </Text>
+                  <Feather
+                    name="send"
                     size={wp(4.5)}
                     color="#fff"
                     style={{ marginLeft: wp(2) }}
@@ -255,75 +327,13 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
 
                 {/* Refund Participant */}
-                <TouchableOpacity style={styles.outlineButton}>
-                  <Text style={styles.outlineButtonText}>
-                    Group chat/ Bulletin
-                  </Text>
-                  <MaterialIcons
-                    name="groups"
-                    size={wp(4.5)}
-                    color="#14532d"
-                    style={{ marginLeft: wp(2) }}
-                  />
-                </TouchableOpacity>
-              </View>
-              {/* Grant Access */}
-              <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.outlineButton}>
-                  <Text style={styles.outlineButtonText}>
-                    Post session update/ Summary
-                  </Text>
-                  <MaterialIcons
-                    name="arrow-u-left-top"
-                    size={wp(4.5)}
-                    color="#14532d"
-                    style={{ marginLeft: wp(2) }}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-
-          <View style={styles.accessPaymentContainer}>
-            <Text style={styles.sectionTitle}>Session Settings</Text>
-            <Text style={styles.paymentLabel}>
-              Manage your sessions at one place 
-            </Text>
-            {/* Action Buttons Section */}
-            <View style={styles.actionButtonsContainer}>
-              {/* Send Payment Link */}
-              <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.primaryButton}  onPress={()=>navigation.navigate('EditSession' as never)}>
-                  <Text style={styles.primaryButtonText}>Edit Sessions</Text>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() => navigation.navigate('ShareProgress' as never)}
+                >
+                  <Text style={styles.outlineButtonText}>Share Progress</Text>
                   <Feather
                     name="edit-2"
-                    size={wp(4.5)}
-                    color="#fff"
-                    style={{ marginLeft: wp(2) }}
-                  />
-                </TouchableOpacity>
-
-                {/* Refund Participant */}
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('RescheduleSession' as never)} >
-                  <Text style={styles.outlineButtonText}>
-                   Reschedule
-                  </Text>
-                  <MaterialIcons
-                    name="groups"
-                    size={wp(4.5)}
-                    color="#14532d"
-                    style={{ marginLeft: wp(2) }}
-                  />
-                </TouchableOpacity>
-              </View>
-              {/* Grant Access */}
-              <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('SessionCancel' as never)}>
-                  <Text style={styles.outlineButtonText}>
-                  Cancel Session
-                  </Text>
-                  <Fontisto
-                    name="arrow-return-left"
                     size={wp(4.5)}
                     color="#14532d"
                     style={{ marginLeft: wp(2) }}
@@ -338,4 +348,4 @@ const SessionPaymentScreen = () => {
   );
 };
 
-export default SessionPaymentScreen;
+export default PastSessionScreen;
