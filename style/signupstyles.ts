@@ -35,13 +35,12 @@ export default StyleSheet.create({
   },
   input: {
     width: wp(80),
-    height :hp(13.5),
+    height: hp(13.5),
     borderWidth: 1,
     borderColor: '#E2E8F0',
     borderRadius: wp(10),
     paddingHorizontal: wp(4),
     backgroundColor: '#fff',
-    
   },
   dateRow: {
     flexDirection: 'row',
@@ -50,6 +49,29 @@ export default StyleSheet.create({
     width: wp(80),
     marginBottom: hp(2),
   },
+    dropdown: {
+    flex: 1,
+    margin: 5,
+    height: 50,
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    borderRadius: 12,
+    width:wp(20),
+    color:'#000'
+  },
+  genderdrop:{
+    flex:1,
+    margin: 5,
+
+  },
+
+  picker: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+
   datePicker: {
     flex: 1,
     borderRadius: wp(4),
@@ -58,6 +80,7 @@ export default StyleSheet.create({
     borderColor: '#E2E8F0',
     borderWidth: 1,
     justifyContent: 'center',
+   
   },
   genderPicker: {
     width: wp(80),
@@ -74,21 +97,24 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginBottom: hp(2),
   },
+
   codeBox: {
-    width: wp(18),
-    height: hp(13.5),
-    borderRadius: wp(3),
-    borderColor: '#E2E8F0',
-    borderWidth: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    paddingLeft: wp(2),
-    marginRight: wp(2),
-  },
+  width: wp(18),
+  height: hp(13.5),
+  borderRadius: wp(3),
+  borderColor: '#E2E8F0',
+  borderWidth: 1,
+  backgroundColor: '#fff',
+  flexDirection: 'row',       // row layout
+  alignItems: 'center',       // vertical center
+  justifyContent: 'flex-start', // keep content aligned left
+  paddingHorizontal: wp(2),   // equal padding left + right
+  marginRight: wp(2),
+},
+
   phoneInput: {
     flex: 1,
-     height :hp(13.5),
+    height: hp(13.5),
     borderRadius: wp(3),
     borderColor: '#E2E8F0',
     borderWidth: 1,
@@ -98,19 +124,18 @@ export default StyleSheet.create({
   termsRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    marginVertical: hp(8),
+    marginVertical: hp(5),
     width: wp(80),
   },
   termsText: {
     flex: 1,
-    fontSize: wp(4),
+    fontSize: 14,
     color: '#333',
     marginLeft: wp(0),
-    marginTop: wp(1)
-   
+    marginTop: wp(1),
   },
   linkText: {
-    color: '#003300',
+    color: '#000',
     fontWeight: '600',
   },
   signUpButton: {
@@ -137,6 +162,20 @@ export default StyleSheet.create({
   },
   loginLink: {
     color: '#003300',
+    fontWeight: '600',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    paddingHorizontal: wp(8),
+    marginBottom: wp(2),
+    alignSelf: 'flex-start',
+  },
+   signupPrompt: {
+    color: '#000',
+  },
+  signupLink: {
+    color: '#0C7C59',
     fontWeight: '600',
   },
 });

@@ -1,17 +1,18 @@
+// App.tsx
 import React from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import RootStack from './src/Navigation/MyStack';
- // <-- use RootStack, not MyStack
 
-const App = () => {
+export default function App() {
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-       <RootStack/>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <RootStack />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
-};
-
-export default App;
+}

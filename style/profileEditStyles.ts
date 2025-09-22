@@ -1,0 +1,232 @@
+import { StyleSheet } from 'react-native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
+export const styles = StyleSheet.create({
+  bgimg: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  container: {
+    flex: 1,
+    padding: 16,
+    
+  },
+   header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: wp(4),
+      paddingTop: hp(3),
+      paddingBottom: hp(1),
+      marginLeft:wp(-5)
+    },
+    backButton: {
+      width: wp(10),
+      height: wp(10),
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: wp(5),
+    },
+    headerTitle: {
+      fontSize: wp(5),
+      fontFamily: 'Poppins-Bold',
+      color: '#222',
+    },
+  titleContainer: {
+    marginTop: hp(-1.5),
+    marginBottom: hp(2),
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    marginLeft: wp(-2),
+  },
+  title: {
+    fontSize: wp(5),
+    fontWeight: 'bold',
+    color: '#000',
+    lineHeight: hp(2.8),
+    marginHorizontal: wp(2),
+  },
+
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: wp(4.5),
+    paddingVertical: hp(1.2),
+  },
+  dateRow: {
+    flexDirection: 'row',
+    height: hp(6),
+    justifyContent: 'space-between',
+    width: wp(80),
+    marginBottom: hp(2),
+  },
+  datePicker: {
+    flex: 1,
+    borderRadius: wp(4),
+    marginHorizontal: wp(0),
+    backgroundColor: '#fff',
+    borderColor: '#E2E8F0',
+    borderWidth: 1,
+    justifyContent: 'center',
+  },
+  datePickerMonth: {
+    borderRadius: wp(3),
+    width: wp(23), // smaller fixed width
+    backgroundColor: '#fff',
+    borderColor: '#E2E8F0',
+    borderWidth: 1,
+    justifyContent: 'center',
+    marginRight: wp(2),
+  },
+  datePickerDay: {
+    borderRadius: wp(3),
+    width: wp(22), // smaller fixed width
+    backgroundColor: '#fff',
+    borderColor: '#E2E8F0',
+    borderWidth: 1,
+    justifyContent: 'center',
+    marginRight: wp(2),
+  },
+  genderPicker: {
+    width: wp(80),
+    height: hp(13.5),
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    borderRadius: wp(10),
+    paddingHorizontal: wp(4),
+    backgroundColor: '#fff',
+  },
+  phoneRow: {
+    flexDirection: 'row',
+    width: wp(80),
+    alignItems: 'center',
+    marginBottom: hp(2),
+  },
+  codeBox: {
+    width: wp(18),
+    height: hp(6),
+    borderRadius: wp(3),
+    borderColor: '#E2E8F0',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    paddingLeft: wp(2),
+    marginRight: wp(2),
+  },
+  phoneInput: {
+    flex: 1,
+    height: hp(6),
+    borderRadius: wp(3),
+    borderColor: '#E2E8F0',
+    borderWidth: 1,
+    paddingHorizontal: wp(3),
+    backgroundColor: '#fff',
+  },
+
+  bgBlobA: {
+    position: 'absolute',
+    top: hp(8),
+    left: -wp(20),
+    width: wp(70),
+    height: wp(70),
+    borderRadius: wp(35),
+    backgroundColor: '#D1FAE5',
+    opacity: 0.5,
+  },
+  bgBlobB: {
+    position: 'absolute',
+    top: hp(18),
+    right: -wp(15),
+    width: wp(60),
+    height: wp(60),
+    borderRadius: wp(30),
+    backgroundColor: '#FEF3C7',
+    opacity: 0.5,
+  },
+
+  avatarWrap: {
+    alignSelf: 'center',
+    width: wp(38),
+    height: wp(38),
+    borderRadius: wp(19),
+    overflow: 'hidden',
+    marginTop: hp(2),
+    marginBottom: hp(2),
+    backgroundColor: '#E5E7EB',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatar: { width: '100%', height: '100%' },
+  camBtn: {
+    position: 'absolute',
+    bottom: hp(6),
+    alignSelf: 'center',
+    justifyContent: 'center',
+
+    padding: wp(2),
+  },
+
+  form: { paddingHorizontal: wp(5) },
+  label: {
+    fontSize: wp(3.6),
+    color: '#1F2937',
+    marginBottom: hp(0.6),
+    fontWeight: '500',
+    marginTop: hp(1.5),
+  },
+   labelph: {
+    fontSize: wp(3.6),
+    color: '#1F2937',
+    marginBottom: hp(0.6),
+    fontWeight: '500',
+    
+  },
+  inputWrap: {
+    height: hp(6),
+    borderRadius: wp(8),
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    paddingHorizontal: wp(3.5),
+    justifyContent: 'center',
+  },
+  input: { fontSize: wp(3.7), color: '#111827', paddingVertical: 0 },
+
+  row: { flexDirection: 'row', alignItems: 'center', gap: wp(2.5) },
+
+  pill: {
+    flex: 1,
+    height: hp(5.8),
+    backgroundColor: '#FFF',
+    borderRadius: wp(3.5),
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    paddingHorizontal: wp(3),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  pillText: { fontSize: wp(3.7), color: '#111827' },
+  placeholder: { color: '#9CA3AF' },
+
+  cta: {
+    marginTop: hp(3),
+    height: hp(6.6),
+    borderRadius: hp(3.3),
+    backgroundColor: '#264734',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: wp(5),
+  },
+  ctaText: {
+    color: '#FFF',
+    fontSize: wp(4.4),
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+});

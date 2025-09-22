@@ -1,12 +1,11 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { headerStyles } from '../../style/headerStyles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface HeaderProps {
   showBackButton?: boolean;
@@ -27,12 +26,10 @@ const Header: React.FC<HeaderProps> = ({
     <>
       <View style={headerStyles(wp, hp).header}>
         <View style={headerStyles(wp, hp).leftContainer}>
-         
-            <Image
-              source={require('../../assets/Image/logo1.png')}
-              style={headerStyles(wp, hp).logo}
-            />
-         
+          <Image
+            source={require('../../assets/Image/logo1.png')}
+            style={headerStyles(wp, hp).logo}
+          />
         </View>
         <View style={headerStyles(wp, hp).headerIcons}>
           <TouchableOpacity>
@@ -41,10 +38,18 @@ const Header: React.FC<HeaderProps> = ({
               style={headerStyles(wp, hp).bellIcon}
             />
           </TouchableOpacity>
-          <Image
-            source={require('../../assets/Image/homeuser.png')}
-            style={headerStyles(wp, hp).userIcon}
-          />
+
+          {/* ✅ open the drawer from parent */}
+          <TouchableOpacity
+            onPress={() =>
+              navigation.getParent()?.dispatch(DrawerActions.openDrawer())
+            }
+          >
+            <Image
+              source={require('../../assets/Image/homeuser.png')}
+              style={headerStyles(wp, hp).userIcon}
+            />
+          </TouchableOpacity>
         </View>
       </View>
       {showWelcomeText && (

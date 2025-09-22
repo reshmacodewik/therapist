@@ -9,15 +9,48 @@ import {
 } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useResponsive } from 'react-native-responsive-hook';
-import { Ionicons } from '@react-native-vector-icons/ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { apiPost } from '../../utils/api/common';
+import { API_LOGIN } from '../../utils/api/APIConstant';
+import { useFormik } from 'formik';
+import { AuthSession } from '../../storage/mmkvPersister';
+import { loginSchema } from '../../validation/signupSchema';
+import { useAuth } from './AuthContext';
 import styles from '../../../style/loginstyles';
-
+import ShowToast from '../../utils/ShowToast';
 
 const LoginScreen: React.FC = () => {
   const { wp, hp } = useResponsive();
   const navigation = useNavigation<NavigationProp<any>>();
   const [secure, setSecure] = useState(true);
+  const { signIn } = useAuth();
 
+  const formik = useFormik({
+    initialValues: { email: '', password: '' },
+    validationSchema: loginSchema,
+    onSubmit: async values => {
+      try {
+        const res = await apiPost({ url: API_LOGIN, values });
+        if (res?.success && res?.data?.token) {
+          const session: AuthSession = {
+            accessToken: res.data.token,
+            refreshToken: res.data?.refreshToken,
+            user: res.data?.user,
+          };
+
+          signIn(session);
+          console.log('Saved session:', session);
+          ShowToast(res?.message, 'success');
+          navigation.navigate('HomeScreen' as never);
+        } else {
+          ShowToast(res?.message || 'Login Failed', 'error');
+        }
+      } catch (e: any) {
+        ShowToast(e?.message || 'Something went wrong', 'error');
+      }
+    },
+  });
+  
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}
@@ -29,17 +62,29 @@ const LoginScreen: React.FC = () => {
           resizeMode="contain"
           style={styles.logo}
         />
-        
-        <Text style={[styles.tagline, { fontSize: wp(3.7), marginTop: hp(2) }]}>
+
+        <Text
+          style={[
+            styles.tagline,
+            { fontSize: wp(3.7), marginTop: hp(2), marginBottom: hp(4) },
+          ]}
+        >
           Real Connection. Real Support. Real Growth.
         </Text>
 
-        <Text style={[styles.label, { marginTop: hp(2) }]}>E-mail</Text>
+        <Text style={styles.label}>E-mail </Text>
         <TextInput
+          style={styles.input}
           placeholder="Enter your email"
-          style={[styles.input, { height: hp(6), fontSize: wp(4) }]}
           placeholderTextColor="#999"
+          keyboardType="email-address"
+          onChangeText={formik.handleChange('email')}
+          onBlur={formik.handleBlur('email')}
+          value={formik.values.email}
         />
+        {formik.touched.email && formik.errors.email && (
+          <Text style={styles.errorText}>{formik.errors.email}</Text>
+        )}
 
         <Text style={[styles.label, { marginTop: hp(2.5) }]}>Password</Text>
         <View style={[styles.passwordContainer, { height: hp(6) }]}>
@@ -48,7 +93,11 @@ const LoginScreen: React.FC = () => {
             style={[styles.passwordInput, { fontSize: wp(4) }]}
             secureTextEntry={secure}
             placeholderTextColor="#999"
+            onChangeText={formik.handleChange('password')}
+            onBlur={formik.handleBlur('password')}
+            value={formik.values.password}
           />
+
           <TouchableOpacity onPress={() => setSecure(!secure)}>
             <Ionicons
               name={secure ? 'eye-off-outline' : 'eye-outline'}
@@ -57,12 +106,17 @@ const LoginScreen: React.FC = () => {
             />
           </TouchableOpacity>
         </View>
-
+        {formik.touched.password && formik.errors.password && (
+          <Text style={styles.errorText}>{formik.errors.password}</Text>
+        )}
         <TouchableOpacity
           style={{ alignSelf: 'flex-end', marginTop: hp(1) }}
           onPress={() => navigation.navigate('ForgotPassword')}
         >
-          <Text style={[styles.forgot, { fontSize: wp(3.5) }]} onPress={() => navigation.navigate('VerificationCode')}>
+          <Text
+            style={[styles.forgot, { fontSize: wp(3.5) }]}
+            onPress={() => navigation.navigate('VerificationCode')}
+          >
             Forgot Password?
           </Text>
         </TouchableOpacity>
@@ -72,7 +126,9 @@ const LoginScreen: React.FC = () => {
             styles.loginButton,
             { height: hp(6), borderRadius: wp(10), marginTop: hp(4) },
           ]}
-           onPress={() => navigation.navigate('HomeScreen')}
+          onPress={() => {
+            formik.handleSubmit();
+          }}
         >
           <Text style={[styles.loginText, { fontSize: wp(4.5) }]}>Login</Text>
         </TouchableOpacity>

@@ -28,6 +28,8 @@ import Breakout from '../Screens/Sessions/Breakout';
 import RescheduleSession from '../Screens/Sessions/RescheduleSession';
 import EditSession from '../Screens/Sessions/EditSession';
 import SessionCancel from '../Screens/Sessions/SessionCancel';
+import DrawerNavigator from './DrawerNavigator';
+import PaymentDetailsScreen from '../Screens/Sidebar/PaymentDetailsScreen';
 
 export type RootStackParamList = {
   splashScreen: undefined;
@@ -57,6 +59,7 @@ export type RootStackParamList = {
   RescheduleSession:undefined;
   EditSession:undefined;
   SessionCancel: undefined;
+  PaymentDetailsScreen:undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -65,7 +68,7 @@ const RootStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="HomeScreen"
+      // initialRouteName="HomeScreen"
     >
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
@@ -76,7 +79,7 @@ const RootStack = () => {
       <Stack.Screen name="VerifyCredentials" component={VerifyCredentials} />
       <Stack.Screen name="CredentailsSuccess" component={CredentailsSuccess} />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-      <Stack.Screen name="HomeScreen" component={BottomTabs} />
+      <Stack.Screen name="HomeScreen" component={DrawerNavigator} />
       <Stack.Screen
         name="CreateSessionScreen"
         component={CreateSessionScreen}
@@ -100,6 +103,7 @@ const RootStack = () => {
       <Stack.Screen name="RescheduleSession" component={RescheduleSession}/>
       <Stack.Screen name="EditSession" component={EditSession}/>
       <Stack.Screen name="SessionCancel" component={SessionCancel}/>
+      <Stack.Screen name="PaymentDetailsScreen" component={PaymentDetailsScreen}/>
     </Stack.Navigator>
   );
 };

@@ -94,6 +94,14 @@ const styles = StyleSheet.create({
     color: '#0C7C59',
     fontWeight: '600',
   },
+    errorText: {
+    color: 'red',
+    fontSize: 12,
+    paddingHorizontal: wp(8),
+    marginTop: wp(2),
+    marginLeft: wp(5),
+    alignSelf: 'flex-start',
+  },
   dividerRow: {
     flexDirection: 'row',
     alignItems: 'center',

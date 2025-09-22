@@ -11,6 +11,7 @@ import SendPaymentLink from '../Screens/Payment/SendPaymentLink';
 import SessionPaymentScreen from '../Screens/Sessions/SessionPaymentScreen';
 import TransactionHistory from '../Screens/Payment/TransactionHistory';
 import RefundPaymentScreen from '../Screens/Payment/RefundPaymentScreen';
+import MessagesScreen from '../Screens/Sidebar/MessagesScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,10 +37,10 @@ const BottomTabs = () => {
         name="HomeScreen"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({ focused }: { focused: boolean }) => (
             <Icon name="home" size={wp(6)} color={focused ? '#FFA726' : '#B0B0B0'} />
           ),
-          tabBarLabel: ({ focused }) => (
+           tabBarLabel: ({ focused }: { focused: boolean }) => (
             <Text style={[styles.label, { color: focused ? '#FFA726' : '#B0B0B0' }]}>
               Home
             </Text>
@@ -49,15 +50,15 @@ const BottomTabs = () => {
 
       <Tab.Screen
         name="MessagesScreen"
-        component={SendPaymentLink}
+        component={MessagesScreen}
         options={{
-          tabBarIcon: ({ focused }) => (
+           tabBarIcon: ({ focused }: { focused: boolean }) => (
            <Image
               source={require('../../assets/Image/message-circle.png')}
               style={{ width: wp(7), height: hp(7), resizeMode: 'contain', tintColor: focused ? '#FFA726' : '#B0B0B0' }}
             />
           ),
-          tabBarLabel: ({ focused }) => (
+          tabBarLabel: ({ focused }: { focused: boolean }) => (
             <Text style={[styles.label, { color: focused ? '#FFA726' : '#B0B0B0' }]}>
               Message
             </Text>
@@ -71,7 +72,7 @@ const BottomTabs = () => {
         name="Sessions"
         component={TransactionHistory}
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({ focused }: { focused: boolean }) => (
             <View
               style={[
                 styles.moodButton,
@@ -84,7 +85,7 @@ const BottomTabs = () => {
             />
             </View>
           ),
-          tabBarLabel: ({ focused }) => (
+           tabBarLabel: ({ focused }: { focused: boolean }) => (
             <Text style={[styles.label, { color: focused ? '#FFA726' : '#B0B0B0' }]}>
               Sessions
             </Text>
@@ -96,13 +97,13 @@ const BottomTabs = () => {
         name="Tools"
         component={RefundPaymentScreen}
         options={{
-          tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({ focused }: { focused: boolean }) => (
             <Image
-              source={require('../../assets/Image/tool.png')}
-              style={{ width: wp(12), height: hp(12), resizeMode: 'contain', tintColor: focused ? '#FFA726' : '#B0B0B0' }}
+              source={require('../../assets/Image/icon.png')}
+              style={{ width: wp(7), height: hp(7), resizeMode: 'contain', tintColor: focused ? '#FFA726' : '#8C8C8C' }}
             />
           ),
-          tabBarLabel: ({ focused }) => (
+          tabBarLabel: ({ focused }: { focused: boolean }) => (
             <Text style={[styles.label, { color: focused ? '#FFA726' : '#B0B0B0' }]}>
               Tools
             </Text>
@@ -114,20 +115,20 @@ const BottomTabs = () => {
         name="wallet"
         component={() => null} // ok to return null
         options={{
-          tabBarIcon: ({ focused }) => (
+           tabBarIcon: ({ focused }: { focused: boolean }) => (
             <Image
-              source={require('../../assets/Image/home_bottom.png')}
+              source={require('../../assets/Image/credit-card.png')}
               style={{ width: wp(8), height: wp(8), resizeMode: 'contain', tintColor: focused ? '#FFA726' : '#B0B0B0' }}
             />
           ),
-          tabBarLabel: ({ focused }) => (
+         tabBarLabel: ({ focused }: { focused: boolean }) => (
             <Text style={[styles.label, { color: focused ? '#FFA726' : '#B0B0B0' }]}>
               wallet
             </Text>
           ),
         }}
         listeners={{
-          tabPress: e => {
+          tabPress: (e: { preventDefault: () => void; }) => {
             e.preventDefault();
             // toggle your modal here
             // setShowTalkMoreModal(prev => !prev);
