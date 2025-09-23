@@ -26,7 +26,12 @@ const WelcomeScreen = () => {
         },
         {
           key: "coach",
-          label: "Coach / Mentor",
+          label: "Coach ",
+          icon: require("../../assets/icon/coach.png"),
+        },
+          {
+          key: "mentor",
+          label: "Mentor ",
           icon: require("../../assets/icon/coach.png"),
         },
         {
@@ -64,7 +69,7 @@ const WelcomeScreen = () => {
             key={option.key}
             style={styles.button}
             onPress={() =>
-              navigation.navigate("LoginScreen", { role: option.key })
+              navigation.navigate("SignUpScreen", { role: option.key })
             }
           >
             <Image source={option.icon} style={styles.icon} />

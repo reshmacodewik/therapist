@@ -464,18 +464,10 @@ const HomeScreen = () => {
             </View>
 
             {/* Calendar & Earnings Row */}
-            <View
-              style={{
-                flexDirection: 'row', // stack items vertically
-                gap: 20, // space between rows (RN 0.71+)
-              }}
-            >
+            <View style={styles(wp, hp).gridRow}>
               {/* Calendar card */}
-              <View
-                style={[styles(wp, hp).calendarcontainer, { width: '100%' }]}
-              >
-               
-                <View style={styles(wp, hp).calendar}>
+              <View style={styles(wp, hp).gridItem}>
+                <View style={styles(wp, hp).calendarHeader}>
                   <Text style={styles(wp, hp).sectionTitle}>Calendar</Text>
                   <TouchableOpacity>
                     <Ionicons
@@ -484,27 +476,28 @@ const HomeScreen = () => {
                       color="#000"
                     />
                   </TouchableOpacity>
-
-                  <View style={styles(wp, hp).sectionHeaderweek}>
-                    <View style={{ flexDirection: 'row', gap: wp(2.5) }}>
-                      <Image
-                        source={require('../../../assets/icon/message-circle.png')}
-                        style={styles(wp, hp).sessionIcon}
-                      />
-                      <Text style={styles(wp, hp).sectionTitleweek}>
-                        This Week Earning
-                      </Text>
-                    </View>
-                    <TouchableOpacity>
-                      <Ionicons
-                        name="chevron-forward"
-                        size={wp(7)}
-                        color="#000"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                
                 </View>
+
+                <View style={styles(wp, hp).sectionHeaderWeek}>
+                  <View style={styles(wp, hp).rowStart}>
+                    <Image
+                      source={require('../../../assets/icon/message-circle.png')}
+                      style={styles(wp, hp).sessionIcon}
+                      resizeMode="contain"
+                    />
+                    <Text style={styles(wp, hp).sectionTitleWeek}>
+                      This Week Earning
+                    </Text>
+                  </View>
+                  <TouchableOpacity>
+                    <Ionicons
+                      name="chevron-forward"
+                      size={wp(7)}
+                      color="#000"
+                    />
+                  </TouchableOpacity>
+                </View>
+
                 <View style={styles(wp, hp).calendarCard}>
                   <Text style={styles(wp, hp).calendarTitle}></Text>
                   {renderCalendar()}
@@ -512,17 +505,20 @@ const HomeScreen = () => {
               </View>
 
               {/* Earnings card */}
-              <View style={[styles(wp, hp).earningCard, { width: '42%' }]}>
-                <Image
-                  source={require('../../../assets/Image/wallet.png')}
-                  style={styles(wp, hp).sessionIcon}
-                />
-                <Text style={styles(wp, hp).earningText}>KES 800</Text>
-                <TouchableOpacity style={styles(wp, hp).withdrawBtn}>
-                  <Text style={styles(wp, hp).withdrawText}>
-                    Withdraw funds
-                  </Text>
-                </TouchableOpacity>
+              <View style={styles(wp, hp).gridItem}>
+                <View style={styles(wp, hp).earningCard}>
+                  <Image
+                    source={require('../../../assets/Image/wallet.png')}
+                    style={styles(wp, hp).walletIcon}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles(wp, hp).earningText}>KES 800</Text>
+                  <TouchableOpacity style={styles(wp, hp).withdrawBtn}>
+                    <Text style={styles(wp, hp).withdrawText}>
+                      Withdraw funds
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
 
@@ -549,12 +545,20 @@ const HomeScreen = () => {
               </View>
 
               <View style={styles(wp, hp).eventButtonsContainer}>
-                <TouchableOpacity style={styles(wp, hp).createSessionBtn} onPress={()=>navigation.navigate('CreateSessionScreen' as never)}>
+                <TouchableOpacity
+                  style={styles(wp, hp).createSessionBtn}
+                  onPress={() =>
+                    navigation.navigate('CreateSessionScreen' as never)
+                  }
+                >
                   <Text style={styles(wp, hp).sessionBtnText}>
                     Create Session
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles(wp, hp).mySessionsBtn} onPress={()=>navigation.navigate('SessionsScreen' as never)}>
+                <TouchableOpacity
+                  style={styles(wp, hp).mySessionsBtn}
+                  onPress={() => navigation.navigate('SessionsScreen' as never)}
+                >
                   <Text style={styles(wp, hp).sessionBtnText}>My Sessions</Text>
                 </TouchableOpacity>
               </View>

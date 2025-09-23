@@ -10,17 +10,25 @@ import {
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
 import CheckBox from '@react-native-community/checkbox';
+import styles from '../../../style/signupstyles';
 import { signupSchema } from '../../validation/signupSchema';
 import { apiPost } from '../../utils/api/common';
 import { API_REGISTER } from '../../utils/api/APIConstant';
 import ShowToast from '../../utils/ShowToast';
-import CountryPicker from "react-native-country-codes-picker";
+
 import { Dropdown } from 'react-native-element-dropdown';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useResponsive } from 'react-native-responsive-hook';
-import styles from '../../../style/signupstyles';
+import { CountryPicker } from 'react-native-country-codes-picker';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
+type SignUpRouteParams = {
+  role: string;
+};
 const SignUpScreen = () => {
+  const route =
+    useRoute<RouteProp<Record<string, SignUpRouteParams>, string>>();
+  const { role } = route.params || { role: '' };
   const { wp, hp } = useResponsive();
   const navigation = useNavigation<NavigationProp<any>>();
   const [loading, setLoading] = useState(false);
@@ -39,6 +47,7 @@ const SignUpScreen = () => {
       month: '',
       day: '',
       year: '',
+      role: role || '',
       agree: false,
     },
     validationSchema: signupSchema,
@@ -284,7 +293,7 @@ const SignUpScreen = () => {
         <CountryPicker
           show={showPicker}
           lang="en" // ✅ Required prop
-          pickerButtonOnPress={item => {
+          pickerButtonOnPress={(item: { dial_code: any; code: any }) => {
             formik.setFieldValue('countryCode', item.dial_code);
             formik.setFieldValue('countryIso2', item.code);
             setShowPicker(false);

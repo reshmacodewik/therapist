@@ -170,13 +170,110 @@ const styles = (wp: any, hp: any) =>
       marginBottom: hp(1),
       marginTop: hp(-1.5),
     },
+    /* ---------------- Calendar & Earnings Grid ---------------- */
+    gridRow: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+      rowGap: hp(2),            // use rowGap/columnGap instead of gap
+    },
+    gridItem: {
+      width: '48%',
+      backgroundColor: '#fff',
+      borderRadius: wp(4),
+      padding: wp(4),
+      // Shadow (iOS) + elevation (Android)
+      shadowColor: '#000',
+      shadowOpacity: 0.08,
+      shadowOffset: { width: 0, height: 4 },
+      shadowRadius: 12,
+      elevation: 3,
+    },
+
+    // headers
+    calendarHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: hp(1.2),
+    },
+    sectionTitle: {
+      fontSize: wp(4.2),
+      fontWeight: '600',
+      color: '#0b0b0b',
+    },
+
+    sectionHeaderWeek: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: hp(1.5),
+    },
+    rowStart: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      columnGap: wp(2.5),
+    },
+    // sessionIcon: {
+    //   width: wp(5.5),
+    //   height: wp(5.5),
+    // },
+    sectionTitleWeek: {
+      fontSize: wp(3.8),
+      color: '#1f3b2e',
+      fontWeight: '500',
+    },
+
+    // calendar card
+    calendarCard: {
+      borderRadius: wp(3),
+      overflow: 'hidden',
+      backgroundColor: '#f7faf7',
+      padding: wp(2),
+    },
+    calendarTitle: {
+      fontSize: wp(3.6),
+      color: '#68866f',
+      marginBottom: hp(0.5),
+    },
+
+    // earning card
+    earningCard: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: hp(4),
+      borderRadius: wp(4),
+      backgroundColor: '#ffffff',
+    },
+    walletIcon: {
+      width: wp(10),
+      height: wp(10),
+      marginBottom: hp(1),
+    },
+    earningText: {
+      fontSize: wp(6),
+      fontWeight: '700',
+      color: '#1f3b2e',
+      marginBottom: hp(1.6),
+    },
+    withdrawBtn: {
+      paddingVertical: hp(1.2),
+      paddingHorizontal: wp(6),
+      backgroundColor: '#2f5a3f',
+      borderRadius: wp(6),
+    },
+    withdrawText: {
+      color: '#fff',
+      fontSize: wp(3.6),
+      fontWeight: '600',
+    },
     sectionHeaderweek: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       marginBottom: hp(1),
       marginTop: hp(-1.5),
-      marginLeft:hp(12)
+      marginLeft: hp(12),
     },
     sessionIcon: {
       width: wp(6),
@@ -188,11 +285,11 @@ const styles = (wp: any, hp: any) =>
       height: wp(12),
       alignSelf: 'center',
     },
-    sectionTitle: {
-      fontSize: 15,
-      fontWeight: '700',
-      fontFamily: 'Poppins-Bold',
-    },
+    // sectionTitle: {
+    //   fontSize: 15,
+    //   fontWeight: '700',
+    //   fontFamily: 'Poppins-Bold',
+    // },
     sectionTitleweek: {
       fontSize: 13,
       fontWeight: '700',
@@ -428,57 +525,42 @@ const styles = (wp: any, hp: any) =>
       flex: 1,
     },
     calendar: {
-      flex:1,
+      flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
-    calendarCard: {
-      width: wp(50),
-      backgroundColor: '#fff',
-      borderRadius: wp(3),
-      padding: wp(3),
-      height: hp(26),
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 2,
-    },
-    calendarImg: {
-      width: '100%',
-      height: hp(18),
-      resizeMode: 'contain',
-      marginTop: hp(1),
-    },
-    earningCard: {
-      width: wp(40),
-      backgroundColor: '#fff',
-      borderRadius: wp(3),
-      padding: wp(3),
-      height: hp(26),
-      justifyContent: 'center',
-      marginTop: hp(4),
-      marginLeft: wp(5),
-    },
-    earningText: {
-      fontSize: wp(5),
-      fontFamily: 'Poppins-Bold',
-      color: '#000',
-      marginVertical: hp(1),
-      textAlign: 'center',
-    },
-    withdrawBtn: {
-      backgroundColor: '#264734',
-      paddingVertical: hp(1),
-      borderRadius: wp(5),
-      alignItems: 'center',
-      marginTop: hp(1),
-    },
-    withdrawText: {
-      color: '#fff',
-      fontSize: wp(3.5),
-      fontFamily: 'Poppins-SemiBold',
-    },
+//    calendarHeader: {
+//   flexDirection: 'row',
+//   justifyContent: 'space-between',
+//   alignItems: 'center',
+//   marginBottom: hp(1),
+// },
+//     calendarImg: {
+//       width: '100%',
+//       height: hp(18),
+//       resizeMode: 'contain',
+//       marginTop: hp(1),
+//     },
+    
+//     earningText: {
+//       fontSize: wp(5),
+//       fontFamily: 'Poppins-Bold',
+//       color: '#000',
+//       marginVertical: hp(1),
+//       textAlign: 'center',
+//     },
+//     withdrawBtn: {
+//       backgroundColor: '#264734',
+//       paddingVertical: hp(1),
+//       borderRadius: wp(5),
+//       alignItems: 'center',
+//       marginTop: hp(1),
+//     },
+//     withdrawText: {
+//       color: '#fff',
+//       fontSize: wp(3.5),
+//       fontFamily: 'Poppins-SemiBold',
+//     },
 
     statText: {
       fontSize: wp(3.2),
@@ -546,14 +628,14 @@ const styles = (wp: any, hp: any) =>
       lineHeight: wp(3.2),
       fontWeight: '600',
     },
-    calendarTitle: {
-      fontSize: 16,
-      fontFamily: 'Poppins-Bold',
-      color: '#000',
-      marginBottom: hp(1),
-      marginTop: hp(-1),
-      fontWeight: '700',
-    },
+    // calendarTitle: {
+    //   fontSize: 16,
+    //   fontFamily: 'Poppins-Bold',
+    //   color: '#000',
+    //   marginBottom: hp(1),
+    //   marginTop: hp(-1),
+    //   fontWeight: '700',
+    // },
     calendarContainer: {
       borderRadius: wp(4),
       padding: wp(2),

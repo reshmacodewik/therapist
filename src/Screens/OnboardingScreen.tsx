@@ -46,7 +46,7 @@ const OnboardingScreen: React.FC = () => {
       sliderRef.current?.goToSlide(activeIndex + 1);
     } else {
       // Navigate to LoginScreen on last slide
-      navigation.navigate('WelcomeScreen');
+      navigation.navigate('LoginScreen');
     }
   };
 
@@ -56,12 +56,7 @@ const OnboardingScreen: React.FC = () => {
       style={styles.container}
       resizeMode="cover"
     >
-      <TouchableOpacity
-        style={[styles.skipButton, { top: hp(5), right: wp(5) }]}
-        onPress={() => navigation.navigate('WelcomeScreen')}
-      >
-        <Text style={styles.skipText}>Skip</Text>
-      </TouchableOpacity>
+      
 
       <Image source={item.image} style={styles.image} />
 
