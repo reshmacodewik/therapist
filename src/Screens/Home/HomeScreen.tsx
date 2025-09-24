@@ -250,7 +250,7 @@ const HomeScreen = () => {
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate('GoalsScreen')}
+                onPress={() => navigation.navigate('SessionshomeScreen')}
               >
                 <Ionicons name="chevron-forward" size={wp(7)} color="#000" />
               </TouchableOpacity>
@@ -315,7 +315,7 @@ const HomeScreen = () => {
                 />
                 <Text style={styles(wp, hp).sectionTitle}>Your Clients</Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('')}>
                 <Ionicons name="chevron-forward" size={wp(7)} color="#000" />
               </TouchableOpacity>
             </View>
@@ -466,10 +466,9 @@ const HomeScreen = () => {
             {/* Calendar & Earnings Row */}
             <View style={styles(wp, hp).gridRow}>
               {/* Calendar card */}
-              <View style={styles(wp, hp).gridItem}>
-                <View style={styles(wp, hp).calendarHeader}>
+               <View style={styles(wp, hp).calendarHeader}>
                   <Text style={styles(wp, hp).sectionTitle}>Calendar</Text>
-                  <TouchableOpacity>
+                  <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: wp(1), marginLeft:wp(15) }} >
                     <Ionicons
                       name="chevron-forward"
                       size={wp(7)}
@@ -498,6 +497,8 @@ const HomeScreen = () => {
                   </TouchableOpacity>
                 </View>
 
+              <View style={styles(wp, hp).gridItem}>
+               
                 <View style={styles(wp, hp).calendarCard}>
                   <Text style={styles(wp, hp).calendarTitle}></Text>
                   {renderCalendar()}

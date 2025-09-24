@@ -10,7 +10,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "react-native-country-codes-picker": "^2.3.5",
     "@mdi/js": "^7.4.47",
     "@react-native-community/checkbox": "^0.5.20",
     "@react-native-picker/picker": "^2.11.1",
@@ -30,6 +29,7 @@
     "react": "19.1.0",
     "react-native": "^0.81.1",
     "react-native-app-intro-slider": "^4.0.4",
+    "react-native-country-codes-picker": "^2.3.5",
     "react-native-element-dropdown": "^2.12.4",
     "react-native-gesture-handler": "^2.28.0",
     "react-native-mmkv": "^3.3.3",

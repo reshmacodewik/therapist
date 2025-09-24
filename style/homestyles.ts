@@ -226,15 +226,15 @@ const styles = (wp: any, hp: any) =>
 
     // calendar card
     calendarCard: {
-      borderRadius: wp(3),
-      overflow: 'hidden',
-      backgroundColor: '#f7faf7',
+      borderRadius: wp(0),
+    
+    
       padding: wp(2),
     },
     calendarTitle: {
-      fontSize: wp(3.6),
+      fontSize: 10,
       color: '#68866f',
-      marginBottom: hp(0.5),
+      marginBottom: hp(0),
     },
 
     // earning card
@@ -244,6 +244,7 @@ const styles = (wp: any, hp: any) =>
       paddingVertical: hp(4),
       borderRadius: wp(4),
       backgroundColor: '#ffffff',
+      
     },
     walletIcon: {
       width: wp(10),
@@ -260,11 +261,11 @@ const styles = (wp: any, hp: any) =>
       paddingVertical: hp(1.2),
       paddingHorizontal: wp(6),
       backgroundColor: '#2f5a3f',
-      borderRadius: wp(6),
+      borderRadius: wp(10),
     },
     withdrawText: {
       color: '#fff',
-      fontSize: wp(3.6),
+      fontSize: 13,
       fontWeight: '600',
     },
     sectionHeaderweek: {
@@ -640,8 +641,8 @@ const styles = (wp: any, hp: any) =>
       borderRadius: wp(4),
       padding: wp(2),
       width: wp(52),
-      marginTop: hp(-3.5),
-      marginLeft: hp(-1.6),
+      marginTop: hp(-4),
+      marginLeft: hp(-2),
     },
     customCalendarHeader: {
       backgroundColor: '#264734',
@@ -649,21 +650,21 @@ const styles = (wp: any, hp: any) =>
       borderTopRightRadius: 0,
       paddingVertical: hp(0.5),
       paddingBottom: wp(1),
-      paddingHorizontal: wp(4),
+      paddingHorizontal: wp(2),
     },
     calendarHeaderYear: {
       color: '#BFC9C6',
-      fontSize: 10,
+      fontSize: 9,
       fontFamily: 'Montserrat-Medium',
     },
     calendarHeaderDate: {
       color: '#fff',
-      fontSize: 10,
+      fontSize: 9,
       fontFamily: 'Poppins-Bold',
       marginTop: hp(0.5),
     },
     calendarNav: {
-      fontSize: 10,
+      fontSize: 9,
       color: '#264734',
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -693,8 +694,7 @@ const styles = (wp: any, hp: any) =>
       borderRadius: wp(10),
     },
     calendarDayText: {
-      fontSize: 10,
-
+      fontSize: 9,
       color: '#222',
       fontFamily: 'Montserrat-Medium',
     },
