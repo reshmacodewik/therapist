@@ -38,45 +38,9 @@ import HelpScreen from '../Screens/Sidebar/Settings/HelpScreen';
 import SetRegularHoursScreen from '../Screens/Sidebar/Settings/SetRegularHoursScreen';
 import SessionshomeScreen from '../Screens/Home/SessionshomeScreen';
 import ClientScreen from '../Screens/Home/ClientScreen';
+import { RootStackParamList } from './types';
+import AppointmentDetails from '../Screens/Sidebar/AppointmentDetails';
 
-export type RootStackParamList = {
-  splashScreen: undefined;
-  OnboardingScreen: undefined;
-  WelcomeScreen: undefined;
-  LoginScreen: undefined;
-  SignUpScreen: undefined;
-  VerificationCode: undefined;
-  SuccessScreen: undefined;
-  VerifyCredentials: undefined;
-  CredentailsSuccess: undefined;
-  HomeScreen: undefined; // hosts BottomTabs
-  CreateSessionScreen: undefined;
-  SessionsScreen: undefined;
-  SessionPaymentScreen: undefined;
-  SendPaymentLink: undefined;
-  TransactionHistory: undefined;
-  RefundPaymentScreen: undefined;
-  GrantAccess: undefined;
-  NoteScreen: undefined;
-  UploadScreen: undefined;
-  ShareProgress: undefined;
-  PastSessionScreen: undefined;
-  SessionDetails: undefined;
-  Breakout: undefined;
-  BreakoutRooms: undefined;
-  RescheduleSession: undefined;
-  EditSession: undefined;
-  SessionCancel: undefined;
-  PaymentDetailsScreen: undefined;
-  WithdrawalScreen: undefined;
-  BankDetailsScreen : undefined;
-  ChangePasswordScreen:undefined;
-  NotificationsScreen: undefined;
-  HelpScreen: undefined;
-  SetRegularHoursScreen: undefined;
-  SessionshomeScreen: undefined;
-  ClientScreen: undefined;
-};
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -134,6 +98,7 @@ const RootStack = () => {
       <Stack.Screen name="SetRegularHoursScreen" component={SetRegularHoursScreen} />
       <Stack.Screen name="SessionshomeScreen" component={SessionshomeScreen} />
       <Stack.Screen name="ClientScreen" component={ClientScreen} />
+      <Stack.Screen name="AppointmentDetails" component={AppointmentDetails} />
     </Stack.Navigator>
   );
 };

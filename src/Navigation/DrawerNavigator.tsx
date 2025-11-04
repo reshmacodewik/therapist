@@ -10,6 +10,8 @@ import MessagesScreen from '../Screens/Sidebar/MessagesScreen';
 import PaymentHistoryScreen from '../Screens/Sidebar/PaymentHistoryScreen';
 import WalletScreen from '../Screens/Sidebar/WalletScreen';
 import SettingsScreen from '../Screens/Sidebar/Settings/SettingsScreen';
+import MyAppointment from '../Screens/Sidebar/MyAppointment';
+import CalendarScreen from '../Screens/Sidebar/CalendarScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -22,9 +24,9 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Home" component={BottomTabs} />
       <Drawer.Screen name="My Profile" component={ProfileEditScreen} />
       <Drawer.Screen name="My Expertise" component={MyExpertiseScreen} />
-      <Drawer.Screen name="My Calendar" component={MyExpertiseScreen} />
+      <Drawer.Screen name="My Calendar" component={CalendarScreen} />
       <Drawer.Screen name="My Sessions" component={MyExpertiseScreen} />
-      <Drawer.Screen name="My Appointment" component={MyExpertiseScreen} />
+      <Drawer.Screen name="My Appointment" component={MyAppointment} />
       <Drawer.Screen name="My Wallet" component={WalletScreen} />
       <Drawer.Screen name="Messages" component={MessagesScreen} />
       <Drawer.Screen name="Payment History" component={PaymentHistoryScreen} />
