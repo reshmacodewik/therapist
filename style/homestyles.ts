@@ -227,8 +227,6 @@ const styles = (wp: any, hp: any) =>
     // calendar card
     calendarCard: {
       borderRadius: wp(0),
-    
-    
       padding: wp(2),
     },
     calendarTitle: {
@@ -640,9 +638,9 @@ const styles = (wp: any, hp: any) =>
     calendarContainer: {
       borderRadius: wp(4),
       padding: wp(2),
-      width: wp(52),
-      marginTop: hp(-4),
-      marginLeft: hp(-2),
+      width: wp(46),
+      marginTop: hp(-4.5),
+      marginLeft: hp(-3),
     },
     customCalendarHeader: {
       backgroundColor: '#264734',
@@ -689,6 +687,7 @@ const styles = (wp: any, hp: any) =>
       borderRadius: wp(2),
       marginBottom: hp(1),
       marginTop: hp(-1.4),
+      padding: hp(0.6),
     },
     calendarDaySelected: {
       borderRadius: wp(10),

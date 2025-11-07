@@ -40,7 +40,11 @@ import SessionshomeScreen from '../Screens/Home/SessionshomeScreen';
 import ClientScreen from '../Screens/Home/ClientScreen';
 import { RootStackParamList } from './types';
 import AppointmentDetails from '../Screens/Sidebar/AppointmentDetails';
-
+import VerifyCredentialsPeer from '../Screens/Peer/VerifyCredentialsPeer';
+import HomeScreenPeer from '../Screens/Peer/HomeScreenPeer';
+import PeerDrawerNavigator from './Drawer/PeerDrawerNavigator';
+import RequestApprovalScreen from '../Screens/Peer/RequestApprovalScreen';
+import CreatePeerGroupScreen from '../Screens/Peer/CreatePeerGroupScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -48,7 +52,7 @@ const RootStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="HomeScreen"
+      initialRouteName="HomeScreenPeer"
     >
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
@@ -92,13 +96,30 @@ const RootStack = () => {
       />
       <Stack.Screen name="WithdrawalScreen" component={WithdrawalScreen} />
       <Stack.Screen name="BankDetailsScreen" component={BankDetailsScreen} />
-      <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-      <Stack.Screen name="NotificationsScreen" component={NotificationsScreen} />
+      <Stack.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+      />
+      <Stack.Screen
+        name="NotificationsScreen"
+        component={NotificationsScreen}
+      />
       <Stack.Screen name="HelpScreen" component={HelpScreen} />
-      <Stack.Screen name="SetRegularHoursScreen" component={SetRegularHoursScreen} />
+      <Stack.Screen
+        name="SetRegularHoursScreen"
+        component={SetRegularHoursScreen}
+      />
       <Stack.Screen name="SessionshomeScreen" component={SessionshomeScreen} />
       <Stack.Screen name="ClientScreen" component={ClientScreen} />
       <Stack.Screen name="AppointmentDetails" component={AppointmentDetails} />
+
+      <Stack.Screen
+        name="VerifyCredentialsPeer"
+        component={VerifyCredentialsPeer}
+      />
+      <Stack.Screen name="HomeScreenPeer" component={PeerDrawerNavigator} />
+      <Stack.Screen name="RequestApprovalScreen" component={RequestApprovalScreen} />
+      <Stack.Screen name="CreatePeerGroupScreen" component={CreatePeerGroupScreen} />
     </Stack.Navigator>
   );
 };

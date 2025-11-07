@@ -67,11 +67,15 @@ export default function SessionshomeScreen() {
         </View>
         <View style={styles.titleContainer}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="keyboard-arrow-left" size={wp(8)} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Today Sessions</Text>
+            <MaterialIcons
+              name="keyboard-arrow-left"
+              size={wp(8)}
+              color="#000"
+            />
+          </TouchableOpacity>
+          <Text style={styles.headerText}>Today Sessions</Text>
         </View>
-        
+
         {sessions.map(session => (
           <View key={session.id} style={styles.card}>
             {/* Profile row */}
@@ -107,9 +111,7 @@ export default function SessionshomeScreen() {
                 <Text style={styles.infoText}>
                   <Text style={styles.bold}>Gender:</Text> male
                 </Text>
-                <Text style={styles.infoText}>
-                  Contact Info:
-                </Text>
+                <Text style={styles.infoText}>Contact Info:</Text>
                 <View style={styles.lineRow}>
                   <Ionicons
                     name="mail-outline"

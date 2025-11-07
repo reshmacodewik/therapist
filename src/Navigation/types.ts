@@ -38,4 +38,8 @@ export type RootStackParamList = {
   ClientScreen: undefined;
   MyAppointment: undefined;
   AppointmentDetails: undefined;
+  VerifyCredentialsPeer: undefined;
+  HomeScreenPeer: undefined;
+  RequestApprovalScreen: undefined;
+  CreatePeerGroupScreen: undefined;
 };

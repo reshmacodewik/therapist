@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -33,6 +33,9 @@ const SignUpScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const [loading, setLoading] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
+  useEffect(() => {
+    console.log('User selected role:', role);
+  }, [role]);
 
   const formik = useFormik({
     initialValues: {
@@ -64,6 +67,7 @@ const SignUpScreen = () => {
           (navigation as any).navigate('VerificationCode', {
             email: values.email,
             phoneNo: values.phoneNo,
+            role: role, // ✅ optional if needed later
           });
         } else {
           ShowToast(res?.error || 'Register Failed', 'error');

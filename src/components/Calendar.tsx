@@ -1,38 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { 
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { calendarStyles } from '../../style/calendarStyles';
+import styles from '../../style/homestyles';
+import { useResponsive } from '../../components/Responsive/useResponsive';
 
-interface CalendarProps {
-  selectedDate: Date;
-  currentMonth: Date;
-  onDateSelect: (day: number, isCurrentMonth: boolean, date: Date) => void;
-  onMonthChange: (direction: 'prev' | 'next') => void;
-  getDaysInMonth: (date: Date) => Array<{
-    day: number;
-    isCurrentMonth: boolean;
-    date: Date;
-  }>;
-}
+const CalendarCard = () => {
+  const { wp, hp } = useResponsive();
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-const Calendar: React.FC<CalendarProps> = ({
-  selectedDate,
-  currentMonth,
-  onDateSelect,
-  onMonthChange,
-  getDaysInMonth,
-}) => {
+  const getDaysInMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+
+    const days = [];
+
+    // Previous month's days
+    const prevMonth = new Date(year, month, 0);
+    const prevMonthDays = prevMonth.getDate();
+    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+      days.push({
+        day: prevMonthDays - i,
+        isCurrentMonth: false,
+        date: new Date(year, month - 1, prevMonthDays - i),
+      });
+    }
+
+    // Current month's days
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push({
+        day: i,
+        isCurrentMonth: true,
+        date: new Date(year, month, i),
+      });
+    }
+
+    // Fill remaining next month's days to complete 6 rows
+    const remainingDays = 42 - days.length;
+    for (let i = 1; i <= remainingDays; i++) {
+      days.push({
+        day: i,
+        isCurrentMonth: false,
+        date: new Date(year, month + 1, i),
+      });
+    }
+
+    return days;
+  };
+
+  const handleDayPress = (date: Date, isCurrentMonth: boolean) => {
+    if (isCurrentMonth) setSelectedDate(date);
+  };
+
+  const changeMonth = (direction: 'prev' | 'next') => {
+    const newMonth = new Date(currentMonth);
+    if (direction === 'prev') newMonth.setMonth(newMonth.getMonth() - 1);
+    else newMonth.setMonth(newMonth.getMonth() + 1);
+    setCurrentMonth(newMonth);
+  };
+
   return (
-    <View style={calendarStyles(wp, hp).calendarContainer}>
-      <View style={calendarStyles(wp, hp).customCalendarHeader}>
-        <Text style={calendarStyles(wp, hp).calendarHeaderYear}>
+    <View style={styles(wp, hp).calendarContainer}>
+      <View style={styles(wp, hp).customCalendarHeader}>
+        <Text style={styles(wp, hp).calendarHeaderYear}>
           {selectedDate.getFullYear()}
         </Text>
-        <Text style={calendarStyles(wp, hp).calendarHeaderDate}>
+        <Text style={styles(wp, hp).calendarHeaderDate}>
           {selectedDate.toLocaleDateString('en-US', {
             weekday: 'short',
             month: 'long',
@@ -40,77 +77,50 @@ const Calendar: React.FC<CalendarProps> = ({
           })}
         </Text>
       </View>
-      <View style={calendarStyles(wp, hp).calendarNav}>
-        <TouchableOpacity onPress={() => onMonthChange('prev')}>
+
+      {/* Navigation */}
+      <View style={styles(wp, hp).calendarNav}>
+        <TouchableOpacity onPress={() => changeMonth('prev')}>
           <MaterialIcons name="chevron-left" size={wp(6)} color="#264734" />
         </TouchableOpacity>
-        <Text
-          style={{
-            fontSize: wp(4),
-            color: '#264734',
-            fontFamily: 'Poppins-Bold',
-          }}
-        >
-          {currentMonth.toLocaleDateString('en-US', {
-            month: 'long',
-            year: 'numeric',
-          })}
+        <Text style={{ fontSize: wp(4), color: '#264734', fontFamily: 'Poppins-Bold' }}>
+          {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
         </Text>
-        <TouchableOpacity onPress={() => onMonthChange('next')}>
+        <TouchableOpacity onPress={() => changeMonth('next')}>
           <MaterialIcons name="chevron-right" size={wp(6)} color="#264734" />
         </TouchableOpacity>
       </View>
-      <View style={calendarStyles(wp, hp).calendarGrid}>
-        {/* Days of week header */}
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(
-          (day, _index) => (
-            <View
-              key={day}
-              style={[
-                calendarStyles(wp, hp).calendarDay,
-                { backgroundColor: 'transparent' },
-              ]}
-            >
-              <Text
-                style={[
-                  calendarStyles(wp, hp).calendarDayText,
-                  { color: '#264734', fontFamily: 'Poppins-Bold' },
-                ]}
-              >
-                {day}
-              </Text>
-            </View>
-          ),
-        )}
 
-        {/* Calendar days */}
+      {/* Days of week */}
+      <View style={styles(wp, hp).calendarGrid}>
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+          <View key={day} style={[styles(wp, hp).calendarDay, { backgroundColor: 'transparent' }]}>
+            <Text style={[styles(wp, hp).calendarDayText, { color: '#264734', fontFamily: 'Poppins-Bold' }]}>
+              {day}
+            </Text>
+          </View>
+        ))}
+
+        {/* Calendar dates */}
         {getDaysInMonth(currentMonth).map((dayData, index) => {
-          const isSelected =
-            selectedDate.toDateString() === dayData.date.toDateString();
-          const isToday =
-            new Date().toDateString() === dayData.date.toDateString();
+          const isSelected = selectedDate.toDateString() === dayData.date.toDateString();
+          const isToday = new Date().toDateString() === dayData.date.toDateString();
 
           return (
             <TouchableOpacity
               key={index}
               style={[
-                calendarStyles(wp, hp).calendarDay,
-                isSelected && calendarStyles(wp, hp).calendarDaySelected,
+                styles(wp, hp).calendarDay,
+                isSelected && styles(wp, hp).calendarDaySelected,
                 isToday && !isSelected && { backgroundColor: '#fff' },
               ]}
-              onPress={() =>
-                onDateSelect(
-                  dayData.day,
-                  dayData.isCurrentMonth,
-                  dayData.date,
-                )
-              }
+              onPress={() => handleDayPress(dayData.date, dayData.isCurrentMonth)}
             >
               <Text
                 style={[
-                  calendarStyles(wp, hp).calendarDayText,
+                  styles(wp, hp).calendarDayText,
                   !dayData.isCurrentMonth && { color: '#d9d9d9' },
-                  isSelected && calendarStyles(wp, hp).calendarDayTextSelected,
+                  isSelected && styles(wp, hp).calendarDayTextSelected,
                   isToday &&
                     !isSelected && {
                       color: '#264734',
@@ -129,4 +139,4 @@ const Calendar: React.FC<CalendarProps> = ({
   );
 };
 
-export default Calendar;
+export default CalendarCard;

@@ -12,7 +12,7 @@ import { styles } from "../../style/WelcomeScreenstyles";
 const WelcomeScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
 
-   const welcomeSlides = [
+  const welcomeSlides = [
     {
       key: "welcome1",
       titleLine1: "Welcome To",
@@ -26,12 +26,12 @@ const WelcomeScreen = () => {
         },
         {
           key: "coach",
-          label: "Coach ",
+          label: "Coach",
           icon: require("../../assets/icon/coach.png"),
         },
-          {
+        {
           key: "mentor",
-          label: "Mentor ",
+          label: "Mentor",
           icon: require("../../assets/icon/coach.png"),
         },
         {
@@ -43,7 +43,11 @@ const WelcomeScreen = () => {
     },
   ];
 
-  const slide = welcomeSlides[0]; // ✅ pick the first slide
+  const slide = welcomeSlides[0];
+
+  const handlePress = (role: string) => {
+    navigation.navigate("SignUpScreen", { role });
+  };
 
   return (
     <ImageBackground
@@ -65,12 +69,10 @@ const WelcomeScreen = () => {
       {/* Options */}
       <View style={styles.buttonContainer}>
         {slide.options.map((option) => (
-           <TouchableOpacity
+          <TouchableOpacity
             key={option.key}
             style={styles.button}
-            onPress={() =>
-              navigation.navigate("SignUpScreen", { role: option.key })
-            }
+            onPress={() => handlePress(option.key)}
           >
             <Image source={option.icon} style={styles.icon} />
             <Text style={styles.buttonText}>{option.label}</Text>
