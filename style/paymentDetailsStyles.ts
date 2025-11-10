@@ -1,5 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
   bg: { flex: 1 },
@@ -21,7 +24,7 @@ export const styles = StyleSheet.create({
   },
   headerTitle: {
     flex: 1,
-    
+
     fontSize: wp(5),
     fontWeight: '700',
     color: '#111827',
@@ -79,6 +82,15 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  checksCircle: {
+    width: wp(6),
+    height: wp(6),
+    borderRadius: wp(7),
+    borderWidth: 3,
+    borderColor: '#16A34A',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   statusTxt: {
     marginTop: hp(0.6),
     fontSize: wp(4.6),
@@ -126,6 +138,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFF',
+    flexDirection: 'row',
   },
   stepNum: {
     fontSize: wp(4),
@@ -149,6 +162,7 @@ export const styles = StyleSheet.create({
     fontSize: wp(3.8),
     color: '#9CA3AF',
     marginTop: hp(0.2),
+    marginBottom: hp(1),
   },
   bankState: {
     marginTop: hp(0.6),
@@ -186,12 +200,18 @@ export const styles = StyleSheet.create({
 
   // bottom actions
   bottomBar: {
-    position: 'absolute',
-    left: wp(4),
+    left: wp(1),
     right: wp(4),
     bottom: hp(2.2),
     flexDirection: 'row',
     gap: wp(4),
+  },
+  arrowBtn: {
+    width: wp(9),
+    height: wp(9),
+   
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   shareBtn: {
     flex: 1,
@@ -225,5 +245,136 @@ export const styles = StyleSheet.create({
     fontSize: wp(4.6),
     fontWeight: '700',
     color: '#FFFFFF',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#000', // dark background like Google Pay
+  },
+
+  logoWrap: {
+    alignItems: 'center',
+    marginTop: wp(3),
+    marginBottom: wp(7),
+  },
+  bankLogo: {
+    width: wp(18),
+    height: wp(18),
+    resizeMode: 'contain',
+  },
+  timeline: {
+    borderLeftWidth: 1,
+    borderColor: '#444',
+    paddingLeft: wp(5),
+  },
+  timelineItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: hp(2.2),
+  },
+
+  timelineLeft: {
+    alignItems: 'center',
+    width: wp(8),
+  },
+
+  dot: {
+    width: wp(3.5),
+    height: wp(3.5),
+    borderRadius: wp(1.75),
+    backgroundColor: '#60A5FA',
+    zIndex: 3,
+  },
+
+  line: {
+    width: 1.5,
+    flex: 1,
+    backgroundColor: '#D1D5DB',
+    marginTop: hp(0.2),
+  },
+
+  timelineRight: {
+    flex: 1,
+    paddingLeft: wp(2),
+  },
+
+  timelineText: {
+    fontSize: wp(4),
+    color: '#000',
+    fontWeight: '500',
+  },
+
+  timelineTime: {
+    fontSize: wp(3.2),
+    color: '#9CA3AF',
+    marginTop: wp(1),
+  },
+
+  successDot: {
+    width: wp(4),
+    height: wp(4),
+    borderRadius: wp(2),
+    backgroundColor: '#DCFCE7',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  successText: {
+    color: '#16A34A',
+    fontSize: wp(4),
+    fontWeight: '600',
+  },
+
+  detailsBox: {
+    backgroundColor: '#111',
+    borderRadius: wp(3),
+    padding: wp(5),
+    marginTop: wp(8),
+  },
+  detailsText: {
+    color: '#aaa',
+    fontSize: wp(3.8),
+    lineHeight: wp(6),
+  },
+  detailsValue: {
+    color: '#fff',
+    fontWeight: '500',
+  },
+  subValue: {
+    color: '#888',
+    fontSize: wp(3.5),
+    marginTop: wp(1),
+  },
+
+  timelineContainer: {
+    paddingHorizontal: wp(4),
+    paddingVertical: wp(3),
+  },
+
+  timelineRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+
+ 
+  timelineTitle: {
+    color: '#fff',
+    fontSize: wp(4),
+    fontWeight: '500',
+  },
+
+  timelineTitleCompleted: {
+    color: '#22C55E', // green
+    fontSize: wp(4),
+    fontWeight: '600',
+  },
+
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#1F2937',
+    padding: wp(4),
+    borderTopLeftRadius: wp(3),
+    borderTopRightRadius: wp(3),
   },
 });

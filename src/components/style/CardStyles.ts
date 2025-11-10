@@ -7,11 +7,7 @@ export const styles = (wp: any, hp: any) =>
       borderRadius: wp(4),
       padding: wp(4),
       marginBottom: hp(2),
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 5, // for android shadow effect
+      
     },
     profileRow: {
       flexDirection: "row",
@@ -25,14 +21,16 @@ export const styles = (wp: any, hp: any) =>
       borderRadius: wp(6),
     },
     name: {
-      fontSize: 16,
+      fontSize: 15,
       fontWeight: "700",
       color: "#1B3B2D",
+      marginLeft: wp(2),
     },
     sessionTime: {
-      fontSize: 14,
+      fontSize: 13,
       color: "#25493B",
       fontWeight: "500",
+      marginLeft: wp(2),
     },
     buttonRow: {
       flexDirection: "row",
@@ -41,22 +39,28 @@ export const styles = (wp: any, hp: any) =>
     },
     viewProfileBtn: {
       backgroundColor: "#264734",
-      paddingVertical: hp(1.2),
+      paddingVertical: hp(0.6),
       paddingHorizontal: wp(3),
       borderRadius: wp(5),
-      height: hp(3.8),
+      height: hp(3),
+    },
+    ViewProfilebuttonText: {
+      color: "#FFF",
+      fontSize: wp(2.8),
+      fontWeight: "600",
     },
     rescheduleBtn: {
       backgroundColor: "#fff",
-      paddingVertical: hp(1.2),
+      paddingVertical: hp(0.6),
       paddingHorizontal: wp(3),
       borderRadius: wp(5),
       borderWidth: 1,
       borderColor: "#264734",
+       height: hp(3),
     },
     buttonText: {
-      color: "#FFFFFF",
-      fontSize: wp(3.4),
+      color: "#264734",
+      fontSize: wp(2.8),
       fontWeight: "600",
     },
   });

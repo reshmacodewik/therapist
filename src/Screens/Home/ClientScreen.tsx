@@ -12,6 +12,7 @@ import { styles } from '../../../style/ClientStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useResponsive } from 'react-native-responsive-hook';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import Header from '../../components/Header';
 // create a separate style file
 
 // Dummy client data
@@ -25,13 +26,15 @@ const clients = [
 const ClientScreen = () => {
   const { wp, hp } = useResponsive();
   const navigation = useNavigation<NavigationProp<any>>();
-  const handleProfilePress = (name: string) => {
-    console.log(`${name} profile pressed`);
-  };
+ const handleProfilePress = (name: string) => {
+  navigation.navigate('ProfileScreen', { clientName: name });
+};
 
-  const handleReschedulePress = (name: string) => {
-    console.log(`${name} reschedule pressed`);
-  };
+
+const handleReschedulePress = (name: string) => {
+  console.log(`${name} reschedule pressed`);
+  navigation.navigate('RescheduleScreen', { clientName: name }); // navigate to RescheduleScreen
+};
 
   return (
     <ImageBackground
@@ -40,26 +43,7 @@ const ClientScreen = () => {
       resizeMode="cover"
     >
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.header}>
-          <View>
-            <Image
-              source={require('../../../assets/Image/logo1.png')}
-              style={styles.logo}
-            />
-          </View>
-          <View style={styles.headerIcons}>
-            <TouchableOpacity>
-              <Image
-                source={require('../../../assets/icon/bell.png')}
-                style={styles.bellIcon}
-              />
-            </TouchableOpacity>
-            <Image
-              source={require('../../../assets/Image/homeuser.png')}
-              style={styles.userIcon}
-            />
-          </View>
-        </View>
+        <Header  />
         <View style={styles.titleContainer}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <MaterialIcons
@@ -68,7 +52,7 @@ const ClientScreen = () => {
               color="#000"
             />
           </TouchableOpacity>
-          <Text style={styles.headerText}>Today Sessions</Text>
+          <Text style={styles.headerText}>your Clients</Text>
         </View>
 
         {/* Loop through client list */}

@@ -45,6 +45,10 @@ import HomeScreenPeer from '../Screens/Peer/HomeScreenPeer';
 import PeerDrawerNavigator from './Drawer/PeerDrawerNavigator';
 import RequestApprovalScreen from '../Screens/Peer/RequestApprovalScreen';
 import CreatePeerGroupScreen from '../Screens/Peer/CreatePeerGroupScreen';
+import ProgressScreen from '../Screens/Sidebar/ProgressScreen';
+import ProfileScreen from '../Screens/Sidebar/ProfileScreen';
+import SecurityPrivacyScreen from '../Screens/Sessions/SecurityPrivacyScreen';
+import RescheduleScreen from '../Screens/Sidebar/RescheduleScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -52,7 +56,7 @@ const RootStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-     
+      initialRouteName="HomeScreen"
     >
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
@@ -118,8 +122,18 @@ const RootStack = () => {
         component={VerifyCredentialsPeer}
       />
       <Stack.Screen name="HomeScreenPeer" component={PeerDrawerNavigator} />
-      <Stack.Screen name="RequestApprovalScreen" component={RequestApprovalScreen} />
-      <Stack.Screen name="CreatePeerGroupScreen" component={CreatePeerGroupScreen} />
+      <Stack.Screen
+        name="RequestApprovalScreen"
+        component={RequestApprovalScreen}
+      />
+      <Stack.Screen
+        name="CreatePeerGroupScreen"
+        component={CreatePeerGroupScreen}
+      />
+      <Stack.Screen name="ProgressScreen" component={ProgressScreen} />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="SecurityPrivacyScreen" component={SecurityPrivacyScreen}/>
+      <Stack.Screen name="RescheduleScreen" component={RescheduleScreen} />
     </Stack.Navigator>
   );
 };

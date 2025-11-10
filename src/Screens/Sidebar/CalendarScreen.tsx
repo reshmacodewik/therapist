@@ -57,26 +57,68 @@ const CalendarScreen = ({ navigation }: any) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const getDaysInMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
 
-  const renderDay = (d: string, isMuted?: boolean, isUnderline?: boolean) => (
-    <View key={d} style={s.dayCell}>
-      <Text
-        style={[
-          s.dayText,
-          isMuted && s.dayMuted,
-          isUnderline && s.dayUnderline,
-        ]}
-      >
-        {d}
-      </Text>
-    </View>
-  );
+    const days = [];
+
+    // Add previous month's days
+    const prevMonth = new Date(year, month, 0);
+    const prevMonthDays = prevMonth.getDate();
+    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+      days.push({
+        day: prevMonthDays - i,
+        isCurrentMonth: false,
+        date: new Date(year, month - 1, prevMonthDays - i),
+      });
+    }
+
+    // Add current month's days
+    for (let i = 1; i <= daysInMonth; i++) {
+      days.push({
+        day: i,
+        isCurrentMonth: true,
+        date: new Date(year, month, i),
+      });
+    }
+
+    // Add next month's days to fill the grid
+    const remainingDays = 42 - days.length; // 6 rows * 7 days
+    for (let i = 1; i <= remainingDays; i++) {
+      days.push({
+        day: i,
+        isCurrentMonth: false,
+        date: new Date(year, month + 1, i),
+      });
+    }
+
+    return days;
+  };
+
+  const handleDayPress = (day: number, isCurrentMonth: boolean, date: Date) => {
+    if (isCurrentMonth) {
+      setSelectedDate(date);
+    }
+  };
+
+  const changeMonth = (direction: 'prev' | 'next') => {
+    const newMonth = new Date(currentMonth);
+    if (direction === 'prev') {
+      newMonth.setMonth(newMonth.getMonth() - 1);
+    } else {
+      newMonth.setMonth(newMonth.getMonth() + 1);
+    }
+    setCurrentMonth(newMonth);
+  };
   const renderCalendar = () => (
     <View style={s.calendarContainer}>
       <View style={s.customCalendarHeader}>
-        <Text style={s.calendarHeaderYear}>
-          {selectedDate.getFullYear()}
-        </Text>
+        <Text style={s.calendarHeaderYear}>{selectedDate.getFullYear()}</Text>
         <Text style={s.calendarHeaderDate}>
           {selectedDate.toLocaleDateString('en-US', {
             weekday: 'short',
@@ -111,10 +153,7 @@ const CalendarScreen = ({ navigation }: any) => {
           (day, _index) => (
             <View
               key={day}
-              style={[
-                s.calendarDay,
-                { backgroundColor: 'transparent' },
-              ]}
+              style={[s.calendarDay, { backgroundColor: 'transparent' }]}
             >
               <Text
                 style={[
@@ -172,6 +211,20 @@ const CalendarScreen = ({ navigation }: any) => {
       </View>
     </View>
   );
+  const renderDay = (d: string, isMuted?: boolean, isUnderline?: boolean) => (
+    <View key={d} style={s.dayCell}>
+      <Text
+        style={[
+          s.dayText,
+          isMuted && s.dayMuted,
+          isUnderline && s.dayUnderline,
+        ]}
+      >
+        {d}
+      </Text>
+    </View>
+  );
+
   const AppointmentItem = ({ item }: { item: AppointmentCard }) => (
     <View style={s.card}>
       <View style={s.cardLeft}>
@@ -220,57 +273,7 @@ const CalendarScreen = ({ navigation }: any) => {
         </View>
 
         {/* Calendar Card */}
-        <View style={s.calendarCard}>
-          <View style={s.calendarHero}>
-            <Text style={s.heroYear}>2024</Text>
-            <Text style={s.heroDate}>Sat, july 15</Text>
-          </View>
-
-          <View style={s.monthHeader}>
-            <TouchableOpacity>
-              <Ionicons name="chevron-back" size={wp(6)} />
-            </TouchableOpacity>
-            <Text style={s.monthTitle}>{month.label}</Text>
-            <TouchableOpacity>
-              <Ionicons name="chevron-forward" size={wp(6)} />
-            </TouchableOpacity>
-          </View>
-
-          {/* Week labels */}
-          <View style={s.weekRow}>
-            {['Mo', 'Tu', 'We', 'Th', 'Fri', 'Sat', 'Sun'].map(w => (
-              <Text key={w} style={s.weekText}>
-                {w}
-              </Text>
-            ))}
-          </View>
-
-          {/* Days grid (static demo to match the screenshot layout) */}
-          <View style={s.daysGrid}>
-            {/* row 1 */}
-            {[
-              { d: '30', m: true },
-              { d: '01' },
-              { d: '02' },
-              { d: '03' },
-              { d: '04' },
-              { d: '05' },
-              { d: '06' },
-            ].map(x => renderDay(x.d, x.m))}
-            {/* row 2 */}
-            {['07', '08', '09', '10', '11', '12', '13'].map(d => renderDay(d))}
-            {/* row 3 (15 underlined) */}
-            {['14', '15', '16', '17', '18', '19', '20'].map(d =>
-              renderDay(d, false, d === '15'),
-            )}
-            {/* row 4 */}
-            {['21', '22', '23', '24', '25', '26', '27'].map(d => renderDay(d))}
-            {/* row 5 */}
-            {['28', '29', '30', '31', '01', '02', '03'].map(
-              (d, i) => renderDay(d, i >= 4), // first 4 are current month, last 3 muted
-            )}
-          </View>
-        </View>
+        <View style={s.calendarCard}>{renderCalendar()}</View>
 
         {/* Today's Appointments */}
         <Text style={s.sectionHeading}>Today’s Appointments</Text>

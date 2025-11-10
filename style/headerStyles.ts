@@ -10,7 +10,7 @@ export const headerStyles = (wp: any, hp: any) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: wp(2),
+      paddingHorizontal: wp(1.2),
       paddingVertical: hp(1.5),
       width: '100%',
       

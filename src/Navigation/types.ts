@@ -42,4 +42,8 @@ export type RootStackParamList = {
   HomeScreenPeer: undefined;
   RequestApprovalScreen: undefined;
   CreatePeerGroupScreen: undefined;
+  ProgressScreen: undefined;
+  ProfileScreen: undefined;
+  SecurityPrivacyScreen: undefined;
+  RescheduleScreen: undefined;
 };

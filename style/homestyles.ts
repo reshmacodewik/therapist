@@ -26,14 +26,13 @@ const styles = (wp: any, hp: any) =>
     },
     innercontainer: {
       borderRadius: 15,
-      paddingHorizontal: wp(1.2),
       paddingTop: hp(2),
       paddingBottom: hp(10),
       marginTop: hp(2),
     },
     container: {
       flex: 0,
-      padding: 16,
+      padding: 14,
       marginTop: hp(1),
     },
     header: {
@@ -51,7 +50,7 @@ const styles = (wp: any, hp: any) =>
       fontSize: 22,
       marginTop: hp(-0.5),
       color: '#000',
-      marginLeft: hp(1),
+      marginLeft: hp(0),
       fontFamily: 'Poopins-Bold',
       fontWeight: '700',
     },
@@ -183,11 +182,11 @@ const styles = (wp: any, hp: any) =>
       borderRadius: wp(4),
       padding: wp(4),
       // Shadow (iOS) + elevation (Android)
-      shadowColor: '#000',
-      shadowOpacity: 0.08,
-      shadowOffset: { width: 0, height: 4 },
-      shadowRadius: 12,
-      elevation: 3,
+      // shadowColor: '#000',
+      // shadowOpacity: 0.08,
+      // shadowOffset: { width: 0, height: 4 },
+      // shadowRadius: 12,
+      // elevation: 3,
     },
 
     // headers
@@ -371,11 +370,6 @@ const styles = (wp: any, hp: any) =>
       backgroundColor: '#fff',
       borderRadius: wp(3),
       padding: wp(3),
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
       marginRight: wp(4), // 👈 adds space between cards
     },
     newreqCard: {
@@ -383,11 +377,6 @@ const styles = (wp: any, hp: any) =>
       backgroundColor: '#fff',
       borderRadius: wp(3),
       padding: wp(3),
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
       marginRight: wp(4), // 👈 adds space between cards
     },
     clientTop: {
