@@ -49,6 +49,9 @@ import ProgressScreen from '../Screens/Sidebar/ProgressScreen';
 import ProfileScreen from '../Screens/Sidebar/ProfileScreen';
 import SecurityPrivacyScreen from '../Screens/Sessions/SecurityPrivacyScreen';
 import RescheduleScreen from '../Screens/Sidebar/RescheduleScreen';
+import RequestApproveScreen from '../Screens/Home/RequestApproveScreen';
+import AddGoalScreen from '../Screens/Sidebar/AddGoalScreen';
+import MyAppointmentCalendar from '../Screens/Sidebar/Settings/MyAppointmentCalendar';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -56,7 +59,7 @@ const RootStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="HomeScreen"
+      initialRouteName='MyAppointmentCalendar'
     >
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
@@ -134,6 +137,9 @@ const RootStack = () => {
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       <Stack.Screen name="SecurityPrivacyScreen" component={SecurityPrivacyScreen}/>
       <Stack.Screen name="RescheduleScreen" component={RescheduleScreen} />
+      <Stack.Screen name="RequestApproveScreen" component={RequestApproveScreen} />
+      <Stack.Screen name="AddGoalScreen" component={AddGoalScreen} />
+      <Stack.Screen name="MyAppointmentCalendar" component={MyAppointmentCalendar} />
     </Stack.Navigator>
   );
 };

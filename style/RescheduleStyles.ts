@@ -5,11 +5,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const PRIMARY = '#234A3E';       // deep green
-const PRIMARY_LIGHT = '#E8F0EC'; // soft green bg
+const PRIMARY = '#264734'; // deep green
+const PRIMARY_LIGHT = '#DEDEDE'; // soft green bg
 const TEXT = '#0B0B0B';
 const SUB = '#6B7280';
-const HINT = '#8AA097';
+const HINT = '#000000';
 const CARD = '#FFFFFF';
 const BORDER = '#E7EBE8';
 
@@ -30,12 +30,12 @@ export const rescheduleStyles = StyleSheet.create({
     borderRadius: wp(4.5),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.06)',
+    marginLeft: wp(-2),
   },
   backIcon: { fontSize: wp(6), color: '#0F172A' },
   headerTitle: {
     flex: 1,
-    textAlign: 'center',
+   
     fontSize: wp(5),
     fontWeight: '700',
     color: '#111827',
@@ -45,8 +45,9 @@ export const rescheduleStyles = StyleSheet.create({
     fontSize: wp(4.1),
     fontWeight: '800',
     color: TEXT,
-    marginTop: hp(1.2),
+    marginTop: hp(1.8),
     paddingHorizontal: wp(4),
+    marginBottom: hp(1.2),
   },
 
   // Cards
@@ -69,7 +70,6 @@ export const rescheduleStyles = StyleSheet.create({
     height: wp(12),
     borderRadius: wp(2.6),
     marginRight: wp(3),
-    backgroundColor: '#F3F4F4',
   },
 
   nameRow: { flexDirection: 'row', alignItems: 'center', gap: wp(2) },
@@ -77,14 +77,20 @@ export const rescheduleStyles = StyleSheet.create({
   pill: {
     paddingHorizontal: wp(2.6),
     paddingVertical: hp(0.4),
-    borderRadius: wp(2),
+    borderRadius: wp(4),
     backgroundColor: PRIMARY_LIGHT,
-    color: PRIMARY,
+    color: HINT,
+    marginLeft: wp(2),
     fontSize: wp(3.2),
     overflow: 'hidden',
   },
 
   metaRow: { flexDirection: 'row', alignItems: 'center', marginTop: hp(0.6) },
+  clockIcon: {
+    width: wp(5),
+    height: wp(5),
+    marginRight: wp(1),
+  },
   dot: {
     width: wp(2),
     height: wp(2),
@@ -96,25 +102,32 @@ export const rescheduleStyles = StyleSheet.create({
 
   iconRow: { flexDirection: 'row', alignItems: 'center', marginLeft: wp(2) },
   circleIcon: {
-    width: wp(10),
-    height: wp(10),
-    borderRadius: wp(5),
-    backgroundColor: PRIMARY_LIGHT,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  iconGlyph: { fontSize: wp(5.2) },
+  iconGlyph: { width: wp(7), height: wp(7) },
 
   subHead: {
-    color: TEXT,
+    color: PRIMARY,
     fontWeight: '700',
     marginBottom: hp(0.6),
     fontSize: wp(3.8),
   },
-  bulletRow: { flexDirection: 'row', alignItems: 'center', marginTop: hp(0.6) },
+  bulletRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: hp(0.6),
+    marginLeft: wp(2),
+  },
+  bulletRow1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: hp(2),
+    marginLeft: wp(2),
+  },
   bulletDot: {
-    width: wp(1.6),
-    height: wp(1.6),
+    width: wp(1),
+    height: wp(1),
     borderRadius: wp(0.8),
     backgroundColor: TEXT,
     marginRight: wp(2),
@@ -170,7 +183,12 @@ export const rescheduleStyles = StyleSheet.create({
     marginTop: hp(0.4),
     marginBottom: hp(0.8),
   },
-  weekTxt: { width: wp(10), textAlign: 'center', color: SUB, fontSize: wp(3.2) },
+  weekTxt: {
+    width: wp(10),
+    textAlign: 'center',
+    color: SUB,
+    fontSize: wp(3.2),
+  },
 
   daysRow: {
     flexDirection: 'row',
@@ -205,11 +223,11 @@ export const rescheduleStyles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: wp(3),
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   slotPill: {
-    paddingHorizontal: wp(4.4),
-    paddingVertical: hp(1.1),
+    paddingHorizontal: wp(5),
+    paddingVertical: hp(0.8),
     borderRadius: wp(7),
     borderWidth: 1.4,
   },
@@ -227,10 +245,73 @@ export const rescheduleStyles = StyleSheet.create({
     backgroundColor: PRIMARY,
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'center',
     shadowColor: '#000',
     shadowOpacity: 0.12,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 3 },
   },
   ctaText: { color: '#fff', fontWeight: '800', fontSize: wp(4.2) },
+  calendarContainer: {
+    borderRadius: wp(4),
+    padding: wp(3.5),
+    height: hp(52),
+  },
+  customCalendarHeader: {
+    backgroundColor: '#264734',
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    paddingVertical: hp(0.5),
+    paddingBottom: wp(1),
+    paddingHorizontal: wp(2),
+  },
+  calendarHeaderYear: {
+    color: '#BFC9C6',
+    fontSize: 15,
+    fontFamily: 'Montserrat-Medium',
+  },
+  calendarHeaderDate: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'Poppins-Bold',
+    marginTop: hp(0.5),
+  },
+  calendarNav: {
+    fontSize: 15,
+    color: '#264734',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: wp(0),
+    paddingVertical: hp(0),
+    marginTop: hp(1.8),
+  },
+  calendarGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: hp(2),
+  },
+  calendarDay: {
+    width: '13%',
+    aspectRatio: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: wp(2),
+    marginBottom: hp(2),
+    marginTop: hp(-0.8),
+    padding: hp(0.6),
+  },
+  calendarDaySelected: {
+    borderRadius: wp(10),
+  },
+  calendarDayText: {
+    fontSize: 16,
+    color: '#222',
+    fontFamily: 'Montserrat-Medium',
+  },
+  calendarDayTextSelected: {
+    color: '#000',
+    fontFamily: 'Montserrat-Bold',
+  },
 });

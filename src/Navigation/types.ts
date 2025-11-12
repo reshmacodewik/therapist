@@ -1,4 +1,3 @@
-
 export type RootStackParamList = {
   splashScreen: undefined;
   OnboardingScreen: undefined;
@@ -29,8 +28,8 @@ export type RootStackParamList = {
   SessionCancel: undefined;
   PaymentDetailsScreen: undefined;
   WithdrawalScreen: undefined;
-  BankDetailsScreen : undefined;
-  ChangePasswordScreen:undefined;
+  BankDetailsScreen: undefined;
+  ChangePasswordScreen: undefined;
   NotificationsScreen: undefined;
   HelpScreen: undefined;
   SetRegularHoursScreen: undefined;
@@ -46,4 +45,7 @@ export type RootStackParamList = {
   ProfileScreen: undefined;
   SecurityPrivacyScreen: undefined;
   RescheduleScreen: undefined;
+  RequestApproveScreen: undefined;
+  AddGoalScreen: undefined;
+  MyAppointmentCalendar: undefined;
 };

@@ -1,36 +1,63 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
   ImageBackground,
-} from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+} from "react-native";
+import { useNavigation, useRoute, NavigationProp } from "@react-navigation/native";
 import styles from '../../../style/otpstyles';
 
+
+
+// Numeric role constants
+const ROLES = {
+  USER: 1,
+  THERAPIST: 2,
+  MENTOR: 3,
+  PEER: 4,
+  COACH: 5,
+};
+
+type RootStackParamList = {
+  SuccessScreen: { role: number };
+  VerifyCredentials: undefined;
+  MentorSetup: undefined;
+  PeerSetup: undefined;
+  CoachSetup: undefined;
+  Home: undefined;
+  VerifyCredentialsPeer: undefined;
+};
+
 const SuccessScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<any>();
   const { role } = route.params || {};
 
   const handleNext = () => {
-    // ✅ Navigate based on role
-    switch (role?.toLowerCase()) {
-      case 'therapist':
-        navigation.navigate('VerifyCredentials' as never);
+    console.log("Role received in SuccessScreen:", role);
+
+    switch (role) {
+      case ROLES.THERAPIST:
+        navigation.navigate("VerifyCredentials");
         break;
-      case 'coach':
-        navigation.navigate('VerifyCredentials' as never);
+
+      case ROLES.MENTOR:
+        navigation.navigate("VerifyCredentials");
         break;
-      case 'mentor':
-        navigation.navigate('VerifyCredentials' as never);
+
+      case ROLES.PEER:
+        navigation.navigate("VerifyCredentialsPeer" );
         break;
-      case 'peer':
-        navigation.navigate('VerifyCredentialsPeer' as never);
+
+      case ROLES.COACH:
+        navigation.navigate("VerifyCredentials");
         break;
+
       default:
-        navigation.navigate('VerifyCredentials' as never); // fallback
+     
+        break;
     }
   };
 
@@ -54,7 +81,7 @@ const SuccessScreen = () => {
         </TouchableOpacity>
       </View>
     </ImageBackground>
-  );
+  )
 };
 
 export default SuccessScreen;

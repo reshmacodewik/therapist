@@ -378,7 +378,9 @@ const HomeScreen = () => {
                   New Request for support
                 </Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('RequestApproveScreen')}
+              >
                 <Ionicons name="chevron-forward" size={wp(7)} color="#000" />
               </TouchableOpacity>
             </View>

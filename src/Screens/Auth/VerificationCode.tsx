@@ -26,7 +26,8 @@ const OTP_LENGTH = 4;
 const RESEND_COOL_DOWN_SECONDS = 30;
 
 const VerificationCode = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
+
   const inputs = useRef<Array<RNTextInput | null>>([]);
   const route = useRoute<any>();
   const { email, phoneNo, role } = route.params || {};
@@ -62,7 +63,7 @@ const VerificationCode = () => {
           ShowToast(res?.message, 'success');
           if (res?.success) {
             ShowToast(res?.message, 'success');
-            navigation.navigate('SuccessScreen', { role } );
+            navigation.navigate('SuccessScreen', { role });
           }
         } else {
           ShowToast(res?.message || 'OTP verification failed', 'error');

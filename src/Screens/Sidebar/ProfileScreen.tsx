@@ -154,7 +154,7 @@ export default function ProfileScreen({ navigation }: { navigation: any }) {
 
         {/* CTA */}
         <View style={st.ctaWrap}>
-          <TouchableOpacity style={st.cta} activeOpacity={0.85}>
+          <TouchableOpacity style={st.cta} activeOpacity={0.85} onPress={() => navigation.navigate('AddGoalScreen' as never)}>
             <Text style={st.ctaText}>Add New Goal</Text>
           </TouchableOpacity>
         </View>

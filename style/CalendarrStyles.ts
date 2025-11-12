@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import { colors } from '../src/Theme/Const/color';
+import { COLORS } from '../src/const/colors';
 
 export default function createStyles(
   wp: (v: number) => number,
@@ -123,7 +125,7 @@ export default function createStyles(
       elevation: 2,
     },
     cardLeft: { flexDirection: 'row', alignItems: 'center', gap: wp(3) },
-    avatar: { width: wp(14), height: wp(14), borderRadius: wp(7) },
+
     cardTextWrap: { justifyContent: 'center' },
     cardName: { fontSize: wp(4.8), fontWeight: '700', color: '#000' },
     timeRow: {
@@ -132,16 +134,17 @@ export default function createStyles(
       marginTop: hp(0.4),
       gap: wp(1.5),
     },
-    clockIcon: { marginTop: hp(0.2) },
+ 
     timeText: { fontSize: wp(4), color: 'rgba(0,0,0,0.5)', fontWeight: '600' },
 
     cardRight: { alignItems: 'flex-end' },
     statusPill: {
       borderRadius: wp(5),
       paddingVertical: hp(0.6),
-      paddingHorizontal: wp(3.5),
-      alignSelf: 'flex-end',
+      paddingHorizontal: wp(3),
+      marginLeft:hp(1),
       marginBottom: hp(1),
+      marginTop:hp(0)
     },
     statusConfirmed: { backgroundColor: '#0b0f1a' }, // dark navy/blackish
     statusPending: { backgroundColor: '#e6e6e6' },
@@ -158,6 +161,7 @@ export default function createStyles(
     calendarContainer: {
       borderRadius: wp(4),
       padding: wp(1),
+      height:hp(40)
     },
     customCalendarHeader: {
       backgroundColor: '#264734',
@@ -176,7 +180,7 @@ export default function createStyles(
       color: '#fff',
       fontSize: 16,
       fontFamily: 'Poppins-Bold',
-      marginTop: hp(0.5),
+      marginTop: hp(1),
     },
     calendarNav: {
       fontSize: 15,
@@ -202,7 +206,7 @@ export default function createStyles(
       justifyContent: 'center',
       borderRadius: wp(2),
       marginBottom: hp(1),
-      marginTop: hp(-1.4),
+      marginTop: hp(-1),
       padding: hp(0.6),
     },
     calendarDaySelected: {
@@ -217,5 +221,87 @@ export default function createStyles(
       color: '#000',
       fontFamily: 'Montserrat-Bold',
     },
+    cardWide: {
+        marginTop: hp(1),
+        marginHorizontal: wp(1),
+        backgroundColor: COLORS.CARD,
+        borderRadius: wp(4),
+        padding: wp(3.4),
+        shadowColor: '#000',
+        shadowOpacity: 0.06,
+        shadowRadius: 6,
+        shadowOffset: { width: 0, height: 2 },
+      },
+    
+      row: { flexDirection: 'row', alignItems: 'center' },
+    
+      avatar: {
+        width: wp(12),
+        height: wp(12),
+        borderRadius: wp(2.6),
+        marginRight: wp(3),
+      },
+    
+      nameRow: { flexDirection: 'row', alignItems: 'center', gap: wp(2) },
+      nameTxt: { fontSize: wp(4.2), color: COLORS.TEXT, fontWeight: '700' },
+      pill: {
+        paddingHorizontal: wp(2.6),
+        paddingVertical: hp(0.4),
+        borderRadius: wp(4),
+        backgroundColor:COLORS. PRIMARY_LIGHT,
+        color:COLORS.HINT,
+        marginLeft: wp(2),
+        fontSize: wp(3.2),
+        overflow: 'hidden',
+      },
+    
+      metaRow: { flexDirection: 'row', alignItems: 'center', marginTop: hp(0.2) },
+      clockIcon: {
+        width: wp(5),
+        height: wp(5),
+        marginRight: wp(1),
+      },
+      dot: {
+        width: wp(2),
+        height: wp(2),
+        borderRadius: wp(1),
+        backgroundColor: '#87A99B',
+        marginRight: wp(1.8),
+      },
+      metaTxt: { color: COLORS.HINT, fontSize: wp(3.5) },
+    
+      iconRow: { flexDirection: 'row', alignItems: 'center', marginLeft: wp(2) },
+      circleIcon: {
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      iconGlyph: { width: wp(7), height: wp(7) },
+    
+      subHead: {
+        color: COLORS.PRIMARY,
+        fontWeight: '700',
+        marginBottom: hp(0.6),
+        fontSize: wp(3.8),
+      },
+      bulletRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: hp(0.6),
+        marginLeft: wp(2),
+      },
+      bulletRow1: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: hp(2),
+        marginLeft: wp(2),
+      },
+      bulletDot: {
+        width: wp(1),
+        height: wp(1),
+        borderRadius: wp(0.8),
+        backgroundColor: COLORS.TEXT,
+        marginRight: wp(2),
+      },
+      bulletTxt: { color: COLORS.TEXT, fontSize: wp(3.6) },
   });
 }
