@@ -180,16 +180,16 @@ export default function createStyles(
       color: '#fff',
       fontSize: 16,
       fontFamily: 'Poppins-Bold',
-      marginTop: hp(1),
+      marginTop: hp(0.5),
     },
     calendarNav: {
-      fontSize: 15,
+      fontSize: 16,
       color: '#264734',
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: wp(0),
-    
+      marginTop: hp(1),
       paddingVertical: hp(0),
     },
     calendarGrid: {
@@ -223,10 +223,10 @@ export default function createStyles(
     },
     cardWide: {
         marginTop: hp(1),
-        marginHorizontal: wp(1),
+        marginHorizontal: wp(0),
         backgroundColor: COLORS.CARD,
         borderRadius: wp(4),
-        padding: wp(3.4),
+        padding: wp(3),
         shadowColor: '#000',
         shadowOpacity: 0.06,
         shadowRadius: 6,

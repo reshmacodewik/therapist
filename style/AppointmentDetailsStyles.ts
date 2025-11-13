@@ -8,7 +8,7 @@ export default function createStyles(
     bgimg: { flex: 1, width: '100%', height: '100%' },
     container: { flex: 1, padding: wp(2.5), paddingTop: hp(2.5) },
 
-    header: { flexDirection: 'row', alignItems: 'center', marginLeft: hp(-1) },
+    header: { flexDirection: 'row', alignItems: 'center', marginLeft: hp(-2) },
     headerTitle: { fontSize: wp(5), fontWeight: 'bold', color: '#000' },
 
     sectionHeading: {

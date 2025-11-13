@@ -19,6 +19,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: hp(2),
+    marginLeft: wp(-2),
   },
   backArrow: {
     fontSize: wp(6),

@@ -58,7 +58,7 @@ const AddGoalScreen = () => {
           {/* Header */}
           <View style={styles.headerContainer}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialIcons name="chevron-left" size={24} color="black" />
+            <MaterialIcons name="chevron-left" size={30} color="black" />
             </TouchableOpacity>
             <Text style={styles.headerText}>Add New Goal</Text>
           </View>
