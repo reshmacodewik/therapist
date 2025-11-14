@@ -459,7 +459,7 @@ const HomeScreen = () => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     gap: wp(1),
-                    marginLeft: wp(15),
+                    marginLeft: wp(20),
                   }}
                 >
                   <Ionicons name="chevron-forward" size={wp(7)} color="#000" />

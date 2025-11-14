@@ -174,7 +174,7 @@ const styles = (wp: any, hp: any) =>
       flexDirection: 'row',
       flexWrap: 'wrap',
       justifyContent: 'space-between',
-      rowGap: hp(2),            // use rowGap/columnGap instead of gap
+      rowGap: hp(2), // use rowGap/columnGap instead of gap
     },
     gridItem: {
       width: '48%',
@@ -241,7 +241,6 @@ const styles = (wp: any, hp: any) =>
       paddingVertical: hp(4),
       borderRadius: wp(4),
       backgroundColor: '#ffffff',
-      
     },
     walletIcon: {
       width: wp(10),
@@ -255,8 +254,8 @@ const styles = (wp: any, hp: any) =>
       marginBottom: hp(1.6),
     },
     withdrawBtn: {
-      paddingVertical: hp(1.2),
-      paddingHorizontal: wp(6),
+      paddingVertical: hp(1.5),
+      width: wp(35),
       backgroundColor: '#2f5a3f',
       borderRadius: wp(10),
     },
@@ -264,6 +263,7 @@ const styles = (wp: any, hp: any) =>
       color: '#fff',
       fontSize: 13,
       fontWeight: '600',
+      textAlign:'center'
     },
     sectionHeaderweek: {
       flexDirection: 'row',
@@ -299,7 +299,7 @@ const styles = (wp: any, hp: any) =>
       color: '#000',
     },
     sessionCard: {
-      width: wp(43),
+      width: wp(35),
       backgroundColor: '#fff',
       borderRadius: wp(4),
       padding: wp(3),
@@ -307,8 +307,8 @@ const styles = (wp: any, hp: any) =>
       marginBottom: hp(2),
     },
     sessionImg: {
-      width: '86%',
-      height: hp(13),
+      width: '89%',
+      height: hp(12),
       borderRadius: wp(5),
       marginBottom: hp(2),
       resizeMode: 'cover',
@@ -320,7 +320,7 @@ const styles = (wp: any, hp: any) =>
       gap: hp(0.5),
     },
     sessionTitle: {
-      fontSize: 17,
+      fontSize: 14,
       marginBottom: hp(0),
       marginTop: hp(-1),
       fontFamily: 'Poppins-Bold',
@@ -328,7 +328,7 @@ const styles = (wp: any, hp: any) =>
       textAlign: 'center',
     },
     sessionText: {
-      fontSize: 16,
+      fontSize: 14,
       color: '#6B7280',
       marginBottom: hp(0),
       fontFamily: 'Poppins-Regular',
@@ -336,10 +336,11 @@ const styles = (wp: any, hp: any) =>
       textAlign: 'center',
     },
     sessiontime: {
-      fontSize: 18,
+      fontSize: 13,
       color: '#000',
       textAlign: 'center',
       fontFamily: 'Poppins-Medium',
+      fontWeight: '600',
     },
     detailsBtn: {
       backgroundColor: '#264734',
@@ -354,7 +355,7 @@ const styles = (wp: any, hp: any) =>
     },
     detailsText: {
       color: '#fff',
-      fontSize: wp(3.5),
+      fontSize: 14,
       fontFamily: 'Poppins-SemiBold',
     },
     eventCard: {
@@ -393,20 +394,21 @@ const styles = (wp: any, hp: any) =>
       marginTop: hp(0.5),
     },
     clientName: {
-      fontSize: wp(3.8),
-      fontFamily: 'Poppins-SemiBold',
+      fontSize: 14,
+      fontFamily: 'Poppins-Bold',
       marginLeft: wp(2),
+      marginBottom: hp(),
       color: '#000',
     },
     clientTime: {
-      fontSize: wp(3.3),
-      fontFamily: 'Poppins-Regular',
+      fontSize: 10,
+      fontFamily: 'Poppins-Bold',
       color: '#264734',
       marginBottom: hp(1),
       marginLeft: wp(2),
     },
     clientText: {
-      fontSize: wp(3.3),
+      fontSize: 11,
       fontFamily: 'Poppins-Regular',
       color: '#264734',
       marginBottom: hp(1),
@@ -415,39 +417,45 @@ const styles = (wp: any, hp: any) =>
     },
     clientBtn: {
       backgroundColor: '#264734',
-      paddingVertical: hp(0.5),
-      paddingHorizontal: wp(3),
+      paddingVertical: hp(0.6),
+      width: wp(22),
+      height: hp(2.8),
       borderRadius: wp(5),
     },
     clientBtn2: {
       backgroundColor: '#264734',
-      paddingVertical: hp(0.5),
-      paddingHorizontal: wp(7),
+      paddingVertical: hp(0.56),
+      width: wp(24),
+      height: hp(2.8),
       borderRadius: wp(6),
     },
     clientBtnText: {
       color: '#fff',
-      fontSize: wp(3.2),
+      fontSize: 9,
       fontFamily: 'Poppins-Medium',
+      textAlign: 'center',
     },
     clientBtnOutline: {
       borderWidth: 1,
       borderColor: '#264734',
-      paddingVertical: hp(0.5),
-      paddingHorizontal: wp(3),
+      paddingVertical: hp(0.6),
+      width: wp(22),
+      height: hp(2.8),
       borderRadius: wp(5),
     },
     clientBtnOutline2: {
       borderWidth: 1,
       borderColor: '#264734',
-      paddingVertical: hp(0.5),
-      paddingHorizontal: wp(7),
+      paddingVertical: hp(0.6),
+      width: wp(24),
+      height: hp(2.8),
       borderRadius: wp(6),
     },
     clientBtnOutlineText: {
       color: '#264734',
-      fontSize: wp(3.2),
+      fontSize: 8,
       fontFamily: 'Poppins-Medium',
+      textAlign: 'center',
     },
 
     /* ---------------- Support Requests ---------------- */
@@ -517,38 +525,38 @@ const styles = (wp: any, hp: any) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
-//    calendarHeader: {
-//   flexDirection: 'row',
-//   justifyContent: 'space-between',
-//   alignItems: 'center',
-//   marginBottom: hp(1),
-// },
-//     calendarImg: {
-//       width: '100%',
-//       height: hp(18),
-//       resizeMode: 'contain',
-//       marginTop: hp(1),
-//     },
-    
-//     earningText: {
-//       fontSize: wp(5),
-//       fontFamily: 'Poppins-Bold',
-//       color: '#000',
-//       marginVertical: hp(1),
-//       textAlign: 'center',
-//     },
-//     withdrawBtn: {
-//       backgroundColor: '#264734',
-//       paddingVertical: hp(1),
-//       borderRadius: wp(5),
-//       alignItems: 'center',
-//       marginTop: hp(1),
-//     },
-//     withdrawText: {
-//       color: '#fff',
-//       fontSize: wp(3.5),
-//       fontFamily: 'Poppins-SemiBold',
-//     },
+    //    calendarHeader: {
+    //   flexDirection: 'row',
+    //   justifyContent: 'space-between',
+    //   alignItems: 'center',
+    //   marginBottom: hp(1),
+    // },
+    //     calendarImg: {
+    //       width: '100%',
+    //       height: hp(18),
+    //       resizeMode: 'contain',
+    //       marginTop: hp(1),
+    //     },
+
+    //     earningText: {
+    //       fontSize: wp(5),
+    //       fontFamily: 'Poppins-Bold',
+    //       color: '#000',
+    //       marginVertical: hp(1),
+    //       textAlign: 'center',
+    //     },
+    //     withdrawBtn: {
+    //       backgroundColor: '#264734',
+    //       paddingVertical: hp(1),
+    //       borderRadius: wp(5),
+    //       alignItems: 'center',
+    //       marginTop: hp(1),
+    //     },
+    //     withdrawText: {
+    //       color: '#fff',
+    //       fontSize: wp(3.5),
+    //       fontFamily: 'Poppins-SemiBold',
+    //     },
 
     statText: {
       fontSize: wp(3.2),
@@ -627,9 +635,9 @@ const styles = (wp: any, hp: any) =>
     calendarContainer: {
       borderRadius: wp(4),
       padding: wp(2),
-      width: wp(46),
-      marginTop: hp(-4.5),
-      marginLeft: hp(-3),
+      width: wp(44),
+      marginTop: hp(-3.5),
+      marginLeft: hp(-2.5),
     },
     customCalendarHeader: {
       backgroundColor: '#264734',
@@ -746,8 +754,6 @@ const styles = (wp: any, hp: any) =>
       backgroundColor: '#FFFFFF',
       borderRadius: wp(3),
       padding: wp(3),
-
-      alignItems: 'center',
     },
     resourceIconContainer: {
       marginBottom: hp(1),
@@ -756,21 +762,22 @@ const styles = (wp: any, hp: any) =>
       fontSize: 11,
       fontFamily: 'Poppins-Bold',
       color: '#0F172A',
+      fontWeight: '700',
       marginBottom: hp(0.5),
+      textAlign: 'center',
     },
 
     resourceDesc: {
-      fontSize: wp(3),
+      fontSize: 11,
       fontFamily: 'Poppins-Regular',
       color: '#000000',
-      textAlign: 'auto',
       marginBottom: hp(1.5),
-      marginLeft: hp(1),
+      textAlign: 'auto',
     },
     resourceBtn: {
       backgroundColor: '#264734',
       paddingVertical: hp(1),
-      paddingHorizontal: wp(6.5),
+      width: wp(38),
       borderRadius: wp(6),
       alignItems: 'center',
       justifyContent: 'center',
@@ -778,7 +785,8 @@ const styles = (wp: any, hp: any) =>
     resourceBtnText: {
       color: '#FFFFFF',
       fontFamily: 'Poppins-Medium',
-      fontSize: wp(3),
+      fontSize: 10,
+      textAlign: 'center',
     },
   });
 
