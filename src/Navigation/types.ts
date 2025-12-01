@@ -1,15 +1,20 @@
-
 export type RootStackParamList = {
   splashScreen: undefined;
   OnboardingScreen: undefined;
   WelcomeScreen: undefined;
   LoginScreen: undefined;
   SignUpScreen: undefined;
-  VerificationCode: undefined;
-  SuccessScreen: undefined;
+  VerificationCode: {
+    email?: string;
+    phoneNo?: string;
+    role?: string;
+  };
+  SuccessScreen: {
+    role: number | string | undefined;
+  };
   VerifyCredentials: undefined;
-  CredentailsSuccess: undefined;
-  HomeScreen: undefined; // hosts BottomTabs
+  CredentialsSuccess: undefined;
+  HomeScreen: undefined; 
   CreateSessionScreen: undefined;
   SessionsScreen: undefined;
   SessionPaymentScreen: undefined;
@@ -29,8 +34,8 @@ export type RootStackParamList = {
   SessionCancel: undefined;
   PaymentDetailsScreen: undefined;
   WithdrawalScreen: undefined;
-  BankDetailsScreen : undefined;
-  ChangePasswordScreen:undefined;
+  BankDetailsScreen: undefined;
+  ChangePasswordScreen: undefined;
   NotificationsScreen: undefined;
   HelpScreen: undefined;
   SetRegularHoursScreen: undefined;

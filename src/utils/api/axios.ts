@@ -2,13 +2,11 @@ import axios from 'axios';
 import ShowToast from '../ShowToast';
 import { APIBaseUrl } from '../constance';
 import { getToken, handleLogout } from '../../libs/auth';
-import { getSession } from '../../storage/mmkvPersister';
 
 export const defaultAxios = axios.create({ baseURL: APIBaseUrl });
 
 defaultAxios.interceptors.request.use(async config => {
-  const session = getSession();
-  const token = session?.accessToken;
+  const token = await getToken(); 
   if (token) {
     config.headers = config.headers || {};
     (config.headers as any).Authorization = `Bearer ${token}`;

@@ -7,10 +7,9 @@ import {
   ImageBackground,
   Keyboard,
   Image,
-  BackHandler,
 } from 'react-native';
 import {
-  useFocusEffect,
+  RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
@@ -21,14 +20,16 @@ import ShowToast from '../../utils/ShowToast';
 import { otpSchema } from '../../validation/signupSchema';
 import type { TextInput as RNTextInput } from 'react-native';
 import styles from '../../../style/otpstyles';
+import { RootStackParamList } from '../../Navigation/types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const OTP_LENGTH = 4;
 const RESEND_COOL_DOWN_SECONDS = 30;
 
 const VerificationCode = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'VerificationCode'>>();
   const inputs = useRef<Array<RNTextInput | null>>([]);
-  const route = useRoute<any>();
   const { email, phoneNo, role } = route.params || {};
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const [otpArray, setOtpArray] = useState(['', '', '', '']);
@@ -52,17 +53,17 @@ const VerificationCode = () => {
           phoneNo,
           otp: Number(values.otp),
         };
-        console.log('payload=============', payload);
+
         const res = await apiPost({
           url: API_VERIFY_OTP,
           values: payload,
         });
-        console.log('res=================dddd======', res);
+
         if (res?.success) {
           ShowToast(res?.message, 'success');
           if (res?.success) {
             ShowToast(res?.message, 'success');
-            navigation.navigate('SuccessScreen', { role } );
+            navigation.navigate('SuccessScreen', { role });
           }
         } else {
           ShowToast(res?.message || 'OTP verification failed', 'error');
@@ -87,7 +88,6 @@ const VerificationCode = () => {
 
   const handleResendOTP = async () => {
     try {
-      console.log(email, 'email-----------', phoneNo);
       if (!email || !phoneNo) {
         ShowToast('Please provide email or phone to resend.');
         return;

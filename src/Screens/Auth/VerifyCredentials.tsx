@@ -11,9 +11,11 @@ import { useResponsive } from '../../../components/Responsive/useResponsive';
 import { styles } from '../../../style/VerifyCredentialstyles';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../Navigation/types';
 
 const VerifyCredentials = () => {
-   const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'VerifyCredentials'>>();
   const { fontSize } = useResponsive();
   const [year, setYear] = useState('');
   const [Specialization, setSpecialization] = useState('');
@@ -102,7 +104,7 @@ const VerifyCredentials = () => {
               </View>
             </View>
           </View>
-         <View style={styles.section}>
+          <View style={styles.section}>
             <Text style={styles.verifytext}>Languages Spoken</Text>
             {/* Languages Spoken */}
             <View style={styles.dateRow}>
@@ -122,7 +124,7 @@ const VerifyCredentials = () => {
 
           {/* Bio */}
           <View style={styles.section}>
-             <Text style={styles.verifytext}>Bio</Text>
+            <Text style={styles.verifytext}>Bio</Text>
             <TextInput
               placeholder="Briefly describe yourself"
               style={[styles.input, styles.bio]}
@@ -132,7 +134,7 @@ const VerifyCredentials = () => {
           </View>
         </View>
         {/* Submit */}
-        <TouchableOpacity style={styles.submitButton} onPress={() => navigation.navigate('CredentailsSuccess' as never)}>
+        <TouchableOpacity style={styles.submitButton} onPress={() => navigation.navigate('CredentialsSuccess')}>
           <Text style={styles.submitText}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>

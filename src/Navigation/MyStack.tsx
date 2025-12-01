@@ -8,9 +8,7 @@ import SignUpScreen from '../Screens/Auth/SignUpScreen';
 import VerificationCode from '../Screens/Auth/VerificationCode';
 import SuccessScreen from '../Screens/Auth/SuccessScreen';
 import VerifyCredentials from '../Screens/Auth/VerifyCredentials';
-import CredentailsSuccess from '../Screens/Auth/CredentailsSuccess';
 import WelcomeScreen from '../Screens/WelcomeScreen';
-import BottomTabs from './MyTab';
 import CreateSessionScreen from '../Screens/Home/CreateSessionScreen';
 import SessionsScreen from '../Screens/Sessions/SessionsScreen';
 import SessionPaymentScreen from '../Screens/Sessions/SessionPaymentScreen';
@@ -41,10 +39,10 @@ import ClientScreen from '../Screens/Home/ClientScreen';
 import { RootStackParamList } from './types';
 import AppointmentDetails from '../Screens/Sidebar/AppointmentDetails';
 import VerifyCredentialsPeer from '../Screens/Peer/VerifyCredentialsPeer';
-import HomeScreenPeer from '../Screens/Peer/HomeScreenPeer';
 import PeerDrawerNavigator from './Drawer/PeerDrawerNavigator';
 import RequestApprovalScreen from '../Screens/Peer/RequestApprovalScreen';
 import CreatePeerGroupScreen from '../Screens/Peer/CreatePeerGroupScreen';
+import CredentialsSuccess from '../Screens/Auth/CredentialsSuccess';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -52,7 +50,7 @@ const RootStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-     
+
     >
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
@@ -61,7 +59,7 @@ const RootStack = () => {
       <Stack.Screen name="VerificationCode" component={VerificationCode} />
       <Stack.Screen name="SuccessScreen" component={SuccessScreen} />
       <Stack.Screen name="VerifyCredentials" component={VerifyCredentials} />
-      <Stack.Screen name="CredentailsSuccess" component={CredentailsSuccess} />
+      <Stack.Screen name="CredentialsSuccess" component={CredentialsSuccess} />
       <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
       <Stack.Screen name="HomeScreen" component={DrawerNavigator} />
       <Stack.Screen

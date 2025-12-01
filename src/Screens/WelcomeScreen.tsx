@@ -20,22 +20,22 @@ const WelcomeScreen = () => {
       image: require("../../assets/Image/doctor.png"),
       options: [
         {
-          key: "therapist",
+          key: 2,
           label: "Therapist",
           icon: require("../../assets/icon/therapist.png"),
         },
         {
-          key: "coach",
+          key: 5,
           label: "Coach",
           icon: require("../../assets/icon/coach.png"),
         },
         {
-          key: "mentor",
+          key: 3,
           label: "Mentor",
           icon: require("../../assets/icon/coach.png"),
         },
         {
-          key: "peer",
+          key: 4,
           label: "Peer",
           icon: require("../../assets/icon/peer.png"),
         },
@@ -45,7 +45,7 @@ const WelcomeScreen = () => {
 
   const slide = welcomeSlides[0];
 
-  const handlePress = (role: string) => {
+  const handlePress = (role: number) => {
     navigation.navigate("SignUpScreen", { role });
   };
 

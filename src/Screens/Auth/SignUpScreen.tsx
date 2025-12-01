@@ -33,6 +33,7 @@ const SignUpScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const [loading, setLoading] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
+  
   useEffect(() => {
     console.log('User selected role:', role);
   }, [role]);
@@ -61,6 +62,7 @@ const SignUpScreen = () => {
           url: API_REGISTER,
           values: { ...values, dob },
         });
+        console.log(res ,values ,"============res========================")
 
         if (res?.success) {
           ShowToast(res?.message, 'success');

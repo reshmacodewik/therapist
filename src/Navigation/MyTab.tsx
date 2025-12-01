@@ -1,14 +1,9 @@
-/* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/no-unstable-nested-components */
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Platform, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Feather';
 import { useResponsive } from 'react-native-responsive-hook';
 import HomeScreen from '../Screens/Home/HomeScreen';
-import SessionsScreen from '../Screens/Sessions/SessionsScreen';
-import SendPaymentLink from '../Screens/Payment/SendPaymentLink';
-import SessionPaymentScreen from '../Screens/Sessions/SessionPaymentScreen';
 import TransactionHistory from '../Screens/Payment/TransactionHistory';
 import RefundPaymentScreen from '../Screens/Payment/RefundPaymentScreen';
 import MessagesScreen from '../Screens/Sidebar/MessagesScreen';

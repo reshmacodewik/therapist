@@ -15,22 +15,21 @@ const SuccessScreen = () => {
   const { role } = route.params || {};
 
   const handleNext = () => {
-    // ✅ Navigate based on role
-    switch (role?.toLowerCase()) {
-      case 'therapist':
+    switch (role) {
+      case 2:
         navigation.navigate('VerifyCredentials' as never);
         break;
-      case 'coach':
+      case 5:
         navigation.navigate('VerifyCredentials' as never);
         break;
-      case 'mentor':
+      case 3:
         navigation.navigate('VerifyCredentials' as never);
         break;
-      case 'peer':
+      case 4:
         navigation.navigate('VerifyCredentialsPeer' as never);
         break;
       default:
-        navigation.navigate('VerifyCredentials' as never); // fallback
+        navigation.navigate('VerifyCredentials' as never);
     }
   };
 

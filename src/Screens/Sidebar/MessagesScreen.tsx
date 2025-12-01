@@ -71,8 +71,7 @@ const MessagesScreen = () => {
     <TouchableOpacity
       // key={thread.id}
       style={themedStyles.messageThread}
-      //onPress={() => navigation.navigate('ChatScreen', { threadId: thread.id })}
-      onPress={() => navigation.navigate('ChatScreen')}
+      // onPress={() => navigation.navigate('ChatScreen')}
     >
       <View style={themedStyles.messageContent}>
         <View style={themedStyles.messagecontainer}>

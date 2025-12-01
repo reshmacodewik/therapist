@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useState, useRef } from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {
@@ -42,10 +41,8 @@ const OnboardingScreen: React.FC = () => {
 
   const handleGetStarted = () => {
     if (activeIndex < slides.length - 1) {
-      // Go to next slide
-      sliderRef.current?.goToSlide(activeIndex + 1);
+      sliderRef.current?.goToSlide(activeIndex + 1, true);
     } else {
-      // Navigate to LoginScreen on last slide
       navigation.navigate('LoginScreen');
     }
   };
@@ -56,7 +53,7 @@ const OnboardingScreen: React.FC = () => {
       style={styles.container}
       resizeMode="cover"
     >
-      
+
 
       <Image source={item.image} style={styles.image} />
 
@@ -111,7 +108,7 @@ const OnboardingScreen: React.FC = () => {
       </TouchableOpacity>
 
       <Text style={styles.bottomText}>
-        Returning user? <Text style={styles.signUpText}>Sign up</Text>
+        Returning user? <TouchableOpacity onPress={() => navigation.navigate('WelcomeScreen')}><Text style={styles.signUpText}>Sign up</Text></TouchableOpacity>
       </Text>
     </ImageBackground>
   );
@@ -126,7 +123,7 @@ const OnboardingScreen: React.FC = () => {
       showDoneButton={false}
       dotStyle={{ display: 'none' }} // Hide default dots
       activeDotStyle={{ display: 'none' }} // Hide active dot
-      onSlideChange={index => setActiveIndex(index)}
+      onSlideChange={(index, lastIndex) => setActiveIndex(index)}
     />
   );
 };

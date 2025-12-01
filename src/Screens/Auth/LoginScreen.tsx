@@ -13,7 +13,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { apiPost } from '../../utils/api/common';
 import { API_LOGIN } from '../../utils/api/APIConstant';
 import { useFormik } from 'formik';
-import { AuthSession } from '../../storage/mmkvPersister';
 import { loginSchema } from '../../validation/signupSchema';
 import { useAuth } from './AuthContext';
 import styles from '../../../style/loginstyles';
@@ -32,7 +31,7 @@ const LoginScreen: React.FC = () => {
       try {
         const res = await apiPost({ url: API_LOGIN, values });
         if (res?.success && res?.data?.token) {
-          const session: AuthSession = {
+          const session = {
             accessToken: res.data.token,
             refreshToken: res.data?.refreshToken,
             user: res.data?.user,
@@ -50,7 +49,7 @@ const LoginScreen: React.FC = () => {
       }
     },
   });
-  
+
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}

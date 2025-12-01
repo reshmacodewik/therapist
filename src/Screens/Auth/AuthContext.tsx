@@ -1,49 +1,59 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { AuthSession, clearSession, getSession, saveSession } from '../../storage/mmkvPersister';
-
+import { getCurrentUserInfo, getToken, handleLogin, handleLogout } from '../../libs/auth';
 
 type AuthContextType = {
-  session: AuthSession | null;
+  user: any | null;
+  token: string | null;
   loading: boolean;
-  signIn: (s: AuthSession) => void;
-  signOut: () => void;
+  signIn: (session: { accessToken: string; user: any }) => Promise<void>;
+  signOut: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({
-  session: null,
+  user: null,
+  token: null,
   loading: true,
-  signIn: () => {},
-  signOut: () => {},
+  signIn: async () => { },
+  signOut: async () => { },
 });
 
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [session, setSession] = useState<AuthSession | null>(null);
+  const [user, setUser] = useState<any | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Runs on cold start / refresh. Reads MMKV and restores session.
   useEffect(() => {
-    const boot = () => {
-      const s = getSession();
-      if (s?.accessToken) setSession(s);
+    const boot = async () => {
+      const storedToken = await getToken();
+      const storedUser = await getCurrentUserInfo();
+
+      if (storedToken && storedUser) {
+        setUser(storedUser);
+        setToken(storedToken);
+      }
       setLoading(false);
     };
+
     boot();
   }, []);
 
   const value = useMemo(
     () => ({
-      session,
+      user,
+      token,
       loading,
-      signIn: (s: AuthSession) => {
-        saveSession(s);
-        setSession(s);
+      signIn: async (session: { accessToken: string; user: any }) => {
+        await handleLogin({ token: session.accessToken, user: session.user });
+        setUser(session.user);
+        setToken(session.accessToken);
       },
-      signOut: () => {
-        clearSession();
-        setSession(null);
+      signOut: async () => {
+        await handleLogout();
+        setUser(null);
+        setToken(null);
       },
     }),
-    [session, loading]
+    [user, token, loading]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import  MaterialIcons  from 'react-native-vector-icons/MaterialIcons'; // Correct import for MaterialIcons
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; // Correct import for MaterialIcons
 import Feather from 'react-native-vector-icons/Feather'; // Correct import for Feather
-import  Fontisto  from 'react-native-vector-icons/Fontisto'; // Correct import for Fontisto
+import Fontisto from 'react-native-vector-icons/Fontisto'; // Correct import for Fontisto
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import sessionPaymentStyles from '../Screens/Sessions/sessionPaymentStyles';
@@ -16,37 +16,36 @@ interface ButtonProps {
 }
 
 const ButtonComponent: React.FC<ButtonProps> = ({ type, text, onPress, icon }) => {
-      const styles = sessionPaymentStyles(wp, hp); 
-  // Dynamically select icon based on the passed icon prop
+  const styles = sessionPaymentStyles(wp, hp);
   const renderIcon = () => {
     switch (icon) {
       case 'link-2':
-        return <Feather name="link-2" size={wp(4.5)}  style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <Feather name="link-2" size={wp(4.5)} style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
       case 'corner-up-left':
-        return <MaterialIcons name="arrow-return-left"  style={{ marginLeft: wp(2) }} size={wp(4.5)} color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <MaterialIcons name="arrow-return-left" style={{ marginLeft: wp(2) }} size={wp(4.5)} color={type === 'primary' ? '#fff' : '#14532d'} />;
       case 'check':
-        return <Ionicons name="checkmark" size={wp(4.5)}  style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <Ionicons name="checkmark" size={wp(4.5)} style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
       case 'eye':
-        return <Ionicons name="eye" size={wp(4.5)}  style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <Ionicons name="eye" size={wp(4.5)} style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
       case 'checkbox-outline':
-        return <Ionicons name="checkbox-outline" size={wp(4.5)}  style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <Ionicons name="checkbox-outline" size={wp(4.5)} style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
       case 'bookmark-outline':
-        return <Fontisto name="bookmark" size={wp(4.5)}  style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <Fontisto name="bookmark" size={wp(4.5)} style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
       case 'upload':
-        return <Feather name="upload" size={wp(4.5)}  style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <Feather name="upload" size={wp(4.5)} style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
       case 'bell':
-        return <Fontisto name="bell" size={wp(4.5)}  style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <Fontisto name="bell" size={wp(4.5)} style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
       case 'groups':
-        return <MaterialIcons name="groups" size={wp(4.5)}  style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <MaterialIcons name="groups" size={wp(4.5)} style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
       case 'arrow-return-left':
-        return <MaterialIcons name="arrow-return-left" size={wp(4.5)}  style={{ marginLeft: wp(2) }}color={type === 'primary' ? '#fff' : '#14532d'} />;
+        return <MaterialIcons name="arrow-return-left" size={wp(4.5)} style={{ marginLeft: wp(2) }} color={type === 'primary' ? '#fff' : '#14532d'} />;
       default:
         return null;
     }
   };
 
   return (
-     <TouchableOpacity
+    <TouchableOpacity
       style={type === 'primary' ? styles.primaryButton : styles.outlineButton} // Use styles for buttons
       onPress={onPress}
     >
