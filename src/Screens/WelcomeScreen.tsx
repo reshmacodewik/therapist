@@ -9,6 +9,15 @@ import {
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { styles } from "../../style/WelcomeScreenstyles";
 
+// Define roles with numeric constants
+const ROLES = {
+  USER: 1,
+  THERAPIST: 2,
+  MENTOR: 3,
+  PEER: 4,
+  COACH: 5,
+};
+
 const WelcomeScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
 
@@ -23,21 +32,25 @@ const WelcomeScreen = () => {
           key: 2,
           label: "Therapist",
           icon: require("../../assets/icon/therapist.png"),
+          role: ROLES.THERAPIST,
         },
         {
           key: 5,
           label: "Coach",
           icon: require("../../assets/icon/coach.png"),
+          role: ROLES.COACH,
         },
         {
           key: 3,
           label: "Mentor",
           icon: require("../../assets/icon/coach.png"),
+          role: ROLES.MENTOR,
         },
         {
           key: 4,
           label: "Peer",
           icon: require("../../assets/icon/peer.png"),
+          role: ROLES.PEER,
         },
       ],
     },
@@ -66,13 +79,13 @@ const WelcomeScreen = () => {
         ) : null}
       </View>
 
-      {/* Options */}
+      {/* Role Options */}
       <View style={styles.buttonContainer}>
         {slide.options.map((option) => (
           <TouchableOpacity
             key={option.key}
             style={styles.button}
-            onPress={() => handlePress(option.key)}
+            onPress={() => handlePress(option.role)}
           >
             <Image source={option.icon} style={styles.icon} />
             <Text style={styles.buttonText}>{option.label}</Text>

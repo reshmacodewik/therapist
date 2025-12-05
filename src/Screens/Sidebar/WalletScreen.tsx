@@ -150,6 +150,7 @@ const WalletScreen: React.FC<{ navigation?: any }> = ({ navigation }) => {
         renderItem={({ item }) => <Item item={item} />}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.listPad}
+      
       />
 
       {/* Bottom CTA */}

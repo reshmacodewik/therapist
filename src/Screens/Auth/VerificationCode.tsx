@@ -30,6 +30,7 @@ const RESEND_COOL_DOWN_SECONDS = 30;
 const VerificationCode = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'VerificationCode'>>();
+
   const inputs = useRef<Array<RNTextInput | null>>([]);
   const { email, phoneNo, role } = route.params || {};
   const [activeIndex, setActiveIndex] = useState<number | null>(0);

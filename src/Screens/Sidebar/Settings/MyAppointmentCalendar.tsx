@@ -15,7 +15,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import createStyles from '../../../style/CalendarrStyles';
+import createStyles from '../../../../style/CalendarrStyles';
 
 type Status = 'confirmed' | 'pending';
 
@@ -32,21 +32,21 @@ const TODAY_APPTS: AppointmentCard[] = [
     id: '1',
     name: 'Sarah Johnson',
     time: '10:00 AM',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../../assets/Image/user2.png'),
     status: 'confirmed',
   },
   {
     id: '2',
     name: 'Sarah Johnson',
     time: '10:00 AM',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../../assets/Image/user2.png'),
     status: 'pending',
   },
   {
     id: '3',
     name: 'Sarah Johnson',
     time: '10:00 AM',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../../assets/Image/user2.png'),
     status: 'confirmed',
   },
 ];
@@ -226,39 +226,57 @@ const CalendarScreen = ({ navigation }: any) => {
   );
 
   const AppointmentItem = ({ item }: { item: AppointmentCard }) => (
-    <View style={s.card}>
-      <View style={s.cardLeft}>
-        <Image source={item.avatar} style={s.avatar} />
-        <View style={s.cardTextWrap}>
-          <Text style={s.cardName}>{item.name}</Text>
-          <View style={s.timeRow}>
-            <Ionicons name="time-outline" size={wp(4.4)} style={s.clockIcon} />
-            <Text style={s.timeText}>{item.time}</Text>
+    <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen' as never)}>
+    <View style={s.cardWide}>
+      <View style={s.row}>
+        <Image
+          source={require('../../../../assets/Image/avatar1.png')}
+          style={s.avatar}
+        />
+        <View style={{ flex: 1 }}>
+          <View style={s.nameRow}>
+            <Text style={s.nameTxt}>{item.name}</Text>
+          </View>
+          <View style={s.metaRow}>
+            <Image
+              source={require('../../../../assets/icon/filledclock.png')}
+              style={s.clockIcon}
+            />
+            <Text style={s.metaTxt}>{item.time}</Text>
+            <View
+                     style={[
+                       s.statusPill,
+                       item.status === 'confirmed' ? s.statusConfirmed : s.statusPending,
+                     ]}
+                   >
+                     <Text style={s.statusText}>{item.status}</Text>
+                   </View>
+           
           </View>
         </View>
-      </View>
 
-      <View style={s.cardRight}>
-        <View
-          style={[
-            s.statusPill,
-            item.status === 'confirmed' ? s.statusConfirmed : s.statusPending,
-          ]}
-        >
-          <Text style={s.statusText}>{item.status}</Text>
-        </View>
-
-        <View style={s.actionIcons}>
-          <Feather name="phone-call" size={wp(5.6)} style={s.actIcon} />
-          <MaterialIcons name="videocam" size={wp(6)} style={s.actIcon} />
+        <View style={s.iconRow}>
+          <TouchableOpacity style={s.circleIcon}>
+            <Image
+              source={require('../../../../assets/icon/phonechat.png')}
+              style={s.iconGlyph}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={[s.circleIcon, { marginLeft: wp(2) }]}>
+            <Image
+              source={require('../../../../assets/icon/chat.png')}
+              style={s.iconGlyph}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
+    </TouchableOpacity>
   );
 
   return (
     <ImageBackground
-      source={require('../../../assets/Image/background.png')}
+      source={require('../../../../assets/Image/background.png')}
       style={s.bgimg}
       resizeMode="cover"
     >

@@ -1,58 +1,57 @@
+// screens/RescheduleScreen.tsx
 import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
   ImageBackground,
   TouchableOpacity,
-  FlatList,
   Image,
   ScrollView,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen'; // <- adjust path
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
+} from 'react-native-responsive-screen';
+import { rescheduleStyles as s } from '../../../style/RescheduleStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import createStyles from '../../../style/CalendarrStyles';
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../Navigation/types';
 
-type Status = 'confirmed' | 'pending';
+type Slot = { id: string; label: string };
 
-type AppointmentCard = {
-  id: string;
-  name: string;
-  time: string;
-  avatar: any;
-  status: Status;
-};
-
-const TODAY_APPTS: AppointmentCard[] = [
-  {
-    id: '1',
-    name: 'Sarah Johnson',
-    time: '10:00 AM',
-    avatar: require('../../../assets/Image/user2.png'),
-    status: 'confirmed',
-  },
-  {
-    id: '2',
-    name: 'Sarah Johnson',
-    time: '10:00 AM',
-    avatar: require('../../../assets/Image/user2.png'),
-    status: 'pending',
-  },
-  {
-    id: '3',
-    name: 'Sarah Johnson',
-    time: '10:00 AM',
-    avatar: require('../../../assets/Image/user2.png'),
-    status: 'confirmed',
-  },
+const DEFAULT_SLOTS: Slot[] = [
+  { id: '1030a-1', label: '10:30 AM' },
+  { id: '1130a-1', label: '11:30 AM' },
+  { id: '1230p-1', label: '12:30 PM' },
+  { id: '1030a-2', label: '10:30 AM' },
+  { id: '1230p-2', label: '12:30 PM' },
+  { id: '1130a-2', label: '11:30 AM' },
 ];
 
-const CalendarScreen = ({ navigation }: any) => {
-  const s = useMemo(() => createStyles(wp, hp), []);
+// Build a month grid matrix starting on Monday (Mo–Su) to match the mock.
+function buildMonthMatrix(year: number, monthIndex: number) {
+  const first = new Date(year, monthIndex, 1);
+  const last = new Date(year, monthIndex + 1, 0);
+  // JS: 0=Sun..6=Sat -> convert to Mon=0..Sun=6
+  const firstDow = (first.getDay() + 6) % 7;
+  const daysInMonth = last.getDate();
+
+  const cells: Array<number | null> = [];
+  for (let i = 0; i < firstDow; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  const rows: Array<Array<number | null>> = [];
+  for (let i = 0; i < cells.length; i += 7) rows.push(cells.slice(i, i + 7));
+  return rows;
+}
+
+export default function RescheduleScreen({ navigation }: { navigation: NavigationProp<RootStackParamList, 'RescheduleScreen'> }) {
+  // default to July 2024 to mirror the design
+  const [cursor, setCursor] = useState({ y: 2024, m: 6 }); // 0-indexed month
+  const [selectedDay, setSelectedDay] = useState<number | null>(15);
+  const [selectedSlot, setSelectedSlot] = useState<string>('1030a-1');
+
   const [month, setMonth] = useState({ label: 'July 2024' });
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -211,83 +210,110 @@ const CalendarScreen = ({ navigation }: any) => {
       </View>
     </View>
   );
-  const renderDay = (d: string, isMuted?: boolean, isUnderline?: boolean) => (
-    <View key={d} style={s.dayCell}>
-      <Text
-        style={[
-          s.dayText,
-          isMuted && s.dayMuted,
-          isUnderline && s.dayUnderline,
-        ]}
-      >
-        {d}
-      </Text>
-    </View>
-  );
-
-  const AppointmentItem = ({ item }: { item: AppointmentCard }) => (
-    <View style={s.card}>
-      <View style={s.cardLeft}>
-        <Image source={item.avatar} style={s.avatar} />
-        <View style={s.cardTextWrap}>
-          <Text style={s.cardName}>{item.name}</Text>
-          <View style={s.timeRow}>
-            <Ionicons name="time-outline" size={wp(4.4)} style={s.clockIcon} />
-            <Text style={s.timeText}>{item.time}</Text>
-          </View>
-        </View>
-      </View>
-
-      <View style={s.cardRight}>
-        <View
-          style={[
-            s.statusPill,
-            item.status === 'confirmed' ? s.statusConfirmed : s.statusPending,
-          ]}
-        >
-          <Text style={s.statusText}>{item.status}</Text>
-        </View>
-
-        <View style={s.actionIcons}>
-          <Feather name="phone-call" size={wp(5.6)} style={s.actIcon} />
-          <MaterialIcons name="videocam" size={wp(6)} style={s.actIcon} />
-        </View>
-      </View>
-    </View>
-  );
 
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}
-      style={s.bgimg}
-      resizeMode="cover"
+      style={s.bg}
+      imageStyle={{ resizeMode: 'cover' }}
     >
-      <ScrollView style={s.container} showsVerticalScrollIndicator={false}>
-        {/* Header */}
-        <View style={s.header}>
-          <TouchableOpacity onPress={() => navigation?.goBack?.()}>
-            <Ionicons name="chevron-back" size={wp(7)} />
-          </TouchableOpacity>
-          <Text style={s.headerTitle}>Calendar</Text>
-          <View style={{ width: wp(7) }} />
+      {/* Header */}
+      <View style={s.header}>
+        <TouchableOpacity style={s.backBtn} activeOpacity={0.7} onPress={() => navigation.goBack()}>
+          <MaterialIcons name="chevron-left" size={wp(8)} color="#264734" />
+        </TouchableOpacity>
+        <Text style={s.headerTitle}>Reschedule Sessions</Text>
+        <View style={{ width: wp(9) }} />
+      </View>
+
+      <ScrollView contentContainerStyle={{ paddingBottom: hp(6) }}>
+        {/* Section: Appointment Detail */}
+        <Text style={s.sectionTitle}>Appointment Detail</Text>
+
+        <View style={s.cardWide}>
+          <View style={s.row}>
+            <Image
+              source={require('../../../assets/Image/avatar1.png')}
+              style={s.avatar}
+            />
+            <View style={{ flex: 1 }}>
+              <View style={s.nameRow}>
+                <Text style={s.nameTxt}>Sarah Johnson</Text>
+              </View>
+              <View style={s.metaRow}>
+                <Image
+                  source={require('../../../assets/icon/filledclock.png')}
+                  style={s.clockIcon}
+                />
+                <Text style={s.metaTxt}>10:00 AM</Text>
+                <Text style={s.pill}>Reschedule</Text>
+              </View>
+            </View>
+
+            <View style={s.iconRow}>
+              <TouchableOpacity style={s.circleIcon}>
+                <Image
+                  source={require('../../../assets/icon/phonechat.png')}
+                  style={s.iconGlyph}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={[s.circleIcon, { marginLeft: wp(2) }]}>
+                <Image
+                  source={require('../../../assets/icon/chat.png')}
+                  style={s.iconGlyph}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
 
-        {/* Calendar Card */}
-        <View style={s.calendarCard}>{renderCalendar()}</View>
+        <View style={s.cardWide}>
+          <Text style={s.subHead}>Session’s Detail</Text>
+          <View style={s.bulletRow}>
+            <View style={s.bulletDot} />
+            <Text style={s.bulletTxt}>Date: 25th June 2025, Monday</Text>
+          </View>
+          <View style={s.bulletRow1}>
+            <View style={s.bulletDot} />
+            <Text style={s.bulletTxt}>Time: 3:30 PM</Text>
+          </View>
+        </View>
 
-        {/* Today's Appointments */}
-        <Text style={s.sectionHeading}>Today’s Appointments</Text>
-        <FlatList
-          data={TODAY_APPTS}
-          keyExtractor={item => item.id}
-          renderItem={AppointmentItem}
-          contentContainerStyle={{ paddingBottom: hp(2) }}
-          scrollEnabled={false}
-          showsVerticalScrollIndicator={false}
-        />
+        {/* Calendar */}
+        <Text style={s.sectionTitle}>Select a new date</Text>
+        <View style={s.calendarCard}>{renderCalendar()}</View>
+        {/* Time slots */}
+        <Text style={s.sectionTitle}>Select a new time slot</Text>
+        <View style={s.slotCard}>
+          <View style={s.slotGrid}>
+            {DEFAULT_SLOTS.map(slot => {
+              const active = selectedSlot === slot.id;
+              return (
+                <TouchableOpacity
+                  key={slot.id}
+                  onPress={() => setSelectedSlot(slot.id)}
+                  activeOpacity={0.9}
+                  style={[
+                    s.slotPill,
+                    active ? s.slotPillActive : s.slotPillIdle,
+                  ]}
+                >
+                  <Text style={[s.slotTxt, active && s.slotTxtActive]}>
+                    {slot.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
+
+        {/* CTA */}
+        <View style={s.ctaWrap}>
+          <TouchableOpacity style={s.cta} activeOpacity={0.9}>
+            <Text style={s.ctaText}>Reschedule</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </ImageBackground>
   );
-};
-
-export default CalendarScreen;
+}

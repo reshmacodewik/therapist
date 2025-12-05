@@ -37,7 +37,7 @@ const DATA: Appointment[] = [
     name: 'Cognitive Behavioral Therapy',
     date: '09 April 2025',
     time: '2:00 PM - 3:00 PM',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user5.png'),
     type: 'upcoming',
   },
   {
@@ -45,7 +45,7 @@ const DATA: Appointment[] = [
     name: 'Anxiety Relief Coaching',
     date: '09 April 2025',
     time: '2:00 PM - 3:00 PM',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user7.png'),
     type: 'upcoming',
   },
   {
@@ -53,7 +53,7 @@ const DATA: Appointment[] = [
     name: 'Anxiety Relief Coaching',
     date: '09 April 2025',
     time: '2:00 PM - 3:00 PM',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user5.png'),
     type: 'upcoming',
   },
   {
@@ -61,7 +61,7 @@ const DATA: Appointment[] = [
     name: 'Anxiety Relief Coaching',
     date: '09 April 2025',
     time: '2:00 PM - 3:00 PM',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user7.png'),
     type: 'upcoming',
   },
   {
@@ -69,7 +69,7 @@ const DATA: Appointment[] = [
     name: 'Mindfulness & Meditation Session',
     date: '09 April 2025',
     time: '2:00 PM - 3:00 PM',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user5.png'),
     type: 'past',
   },
 
@@ -78,7 +78,23 @@ const DATA: Appointment[] = [
     name: 'Couple’s Counseling',
     date: '09 April 2025',
     time: '2:00 PM - 3:00 PM',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user7.png'),
+    type: 'past',
+  },
+    {
+    id: '5',
+    name: 'Mindfulness & Meditation Session',
+    date: '09 April 2025',
+    time: '2:00 PM - 3:00 PM',
+    avatar: require('../../../assets/icon/user5.png'),
+    type: 'past',
+  },
+   {
+    id: '6',
+    name: 'Couple’s Counseling',
+    date: '09 April 2025',
+    time: '2:00 PM - 3:00 PM',
+    avatar: require('../../../assets/icon/user7.png'),
     type: 'past',
   },
 ];
@@ -139,9 +155,19 @@ const MyAppointment = () => {
               color="#000"
             />
           </TouchableOpacity>
-          <Text style={s.headerTitle} numberOfLines={1}>
+          <View style={s.headerTitleContainer}>
+             <Text style={s.headerTitle} numberOfLines={1}>
             My Appointment
           </Text>
+          <TouchableOpacity
+            style={s.Addbtn}
+
+            onPress={() => navigation.navigate('AddSessionScreen')}
+          >
+            <Image source={require('../../../assets/icon/plus.png')} style={s.AddIcon} />
+          </TouchableOpacity>
+          </View>
+         
           <View style={{ width: wp(10) }} />
         </View>
 

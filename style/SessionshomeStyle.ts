@@ -139,7 +139,7 @@ export const makeSessionStyles = (_wp = wp, _hp = hp) =>
       alignItems: 'center',
       gap: _wp(2),
       marginTop: _hp(0),
-      marginLeft:wp(2)
+      marginLeft:wp(0.5)
     },
     lineIcon: {
       marginTop: _hp(0.1),
@@ -169,8 +169,9 @@ export const makeSessionStyles = (_wp = wp, _hp = hp) =>
     },
     detailText: {
       color: '#2C2F2E',
-      fontSize: 11,
+      fontSize: 12,
       fontFamily: 'Poppins-Medium',
+      marginBottom: _hp(1),
     },
 
     /* actions */
@@ -191,12 +192,12 @@ export const makeSessionStyles = (_wp = wp, _hp = hp) =>
     startBtn: {
       backgroundColor: '#183F2E',
       borderRadius: _wp(10),
-      paddingVertical: _hp(1),
+      paddingVertical: _hp(0.6),
       paddingHorizontal: _wp(3.5),
     },
     startBtnText: {
       color: '#FFFFFF',
-      fontSize: _wp(3.4),
+      fontSize: _wp(2.9),
       fontFamily: 'Poppins-SemiBold',
     },
     rescheduleBtn: {
@@ -204,23 +205,23 @@ export const makeSessionStyles = (_wp = wp, _hp = hp) =>
       borderColor: '#183F2E',
       backgroundColor: '#FFFFFF',
       borderRadius: _wp(10),
-      paddingVertical: _hp(1),
-      paddingHorizontal: _wp(3.5),
+      paddingVertical: _hp(0.6),
+      paddingHorizontal: _wp(3),
     },
     rescheduleText: {
       color: '#183F2E',
-      fontSize: _wp(3.4),
+      fontSize: _wp(2.8),
       fontFamily: 'Poppins-SemiBold',
     },
     remindBtn: {
-      backgroundColor: '#E7EBE9',
+      backgroundColor: '#979797',
       borderRadius: _wp(10),
-      paddingVertical: _hp(1),
+      paddingVertical: _hp(0.6),
       paddingHorizontal: _wp(3.5),
     },
     remindText: {
-      color: '#26322C',
-      fontSize: _wp(3.4),
+      color: '#fff',
+      fontSize: _wp(2.8),
       fontFamily: 'Poppins-SemiBold',
     },
 

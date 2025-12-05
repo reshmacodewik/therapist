@@ -6,6 +6,7 @@ import {
   Pressable,
   ScrollView,
   Image,
+  Animated,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -25,10 +26,7 @@ const PaymentDetailsScreen = ({ navigation }: any) => {
     >
       {/* Header */}
       <View style={styles.header}>
-        <Pressable
-          style={styles.backBtn}
-          onPress={() => navigation.goBack()}
-        >
+        <Pressable style={styles.backBtn} onPress={() => navigation.goBack()}>
           <Feather name="chevron-left" size={wp(7.5)} color="#000" />
         </Pressable>
         <Text style={styles.headerTitle}>Payment Details</Text>
@@ -61,80 +59,138 @@ const PaymentDetailsScreen = ({ navigation }: any) => {
         </View>
 
         <View style={styles.divider} />
-        <Text style={styles.timeTxt}>Today 12:32PM</Text>
+        <Text style={styles.timeTxt}>Today 12:32 PM</Text>
 
-        {/* Step 1 – bank card (collapsible) */}
-        <Pressable style={styles.stepCard} onPress={() => setExpanded(x => !x)}>
-          {/* left step bullet & line */}
-          <View style={styles.stepCol}>
+        {/* Step 1 – Bank Card */}
+        <View style={styles.stepCard}>
+          {/* Left step bullet & line */}
+          {/* <View style={styles.stepCol}>
             <View style={styles.stepBullet}>
               <Text style={styles.stepNum}>1</Text>
             </View>
             <View style={styles.stepLine} />
-          </View>
+          </View> */}
 
-          {/* center content */}
+          {/* Center content */}
           <View style={styles.stepBody}>
-            <Text style={styles.bankTitle} numberOfLines={1}>
-              Equity Bank Ltd
-            </Text>
-            <Text style={styles.bankSub} numberOfLines={1}>
-              VISA - 1038
-            </Text>
-            <Text style={styles.bankState}>Card Payment started</Text>
+             {/* Right arrow toggle */}
+          
+            <Text style={styles.bankTitle}>Equity Bank Ltd</Text>
+            <Text style={styles.bankSub}>VISA - 1038</Text>
+            
+            {expanded && (
+              <>
+                <View style={styles.timelineItem}>
+                  <View style={styles.timelineLeft}>
+                    <View style={styles.dot} />
+                    <View style={styles.line} />
+                  </View>
+
+                  <View style={styles.timelineRight}>
+                    <Text style={styles.timelineText}>
+                      Card Payment started
+                    </Text>
+                     <Text style={styles.timelineTime}>3:30 PM</Text>
+                  </View>
+                </View>
+
+                {/* Timeline steps */}
+                {/* Timeline step */}
+                <View style={styles.timelineItem}>
+                  <View style={styles.timelineLeft}>
+                    <View style={styles.dot} />
+                    <View style={styles.line} />
+                  </View>
+
+                  <View style={styles.timelineRight}>
+                    <Text style={styles.timelineText}>₹800 was debited</Text>
+                    <Text style={styles.timelineTime}>3:30 PM</Text>
+                  </View>
+                </View>
+
+                {/* Timeline step */}
+                <View style={styles.timelineItem}>
+                  <View style={styles.timelineLeft}>
+                    <View style={styles.dot} />
+                    <View style={styles.line} />
+                  </View>
+
+                  <View style={styles.timelineRight}>
+                    <Text style={styles.timelineText}>₹800 was debited</Text>
+                    <Text style={styles.timelineTime}>3:30 PM</Text>
+                  </View>
+                </View>
+
+                {/* Timeline step */}
+                <View style={styles.timelineItem}>
+                  <View style={styles.timelineLeft}>
+                    <View style={styles.checksCircle}>
+                      <MaterialIcons
+                        name="check"
+                        size={wp(4)}
+                        color="#16A34A"
+                      />
+                    </View>
+                  </View>
+
+                  <View style={styles.timelineRight}>
+                    <Text style={styles.successText}>Payment completed</Text>
+                    <Text style={styles.timelineTime}>3:30 PM</Text>
+                  </View>
+                </View>
+              </>
+            )}
           </View>
 
-          {/* chevron */}
-          <Feather
-            name={expanded ? 'chevron-up' : 'chevron-down'}
-            size={wp(6)}
-            color="#111"
-          />
-        </Pressable>
+         <Pressable style={styles.arrowBtn} onPress={() => setExpanded(prev => !prev)}>
+            <Feather
+              name={expanded ? 'chevron-up' : 'chevron-down'}
+              size={wp(6)}
+              color="#000"
+            />
+          </Pressable>
+        </View>
 
-        {/* Details card */}
-        {expanded && (
-          <View style={styles.detailsCard}>
-            <View style={styles.row}>
-              <Text style={styles.k}>Transfer ID:</Text>
-              <Text style={styles.v}>#4567</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.k}>Transfer amount:</Text>
-              <Text style={styles.v}>{currency} 200</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.k}>App fee:</Text>
-              <Text style={styles.v}>{currency} 389</Text>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.k}>Total Amount:</Text>
-              <Text style={styles.v}>{currency} 2589</Text>
-            </View>
+        {/* Transaction Details */}
+        <View style={styles.detailsCard}>
+          <View style={styles.row}>
+            <Text style={styles.k}>Transfer ID:</Text>
+            <Text style={styles.v}>#4567</Text>
           </View>
-        )}
+          <View style={styles.row}>
+            <Text style={styles.k}>Transfer amount:</Text>
+            <Text style={styles.v}>{currency} 200</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.k}>App fee:</Text>
+            <Text style={styles.v}>{currency} 389</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.k}>Total Amount:</Text>
+            <Text style={styles.v}>{currency} 2589</Text>
+          </View>
+        </View>
+        <View style={{ height: wp(10) }} />
 
-        {/* bottom spacer to clear sticky buttons */}
-        <View style={{ height: wp(28) }} />
+        {/* Sticky bottom actions */}
+        <View style={styles.bottomBar}>
+          <Pressable
+            style={styles.shareBtn}
+            onPress={() => {
+              /* share */
+            }}
+          >
+            <Text style={styles.shareTxt}>Share</Text>
+          </Pressable>
+
+          <Pressable
+            style={styles.doneBtn}
+            onPress={() => navigation?.goBack?.()}
+          >
+            <Text style={styles.doneTxt}>Done</Text>
+          </Pressable>
+        </View>
       </ScrollView>
-
-      {/* Sticky bottom actions */}
-      <View style={styles.bottomBar}>
-        <Pressable
-          style={styles.shareBtn}
-          onPress={() => {
-            /* share */
-          }}
-        >
-          <Text style={styles.shareTxt}>Share</Text>
-        </Pressable>
-        <Pressable
-          style={styles.doneBtn}
-          onPress={() => navigation?.goBack?.()}
-        >
-          <Text style={styles.doneTxt}>Done</Text>
-        </Pressable>
-      </View>
     </ImageBackground>
   );
 };

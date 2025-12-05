@@ -30,7 +30,7 @@ const CardComponent = ({
         </View>
         <View style={styles.buttonRow}>
           <TouchableOpacity onPress={onProfilePress} style={styles.viewProfileBtn}>
-            <Text style={styles.buttonText}>View Profile</Text>
+            <Text style={styles.ViewProfilebuttonText}>View Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={onReschedulePress} style={styles.rescheduleBtn}>
             <Text style={styles.buttonText}>Reschedule</Text>

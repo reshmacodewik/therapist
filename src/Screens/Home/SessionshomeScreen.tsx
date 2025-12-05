@@ -114,7 +114,7 @@ export default function SessionshomeScreen() {
                 <Text style={styles.infoText}>Contact Info:</Text>
                 <View style={styles.lineRow}>
                   <Ionicons
-                    name="mail-outline"
+                    name="at"
                     size={wp(4.8)}
                     color="#fff"
                     style={styles.lineIcon}

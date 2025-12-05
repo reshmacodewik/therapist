@@ -20,22 +20,22 @@ const joinedUsers = [
   {
     id: '1',
     name: 'John Marker',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user5.png'),
   },
   {
     id: '2',
     name: 'Jimmy Deo',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user7.png'),
   },
   {
     id: '3',
     name: 'Luwis',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user5.png'),
   },
   {
     id: '4',
     name: 'Susan',
-    avatar: require('../../../assets/Image/user2.png'),
+    avatar: require('../../../assets/icon/user7.png'),
   },
 ];
 
@@ -62,7 +62,7 @@ const AppointmentDetails = () => {
               />
             </TouchableOpacity>
             <Text style={s.headerTitle} numberOfLines={1}>
-              Appointment Details
+           Sessions Details
             </Text>
             <View style={{ width: wp(10) }} />
           </View>

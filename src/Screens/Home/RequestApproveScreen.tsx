@@ -23,7 +23,7 @@ const clients = [
   { id: 4, name: 'Michael Brown', sessionTime: '6:00 PM' },
 ];
 
-const ClientScreen = () => {
+const RequestApproveScreen = () => {
   const { wp, hp } = useResponsive();
   const navigation = useNavigation<NavigationProp<any>>();
  const handleProfilePress = (name: string) => {
@@ -70,4 +70,4 @@ const handleReschedulePress = (name: string) => {
   );
 };
 
-export default ClientScreen;
+export default RequestApproveScreen;

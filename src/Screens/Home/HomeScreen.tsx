@@ -16,6 +16,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Header from '../../components/Header';
 
 const HomeScreen = () => {
   const { wp, hp } = useResponsive();
@@ -212,26 +213,7 @@ const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
         >
           {/* HEADER */}
-          <View style={styles(wp, hp).header}>
-            <View>
-              <Image
-                source={require('../../../assets/Image/logo1.png')}
-                style={styles(wp, hp).logo}
-              />
-            </View>
-            <View style={styles(wp, hp).headerIcons}>
-              <TouchableOpacity>
-                <Image
-                  source={require('../../../assets/icon/bell.png')}
-                  style={styles(wp, hp).bellIcon}
-                />
-              </TouchableOpacity>
-              <Image
-                source={require('../../../assets/Image/homeuser.png')}
-                style={styles(wp, hp).userIcon}
-              />
-            </View>
-          </View>
+          <Header />
           <Text style={styles(wp, hp).headerText}>
             Welcome back, {'\n'}Susan
           </Text>
@@ -315,7 +297,9 @@ const HomeScreen = () => {
                 />
                 <Text style={styles(wp, hp).sectionTitle}>Your Clients</Text>
               </View>
-              <TouchableOpacity onPress={() => navigation.navigate('')}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ClientScreen')}
+              >
                 <Ionicons name="chevron-forward" size={wp(7)} color="#000" />
               </TouchableOpacity>
             </View>
@@ -394,7 +378,9 @@ const HomeScreen = () => {
                   New Request for support
                 </Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('RequestApproveScreen')}
+              >
                 <Ionicons name="chevron-forward" size={wp(7)} color="#000" />
               </TouchableOpacity>
             </View>
@@ -466,39 +452,37 @@ const HomeScreen = () => {
             {/* Calendar & Earnings Row */}
             <View style={styles(wp, hp).gridRow}>
               {/* Calendar card */}
-               <View style={styles(wp, hp).calendarHeader}>
-                  <Text style={styles(wp, hp).sectionTitle}>Calendar</Text>
-                  <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: wp(1), marginLeft:wp(15) }} >
-                    <Ionicons
-                      name="chevron-forward"
-                      size={wp(7)}
-                      color="#000"
-                    />
-                  </TouchableOpacity>
-                </View>
+              <View style={styles(wp, hp).calendarHeader}>
+                <Text style={styles(wp, hp).sectionTitle}>Calendar</Text>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: wp(1),
+                    marginLeft: wp(20),
+                  }}
+                >
+                  <Ionicons name="chevron-forward" size={wp(7)} color="#000" />
+                </TouchableOpacity>
+              </View>
 
-                <View style={styles(wp, hp).sectionHeaderWeek}>
-                  <View style={styles(wp, hp).rowStart}>
-                    <Image
-                      source={require('../../../assets/icon/message-circle.png')}
-                      style={styles(wp, hp).sessionIcon}
-                      resizeMode="contain"
-                    />
-                    <Text style={styles(wp, hp).sectionTitleWeek}>
-                      This Week Earning
-                    </Text>
-                  </View>
-                  <TouchableOpacity>
-                    <Ionicons
-                      name="chevron-forward"
-                      size={wp(7)}
-                      color="#000"
-                    />
-                  </TouchableOpacity>
+              <View style={styles(wp, hp).sectionHeaderWeek}>
+                <View style={styles(wp, hp).rowStart}>
+                  <Image
+                    source={require('../../../assets/icon/message-circle.png')}
+                    style={styles(wp, hp).sessionIcon}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles(wp, hp).sectionTitleWeek}>
+                    This Week Earning
+                  </Text>
                 </View>
+                <TouchableOpacity>
+                  <Ionicons name="chevron-forward" size={wp(7)} color="#000" />
+                </TouchableOpacity>
+              </View>
 
               <View style={styles(wp, hp).gridItem}>
-               
                 <View style={styles(wp, hp).calendarCard}>
                   <Text style={styles(wp, hp).calendarTitle}></Text>
                   {renderCalendar()}

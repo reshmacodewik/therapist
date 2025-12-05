@@ -1,16 +1,37 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
   ImageBackground,
-} from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+} from "react-native";
+import { useNavigation, useRoute, NavigationProp } from "@react-navigation/native";
 import styles from '../../../style/otpstyles';
 
+
+
+// Numeric role constants
+const ROLES = {
+  USER: 1,
+  THERAPIST: 2,
+  MENTOR: 3,
+  PEER: 4,
+  COACH: 5,
+};
+
+type RootStackParamList = {
+  SuccessScreen: { role: number };
+  VerifyCredentials: undefined;
+  MentorSetup: undefined;
+  PeerSetup: undefined;
+  CoachSetup: undefined;
+  Home: undefined;
+  VerifyCredentialsPeer: undefined;
+};
+
 const SuccessScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<any>();
   const { role } = route.params || {};
 
@@ -19,6 +40,7 @@ const SuccessScreen = () => {
       case 4:
         navigation.navigate('VerifyCredentialsPeer' as never);
         break;
+
       default:
         navigation.navigate('VerifyCredentials' as never);
     }
@@ -43,7 +65,7 @@ const SuccessScreen = () => {
         </TouchableOpacity>
       </View>
     </ImageBackground>
-  );
+  )
 };
 
 export default SuccessScreen;

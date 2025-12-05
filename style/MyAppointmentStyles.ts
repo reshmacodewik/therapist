@@ -9,7 +9,14 @@ export default function createStyles(
     bgimg: { flex: 1, width: '100%', height: '100%' },
     container: { flex: 1, paddingHorizontal: wp(4), paddingTop: hp(4) },
 
-    header: { flexDirection: 'row', alignItems: 'center', marginBottom: hp(2) },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      marginBottom: hp(2),
+      marginLeft: wp(-2),
+    },
+
     headerText: { fontSize: wp(5), fontWeight: 'bold', color: '#000' },
 
     tabContainer: {
@@ -35,23 +42,41 @@ export default function createStyles(
       borderRadius: wp(3),
       padding: wp(3),
       marginBottom: hp(1.5),
-     
     },
-     backButton: {
-        width: wp(10),
-        height: wp(10),
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: wp(5),
-      },
-      headerTitle: {
-        fontSize: wp(5),
-        fontFamily: 'Poppins-Bold',
-        color: '#222',
-         justifyContent: 'center',
-        alignItems: 'center',
-       
-      },
+    backButton: {
+      width: wp(10),
+      height: wp(10),
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: wp(5),
+    },
+    headerTitleContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between', // ensures + icon moves to right
+    },
+
+    headerTitle: {
+      fontSize: wp(5),
+      fontFamily: 'Poppins-Bold',
+      color: '#222',
+    },
+
+    Addbtn: {
+      width: wp(8),
+      height: wp(8),
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: wp(5),
+      backgroundColor: '#14532d',
+      left: wp(8),
+    },
+
+    AddIcon: {
+      width: wp(4),
+      height: wp(4),
+    },
     avatar: {
       width: wp(12),
       height: wp(12),
