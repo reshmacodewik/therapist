@@ -148,7 +148,7 @@ const VerifyCredentials = () => {
               multiline
             />
           </View>
-         
+
           <View style={styles.section}>
             <Text style={styles.verifytext}>How many years you have worked as peer?</Text>
             {/* Languages Spoken */}
@@ -167,7 +167,7 @@ const VerifyCredentials = () => {
             </View>
           </View>
 
-              <View style={styles.section}>
+          <View style={styles.section}>
             <Text style={styles.verifytext}>Languages</Text>
             {/* Languages Spoken */}
             <View style={styles.dateRow}>

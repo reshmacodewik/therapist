@@ -16,15 +16,6 @@ const SuccessScreen = () => {
 
   const handleNext = () => {
     switch (role) {
-      case 2:
-        navigation.navigate('VerifyCredentials' as never);
-        break;
-      case 5:
-        navigation.navigate('VerifyCredentials' as never);
-        break;
-      case 3:
-        navigation.navigate('VerifyCredentials' as never);
-        break;
       case 4:
         navigation.navigate('VerifyCredentialsPeer' as never);
         break;
@@ -47,7 +38,6 @@ const SuccessScreen = () => {
         <Text style={styles.message}>
           Congratulations! You have been successfully authenticated
         </Text>
-
         <TouchableOpacity style={styles.button} onPress={handleNext}>
           <Text style={styles.buttonText}>Let’s verify your documents</Text>
         </TouchableOpacity>

@@ -22,6 +22,7 @@ import type { TextInput as RNTextInput } from 'react-native';
 import styles from '../../../style/otpstyles';
 import { RootStackParamList } from '../../Navigation/types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { handleLogin } from '../../libs/auth';
 
 const OTP_LENGTH = 4;
 const RESEND_COOL_DOWN_SECONDS = 30;
@@ -61,10 +62,8 @@ const VerificationCode = () => {
 
         if (res?.success) {
           ShowToast(res?.message, 'success');
-          if (res?.success) {
-            ShowToast(res?.message, 'success');
-            navigation.navigate('SuccessScreen', { role });
-          }
+          await handleLogin({ token: res?.data?.token, user: res?.data?.user });
+          navigation.navigate('SuccessScreen', { role });
         } else {
           ShowToast(res?.message || 'OTP verification failed', 'error');
         }
@@ -103,8 +102,6 @@ const VerificationCode = () => {
         url: API_VERIFY_RESEND,
         values: payload,
       });
-
-      console.log(res, 'res-------dddsaaa---------------');
 
       if (res?.success) {
         ShowToast(res?.message, 'success');
