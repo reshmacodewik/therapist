@@ -53,8 +53,6 @@ const OnboardingScreen: React.FC = () => {
       style={styles.container}
       resizeMode="cover"
     >
-
-
       <Image source={item.image} style={styles.image} />
 
       <View style={styles.dotContainer}>
@@ -106,10 +104,13 @@ const OnboardingScreen: React.FC = () => {
           {activeIndex === slides.length - 1 ? 'Get Started' : 'Get Started'}
         </Text>
       </TouchableOpacity>
+      <View style={styles.bottomRow}>
+        <Text style={styles.bottomText}>Returning user? </Text>
 
-      <Text style={styles.bottomText}>
-        Returning user? <TouchableOpacity onPress={() => navigation.navigate('WelcomeScreen')}><Text style={styles.signUpText}>Sign up</Text></TouchableOpacity>
-      </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('WelcomeScreen')}>
+          <Text style={styles.signUpText}>Sign up</Text>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
   );
 

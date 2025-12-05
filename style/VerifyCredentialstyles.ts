@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     flexGrow: 0,
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingHorizontal: wp(6),
+    paddingHorizontal: wp(2),
     paddingTop: hp(5),
    
   },
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     marginTop: hp(5),
     borderRadius: borderRadius(20),
   
- 
+    width: wp(90),
   },
   title: {
     fontSize: fontSize(20),
@@ -122,5 +122,12 @@ export const styles = StyleSheet.create({
     fontSize: fontSize(16),
     fontWeight: "700",
     color: "#FFF",
+  },
+   error: {
+    color: 'red',
+    fontSize: 12,
+    marginRight: spacing(1),
+    marginBottom: wp(2),
+   
   },
 });

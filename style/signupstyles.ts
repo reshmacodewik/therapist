@@ -41,6 +41,7 @@ export default StyleSheet.create({
     borderRadius: wp(10),
     paddingHorizontal: wp(4),
     backgroundColor: '#fff',
+    color: '#000',
   },
   dateRow: {
     flexDirection: 'row',

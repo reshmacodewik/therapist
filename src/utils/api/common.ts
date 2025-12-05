@@ -104,6 +104,7 @@ export const apiPost = async ({
     const res = await defaultAxios.post(url, values);
     return res.data;
   } catch (err: any) {
+    console.log(err?.response,"errresponse--fff-")
     ShowToast(err?.response?.data?.error, 'error');
     return err?.response?.data;
   }

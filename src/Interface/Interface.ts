@@ -9,7 +9,7 @@ export interface UserData {
   address: string;
   city: string;
   email: string;
-  id: number;
+   _id: string; 
   mobile: string;
   name: string;
   pincode: string;
