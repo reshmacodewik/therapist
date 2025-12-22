@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     width: wp(100),
     height: hp(45),
     resizeMode: 'contain',
-    marginTop: hp(5),
+    marginTop: hp(2.5),
   },
   titleWrapper: {
     marginTop: hp(3),

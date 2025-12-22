@@ -55,4 +55,8 @@ export type RootStackParamList = {
   AddGoalScreen: undefined;
   MyAppointmentCalendar: undefined;
   AddSessionScreen: undefined;
+  CreateSessionHomeScreen: undefined;
+  NewRequestSupportScreen: undefined;
+  CreateEventScreen: undefined;
+  MyEventScreen: undefined;
 };

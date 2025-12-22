@@ -11,91 +11,54 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
-import { sessionsStyles } from '../../../style/sessionsStyles';
+
 import Header from '../../components/Header';
 import SessionCard from '../../components/SessionCard';
 // adjust path
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
-
+import { eventStyles } from '../../../style/eventStyle';
+import EventCard from '../../components/eventCard';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'SessionsScreen'>;
 // Sample session data
 const upcomingSessions = [
   {
     id: '1',
-    title: 'Mindfulness Practices',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
+    title: 'Wellness & Mental Health workshop',
+    date: '15th July, 2025',
+    time: '8:00 AM',
+    attendees: 50,
     image: require('../../../assets/Image/yoga.png'),
+    status: 'approved',
   },
   {
     id: '2',
-    title: 'LGBTQ+ Support Group',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
+    title: 'Mindfulness Session',
+    date: '20th July, 2025',
+    time: '6:00 PM',
     image: require('../../../assets/Image/group.png'),
+    status: 'requested',
   },
   {
     id: '3',
-    title: 'Building Self-Esteem',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
+    title: 'Self Growth Workshop',
+    date: '22nd July, 2025',
+    time: '7:00 PM',
     image: require('../../../assets/Image/photo.png'),
-  },
-  {
-    id: '4',
-    title: 'Healthy Boundaries',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/writer.png'),
+    status: 'rejected',
   },
 ];
 
 const pastSessions = [
   {
-    id: '1',
-    title: 'Mindfulness Practices',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/yoga.png'),
-  },
-  {
-    id: '2',
-    title: 'LGBTQ+ Support Group',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/group.png'),
-  },
-  {
-    id: '3',
-    title: 'Building Self-Esteem',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/photo.png'),
-  },
-  {
     id: '4',
     title: 'Healthy Boundaries',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
+    date: '10th July, 2025',
+    time: '5:00 PM',
     image: require('../../../assets/Image/writer.png'),
+    status: 'approved',
+    attendees: 30,
   },
 ];
 
@@ -105,10 +68,9 @@ const SessionsScreen: React.FC = () => {
   const handleManage = () => {
     navigation.navigate('SessionPaymentScreen'); // ✅ simple navigate, no params
   };
-   const handleManagePast = () => {
+  const handleManagePast = () => {
     navigation.navigate('PastSessionScreen' as never); // ✅ simple navigate, no params
   };
-
 
   const handleConduct = (sessionId: string) => {
     // Handle conduct session
@@ -118,34 +80,34 @@ const SessionsScreen: React.FC = () => {
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}
-      style={sessionsStyles(wp, hp).bgimg}
+      style={eventStyles(wp, hp).bgimg}
     >
-      <View style={sessionsStyles(wp, hp).container}>
+      <View style={eventStyles(wp, hp).container}>
         <ScrollView
           contentContainerStyle={{ paddingBottom: hp(20) }}
           showsVerticalScrollIndicator={false}
         >
           <Header showWelcomeText={true} />
 
-          <View style={sessionsStyles(wp, hp).mainContainer}>
-            <Text style={sessionsStyles(wp, hp).headerText}>My Sessions</Text>
+          <View style={eventStyles(wp, hp).mainContainer}>
+            <Text style={eventStyles(wp, hp).headerText}>My Event</Text>
 
-            <View style={sessionsStyles(wp, hp).tabsContainer}>
+            <View style={eventStyles(wp, hp).tabsContainer}>
               <TouchableOpacity
                 style={[
-                  sessionsStyles(wp, hp).tabButton,
+                  eventStyles(wp, hp).tabButton,
                   activeTab === 'upcoming'
-                    ? sessionsStyles(wp, hp).activeTabButton
-                    : sessionsStyles(wp, hp).inactiveTabButton,
+                    ? eventStyles(wp, hp).activeTabButton
+                    : eventStyles(wp, hp).inactiveTabButton,
                 ]}
                 onPress={() => setActiveTab('upcoming')}
               >
                 <Text
                   style={[
-                    sessionsStyles(wp, hp).tabText,
+                    eventStyles(wp, hp).tabText,
                     activeTab === 'upcoming'
-                      ? sessionsStyles(wp, hp).activeTabText
-                      : sessionsStyles(wp, hp).inactiveTabText,
+                      ? eventStyles(wp, hp).activeTabText
+                      : eventStyles(wp, hp).inactiveTabText,
                   ]}
                 >
                   Upcoming
@@ -154,19 +116,19 @@ const SessionsScreen: React.FC = () => {
 
               <TouchableOpacity
                 style={[
-                  sessionsStyles(wp, hp).tabButton,
+                  eventStyles(wp, hp).tabButton,
                   activeTab === 'past'
-                    ? sessionsStyles(wp, hp).activeTabButton
-                    : sessionsStyles(wp, hp).inactiveTabButton,
+                    ? eventStyles(wp, hp).activeTabButton
+                    : eventStyles(wp, hp).inactiveTabButton,
                 ]}
                 onPress={() => setActiveTab('past')}
               >
                 <Text
                   style={[
-                    sessionsStyles(wp, hp).tabText,
+                    eventStyles(wp, hp).tabText,
                     activeTab === 'past'
-                      ? sessionsStyles(wp, hp).activeTabText
-                      : sessionsStyles(wp, hp).inactiveTabText,
+                      ? eventStyles(wp, hp).activeTabText
+                      : eventStyles(wp, hp).inactiveTabText,
                   ]}
                 >
                   Past
@@ -178,33 +140,31 @@ const SessionsScreen: React.FC = () => {
           {activeTab === 'upcoming' ? (
             <>
               {upcomingSessions.map(session => (
-                <SessionCard
+                <EventCard
                   key={session.id}
                   title={session.title}
-                  description={session.description}
                   date={session.date}
                   time={session.time}
-                  attendees={session.attendees}
                   image={session.image}
-                  showConductButton={true}
-                  onManage={handleManage}
-                  onConduct={() => handleConduct(session.id)}
+                  status={session.status}
+                  attendees={session.attendees}
+                  onManage={() => handleManage()}
+                  onConduct={() => console.log('Conduct', session.id)}
                 />
               ))}
             </>
           ) : (
             <>
               {pastSessions.map(session => (
-                <SessionCard
+                <EventCard
                   key={session.id}
                   title={session.title}
-                  description={session.description}
                   date={session.date}
                   time={session.time}
-                  attendees={session.attendees}
                   image={session.image}
-                  showConductButton={false}
-                  onManage={handleManagePast}
+                  status={session.status}
+                  attendees={session.attendees}
+                  onManage={() => handleManagePast()}
                 />
               ))}
             </>

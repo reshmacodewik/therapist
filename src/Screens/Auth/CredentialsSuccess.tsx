@@ -12,8 +12,8 @@ const CredentialsSuccess = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      navigation.navigate('HomeScreen' as never);
-    }, 2000);
+      navigation.navigate('LoginScreen' as never);
+    }, 1000);
 
     return () => clearTimeout(timeout);
   }, [navigation]);

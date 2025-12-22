@@ -4,7 +4,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-export const sessionsStyles = (wp: any, hp: any) =>
+export const eventStyles = (wp: any, hp: any) =>
   StyleSheet.create({
     container: {
       flex: 1,

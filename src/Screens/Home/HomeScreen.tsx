@@ -228,7 +228,7 @@ const HomeScreen = () => {
                   style={styles(wp, hp).sessionIcon}
                 />
                 <Text style={styles(wp, hp).sectionTitle}>
-                  Today's Sessions
+                  Today's Schedule
                 </Text>
               </View>
               <TouchableOpacity
@@ -251,6 +251,7 @@ const HomeScreen = () => {
                   text: 'Depression',
                   time: 'Starts in 5 Min',
                   buttonText: 'Join Now',
+                  chiptext: 'Depression',
                 },
                 {
                   image: require('../../../assets/Image/sessionuser.png'),
@@ -258,6 +259,7 @@ const HomeScreen = () => {
                   text: 'Depression',
                   time: 'Today, 10:00 AM',
                   buttonText: 'Remind Me ',
+                  chiptext: 'Appointment',
                 },
 
                 {
@@ -266,6 +268,7 @@ const HomeScreen = () => {
                   text: 'Depression',
                   time: 'Today, 6:00 AM',
                   buttonText: 'Remind Me',
+                  chiptext: 'Therapy',
                 },
               ].map((item, i) => (
                 <View key={i} style={styles(wp, hp).sessionCard}>
@@ -274,10 +277,29 @@ const HomeScreen = () => {
                     style={styles(wp, hp).sessionImg}
                   />
                   <View style={styles(wp, hp).sessionContent}>
-                    <Text style={styles(wp, hp).sessionTitle}>
-                      {item.title}
-                    </Text>
-                    <Text style={styles(wp, hp).sessionText}>{item.text}</Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        gap: wp(2),
+                      }}
+                    >
+                      <View style={{flexDirection:'column',gap:wp(1)}}>
+                        <Text style={styles(wp, hp).sessionTitle}>
+                          {item.title}
+                        </Text>
+                        <Text style={styles(wp, hp).sessionText}>
+                          {item.text}
+                        </Text>
+                      </View>
+
+                      <TouchableOpacity style={styles(wp, hp).chipBtn}>
+                        <Text style={styles(wp, hp).chipText}>
+                          {item.chiptext}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+
                     <Text style={styles(wp, hp).sessiontime}>{item.time}</Text>
                     <TouchableOpacity style={styles(wp, hp).detailsBtn}>
                       <Text style={styles(wp, hp).detailsText}>
@@ -379,7 +401,7 @@ const HomeScreen = () => {
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate('RequestApproveScreen')}
+                onPress={() => navigation.navigate('NewRequestSupportScreen')}
               >
                 <Ionicons name="chevron-forward" size={wp(7)} color="#000" />
               </TouchableOpacity>
@@ -533,7 +555,7 @@ const HomeScreen = () => {
                 <TouchableOpacity
                   style={styles(wp, hp).createSessionBtn}
                   onPress={() =>
-                    navigation.navigate('CreateSessionScreen' as never)
+                    navigation.navigate('CreateSessionHomeScreen' as never)
                   }
                 >
                   <Text style={styles(wp, hp).sessionBtnText}>
@@ -542,9 +564,28 @@ const HomeScreen = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles(wp, hp).mySessionsBtn}
-                  onPress={() => navigation.navigate('SessionsScreen' as never)}
+                  onPress={() => navigation.navigate('CreateEventScreen' as never)}
                 >
-                  <Text style={styles(wp, hp).sessionBtnText}>My Sessions</Text>
+                  <Text style={styles(wp, hp).sessionBtnText}>Create Event</Text>
+                </TouchableOpacity>
+              </View>
+              
+              <View style={styles(wp, hp).eventButtonsContainer}>
+                <TouchableOpacity
+                  style={styles(wp, hp).createSessionBtn}
+                  onPress={() =>
+                    navigation.navigate('CreateSessionScreen' as never)
+                  }
+                >
+                  <Text style={styles(wp, hp).sessionBtnText}>
+                    My Sessions
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles(wp, hp).mySessionsBtn}
+                  onPress={() => navigation.navigate('MyEventScreen' as never)}
+                >
+                  <Text style={styles(wp, hp).sessionBtnText}>My Event</Text>
                 </TouchableOpacity>
               </View>
             </View>

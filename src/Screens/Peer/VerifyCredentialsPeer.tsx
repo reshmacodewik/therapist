@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,190 +11,225 @@ import { useResponsive } from '../../../components/Responsive/useResponsive';
 import { styles } from '../../../style/VerifyCredentialstyles';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../Navigation/types';
+import { Formik } from 'formik';
+import { apiPost } from '../../utils/api/common';
 
-const VerifyCredentials = () => {
-  const navigation = useNavigation();
-  const { fontSize } = useResponsive();
-  const [year, setYear] = useState('');
-  const [Specialization, setSpecialization] = useState('');
-  const [Language, setLanguage] = useState('');
-  const [Age, setAge] = useState('');
+import ShowToast from '../../utils/ShowToast';
+import { getCurrentUserInfo } from '../../libs/auth';
+import { peerVerifySchema } from '../../validation/signupSchema';
+import { API_VERIFY_DETAILS_PEER } from '../../utils/api/APIConstant';
+import { Dropdown } from 'react-native-element-dropdown';
+import AgeDropdown from '../../components/AgeDropdown';
+import UniversalDropdown from '../../components/AgeDropdown';
 
-  const specializations = [
-    'Cardiology',
-    'Dermatology',
-    'Pediatrics',
-    'Psychiatry',
-    'Neurology',
-    'Orthopedics',
-    'Gynecology',
-    'Oncology',
-    'Radiology',
-    'General Surgery',
+const VerifyInfoPeer = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getCurrentUserInfo();
+      if (user?.name) {
+        setUserName(user.name);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const ages = Array.from({ length: 50 }, (_, i) => `${i + 18}`);
+
+  const mentalIssues = [
+    'Depression',
+    'Anxiety',
+    'PTSD',
+    'Bipolar Disorder',
+    'OCD',
+    'Addiction',
+    'Eating Disorders',
   ];
-  const languages = [
-    'English',
-    'Spanish',
-    'French',
-    'German',
-    'Chinese',
-    'Japanese',
-    'Arabic',
-    'Portuguese',
-    'Hindi',
-  ];
-  const age = [
-    '18',
-    '19',
-    '20',
-    '21',
-    '22',
-    '23',
-    '24',
-    '25',
-    '26',
-    '27',
-    '28',
-    '29',
-    '30',
-  ];
+
+  const years = Array.from({ length: 20 }, (_, i) => `${i + 1}`);
+
+  const languages = ['English', 'Hindi', 'Spanish', 'French', 'German'];
+
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}
       style={styles.bg}
     >
       <ScrollView contentContainerStyle={styles.container}>
-        {/* Header */}
-        <Text style={styles.title}>Verify your Credentials</Text>
+        <Text style={styles.title}>Verify Your Credentials</Text>
         <Text style={styles.subtitle}>Fill the details below</Text>
-        <View style={styles.innerContainer}>
-          {/* License Number */}
-          <View>
-            <Text style={styles.verifytext}>Full Name</Text>
-            <TextInput
-              placeholder="abc"
-              style={styles.input}
-              placeholderTextColor="#A0A0A0"
-            />
-          </View>
-          <View>
-            <Text style={styles.verifytext}>Age</Text>
-            <View style={styles.dateRow}>
-              <View style={styles.datePicker}>
-                <Picker
-                  selectedValue={Age}
-                  onValueChange={value => setAge(value)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {age.map((item, index) => (
-                    <Picker.Item key={index} label={item} value={item} />
-                  ))}
-                </Picker>
-              </View>
-            </View>
-          </View>
-          <View>
-            <Text style={styles.verifytext}>
-              Mental Health Issue You Have Faced{' '}
-            </Text>
-            <View style={styles.dateRow}>
-              <View style={styles.datePicker}>
-                <Picker
-                  selectedValue={year}
-                  onValueChange={value => setYear(value)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {[...Array(12)].map((_, i) => (
-                    <Picker.Item
-                      key={i}
-                      label={`${i + 1}`}
-                      value={`${i + 1}`}
-                    />
-                  ))}
-                </Picker>
-              </View>
-            </View>
-          </View>
 
-          {/* Area of Specialization */}
-          <View style={styles.section}>
-            <Text style={styles.verifytext}>
-              How many years you have faced this problem?{' '}
-            </Text>
-            <View style={styles.dateRow}>
-              <View style={styles.datePicker}>
-                <Picker
-                  selectedValue={Specialization}
-                  onValueChange={value => setSpecialization(value)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {specializations.map((item, index) => (
-                    <Picker.Item key={index} label={item} value={item} />
-                  ))}
-                </Picker>
-              </View>
-            </View>
-          </View>
+        <Formik
+          initialValues={{
+            fullName: userName,
+            age: '',
+            mentalHealthIssue: '',
+            yearsFacedProblem: '',
+            recoveryJourney: '',
+            yearsWorkedAsPeer: '',
+            language: '',
+          }}
+          validationSchema={peerVerifySchema}
+          onSubmit={async values => {
+            const user = await getCurrentUserInfo();
 
-          {/* Bio */}
-          <View style={styles.section}>
-            <Text style={styles.verifytext}>
-              Explain your recovery and healing journey
-            </Text>
-            <TextInput
-              placeholder="abcf"
-              style={[styles.input, styles.bio]}
-              placeholderTextColor="#A0A0A0"
-              multiline
-            />
-          </View>
+            const payload = {
+              userId: user?._id,
+              yearsFacedProblem: values.yearsFacedProblem,
+              mentalHealthIssue: values.mentalHealthIssue,
+              recoveryJourney: values.recoveryJourney,
+              yearsWorkedAsPeer: values.yearsWorkedAsPeer,
+              languages: [values.language],
+              fullName: user?.name,
+              age: values.age,
+            };
 
-          <View style={styles.section}>
-            <Text style={styles.verifytext}>How many years you have worked as peer?</Text>
-            {/* Languages Spoken */}
-            <View style={styles.dateRow}>
-              <View style={styles.datePicker}>
-                <Picker
-                  selectedValue={Language}
-                  onValueChange={value => setLanguage(value)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {languages.map((item, index) => (
-                    <Picker.Item key={index} label={item} value={item} />
-                  ))}
-                </Picker>
-              </View>
-            </View>
-          </View>
+            console.log('Final Peer Payload → ', payload);
 
-          <View style={styles.section}>
-            <Text style={styles.verifytext}>Languages</Text>
-            {/* Languages Spoken */}
-            <View style={styles.dateRow}>
-              <View style={styles.datePicker}>
-                <Picker
-                  selectedValue={Language}
-                  onValueChange={value => setLanguage(value)}
-                >
-                  <Picker.Item label="Select" value="" />
-                  {languages.map((item, index) => (
-                    <Picker.Item key={index} label={item} value={item} />
-                  ))}
-                </Picker>
-              </View>
-            </View>
-          </View>
-        </View>
-        {/* Submit */}
-        <TouchableOpacity
-          style={styles.submitBtn}
-          onPress={() => navigation.navigate('CredentailsSuccess' as never)}
+            const res = await apiPost({
+              url: API_VERIFY_DETAILS_PEER,
+              values: payload,
+            });
+
+            if (res?.success) {
+              ShowToast('Details submitted successfully', 'success');
+              navigation.navigate('CredentialsSuccess');
+            }
+          }}
         >
-          <Text style={styles.submitText}>Submit</Text>
-        </TouchableOpacity>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            setFieldValue,
+            values,
+            errors,
+            touched,
+          }) => (
+            <>
+              <View style={styles.innerContainer}>
+                {/* License Number */}
+                <View>
+                  <Text style={styles.verifytext}>Full Name</Text>
+                  <TextInput
+                    placeholder="Full Name"
+                    style={styles.input}
+                    value={values.fullName}
+                    onChangeText={handleChange('fullName')}
+                    onBlur={handleBlur('fullName')}
+                    placeholderTextColor="#A0A0A0"
+                  />
+
+                  {touched.fullName && errors.fullName && (
+                    <Text style={styles.error}>{errors.fullName}</Text>
+                  )}
+                </View>
+                <View>
+                  <Text style={styles.verifytext}>Age</Text>
+                  <UniversalDropdown
+                    value={values.age}
+                    setValue={val => setFieldValue('age', val)}
+                    data={ages.map(a => ({ label: a, value: a }))}
+                  />
+
+                  {touched.age && errors.age && (
+                    <Text style={styles.error}>{errors.age}</Text>
+                  )}
+                </View>
+                <View>
+                  <Text style={styles.verifytext}>
+                    Mental Health Issue You Have Faced{' '}
+                  </Text>
+                  <UniversalDropdown
+                    value={values.mentalHealthIssue}
+                    setValue={val => setFieldValue('mentalHealthIssue', val)}
+                    data={mentalIssues.map(i => ({ label: i, value: i }))}
+                  />
+
+                  {touched.mentalHealthIssue && errors.mentalHealthIssue && (
+                    <Text style={styles.error}>{errors.mentalHealthIssue}</Text>
+                  )}
+                </View>
+
+                {/* Area of Specialization */}
+                <View style={styles.section}>
+                  <Text style={styles.verifytext}>
+                    How many years you have faced this problem?{' '}
+                  </Text>
+                  <UniversalDropdown
+                    value={values.yearsFacedProblem}
+                    setValue={val => setFieldValue('yearsFacedProblem', val)}
+                    data={years.map(y => ({ label: y, value: y }))}
+                  />
+
+                  {touched.yearsFacedProblem && errors.yearsFacedProblem && (
+                    <Text style={styles.error}>{errors.yearsFacedProblem}</Text>
+                  )}
+                </View>
+
+                {/* Bio */}
+                <View style={styles.section}>
+                  <Text style={styles.verifytext}>
+                    Explain your recovery and healing journey
+                  </Text>
+                  <TextInput
+                    placeholder="Share your experience"
+                    style={[styles.input, styles.bio]}
+                    placeholderTextColor="#A0A0A0"
+                    multiline
+                    onChangeText={handleChange('recoveryJourney')}
+                    onBlur={handleBlur('recoveryJourney')}
+                    value={values.recoveryJourney}
+                  />
+                  {touched.recoveryJourney && errors.recoveryJourney && (
+                    <Text style={styles.error}>{errors.recoveryJourney}</Text>
+                  )}
+                </View>
+
+                <View style={styles.section}>
+                  <Text style={styles.verifytext}>
+                    How many years you have worked as peer?
+                  </Text>
+                  {/* Languages Spoken */}
+                  <UniversalDropdown
+                    value={values.yearsWorkedAsPeer}
+                    setValue={val => setFieldValue('yearsWorkedAsPeer', val)}
+                    data={years.map(y => ({ label: y, value: y }))}
+                  />
+                  {touched.yearsWorkedAsPeer && errors.yearsWorkedAsPeer && (
+                    <Text style={styles.error}>{errors.yearsWorkedAsPeer}</Text>
+                  )}
+                </View>
+
+                <View style={styles.section}>
+                  <Text style={styles.verifytext}>Languages</Text>
+                  {/* Languages Spoken */}
+                  <UniversalDropdown
+                    value={values.language}
+                    setValue={val => setFieldValue('language', val)}
+                    data={languages.map(l => ({ label: l, value: l }))}
+                  />
+                </View>
+                {touched.language && errors.language && (
+                  <Text style={styles.error}>{errors.language}</Text>
+                )}
+              </View>
+
+              {/* Submit Button */}
+              <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit}>
+                <Text style={styles.submitText}>Submit</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </Formik>
       </ScrollView>
     </ImageBackground>
   );
 };
 
-export default VerifyCredentials;
+export default VerifyInfoPeer;

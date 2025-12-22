@@ -85,10 +85,16 @@ const styles = StyleSheet.create({
     fontSize: wp(4),
     fontWeight: '600',
   },
+  bottomRow: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: hp(2),
+},
   bottomText: {
     color: '#000',
     fontSize: wp(3.5),
-    marginTop: hp(1.5),
+   
     fontFamily:"Poppins-Light"
   },
   signUpText: {

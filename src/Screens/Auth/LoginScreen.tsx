@@ -89,13 +89,14 @@ const LoginScreen: React.FC = () => {
         <View style={[styles.passwordContainer, { height: hp(6) }]}>
           <TextInput
             placeholder="Enter your password"
-            style={[styles.passwordInput, { fontSize: wp(4) }]}
+             style={[styles.passwordInput, { fontSize: wp(4), color: '#000' }]}
             secureTextEntry={secure}
             placeholderTextColor="#999"
             onChangeText={formik.handleChange('password')}
             onBlur={formik.handleBlur('password')}
             value={formik.values.password}
           />
+          
 
           <TouchableOpacity onPress={() => setSecure(!secure)}>
             <Ionicons

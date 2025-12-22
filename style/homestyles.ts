@@ -263,7 +263,7 @@ const styles = (wp: any, hp: any) =>
       color: '#fff',
       fontSize: 13,
       fontWeight: '600',
-      textAlign:'center'
+      textAlign: 'center',
     },
     sectionHeaderweek: {
       flexDirection: 'row',
@@ -299,7 +299,7 @@ const styles = (wp: any, hp: any) =>
       color: '#000',
     },
     sessionCard: {
-      width: wp(35),
+      width: wp(50),
       backgroundColor: '#fff',
       borderRadius: wp(4),
       padding: wp(3),
@@ -307,12 +307,13 @@ const styles = (wp: any, hp: any) =>
       marginBottom: hp(2),
     },
     sessionImg: {
-      width: '89%',
-      height: hp(12),
+      width: '100%',
+      height: hp(15),
       borderRadius: wp(5),
       marginBottom: hp(2),
       resizeMode: 'cover',
       alignSelf: 'center',
+      marginTop: hp(2)
     },
     sessionContent: {
       flex: 1,
@@ -325,7 +326,6 @@ const styles = (wp: any, hp: any) =>
       marginTop: hp(-1),
       fontFamily: 'Poppins-Bold',
       color: '#000',
-      textAlign: 'center',
     },
     sessionText: {
       fontSize: 14,
@@ -333,18 +333,18 @@ const styles = (wp: any, hp: any) =>
       marginBottom: hp(0),
       fontFamily: 'Poppins-Regular',
       lineHeight: wp(4.5),
-      textAlign: 'center',
     },
     sessiontime: {
       fontSize: 13,
       color: '#000',
-      textAlign: 'center',
       fontFamily: 'Poppins-Medium',
       fontWeight: '600',
+      marginTop: hp(0.5),
     },
-    detailsBtn: {
+    chipBtn: {
       backgroundColor: '#264734',
-      paddingVertical: hp(1),
+      height: hp(3),
+      paddingVertical: wp(1),
       borderRadius: wp(6),
       alignItems: 'center',
       shadowColor: '#000',
@@ -352,6 +352,26 @@ const styles = (wp: any, hp: any) =>
       shadowOpacity: 0.1,
       shadowRadius: 3,
       elevation: 2,
+      width: wp(23),
+      marginTop: hp(-1.2),
+    },
+    chipText: {
+      color: '#fff',
+      fontSize: 14,
+      fontFamily: 'Poppins-SemiBold',
+    },
+    detailsBtn: {
+      backgroundColor: '#264734',
+      paddingVertical: hp(1.5),
+      borderRadius: wp(6),
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 3,
+      elevation: 2,
+      marginBottom: hp(3),  
+      marginTop: hp(1),   
     },
     detailsText: {
       color: '#fff',
@@ -717,6 +737,7 @@ const styles = (wp: any, hp: any) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       gap: wp(3),
+      marginBottom: hp(2),
     },
     createSessionBtn: {
       flex: 1,

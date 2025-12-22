@@ -3,10 +3,11 @@ import ShowToast from '../ShowToast';
 import { APIBaseUrl } from '../constance';
 import { getToken, handleLogout } from '../../libs/auth';
 
-export const defaultAxios = axios.create({ baseURL: APIBaseUrl });
+export const defaultAxios = axios.create({ baseURL: APIBaseUrl });//Axios Setup (defaultAxios) — Attach token on every API request
 
 defaultAxios.interceptors.request.use(async config => {
-  const token = await getToken(); 
+  const token = await getToken();
+  console.log(token ,"token------------------------------------") 
   if (token) {
     config.headers = config.headers || {};
     (config.headers as any).Authorization = `Bearer ${token}`;

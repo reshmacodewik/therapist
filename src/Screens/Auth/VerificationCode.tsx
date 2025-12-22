@@ -8,11 +8,7 @@ import {
   Keyboard,
   Image,
 } from 'react-native';
-import {
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFormik } from 'formik';
 import { apiPost } from '../../utils/api/common';
 import { API_VERIFY_OTP, API_VERIFY_RESEND } from '../../utils/api/APIConstant';
@@ -28,7 +24,8 @@ const OTP_LENGTH = 4;
 const RESEND_COOL_DOWN_SECONDS = 30;
 
 const VerificationCode = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'VerificationCode'>>();
 
   const inputs = useRef<Array<RNTextInput | null>>([]);
@@ -37,6 +34,7 @@ const VerificationCode = () => {
   const [otpArray, setOtpArray] = useState(['', '', '', '']);
   const [resendCoolDown, setResendCoolDown] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  console.log(email, phoneNo, role, 'params---------------------');
 
   const setInputRef = useCallback((idx: number) => {
     return (el: RNTextInput | null): void => {
@@ -55,12 +53,11 @@ const VerificationCode = () => {
           phoneNo,
           otp: Number(values.otp),
         };
-
+        console.log(payload);
         const res = await apiPost({
           url: API_VERIFY_OTP,
           values: payload,
         });
-
         if (res?.success) {
           ShowToast(res?.message, 'success');
           await handleLogin({ token: res?.data?.token, user: res?.data?.user });
