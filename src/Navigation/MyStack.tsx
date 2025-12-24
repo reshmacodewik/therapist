@@ -56,6 +56,10 @@ import CreateSessionHomeScreen from '../Screens/Sessions/CreateSessionHomeScreen
 import NewRequestSupportScreen from '../Screens/Home/NewRequestSupportScreen';
 import CreateEventScreen from '../Screens/Sessions/CreateEventScreen';
 import MyEventScreen from '../Screens/Event/MyEventScreen';
+import SupportTicket from '../SupportTicket/Support_Ticket';
+import NewTicket from '../SupportTicket/NewTicket';
+import TicketSuccess from '../SupportTicket/TicketSuccess';
+import TicketChat from '../SupportTicket/TicketChat';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -63,7 +67,7 @@ const RootStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-    initialRouteName='HomeScreen'
+      initialRouteName="HomeScreen"
     >
       <Stack.Screen name="splashScreen" component={SplashScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
@@ -139,17 +143,35 @@ const RootStack = () => {
       />
       <Stack.Screen name="ProgressScreen" component={ProgressScreen} />
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-      <Stack.Screen name="SecurityPrivacyScreen" component={SecurityPrivacyScreen}/>
+      <Stack.Screen
+        name="SecurityPrivacyScreen"
+        component={SecurityPrivacyScreen}
+      />
       <Stack.Screen name="RescheduleScreen" component={RescheduleScreen} />
-      <Stack.Screen name="RequestApproveScreen" component={RequestApproveScreen} />
+      <Stack.Screen
+        name="RequestApproveScreen"
+        component={RequestApproveScreen}
+      />
       <Stack.Screen name="AddGoalScreen" component={AddGoalScreen} />
-      <Stack.Screen name="MyAppointmentCalendar" component={MyAppointmentCalendar} />
+      <Stack.Screen
+        name="MyAppointmentCalendar"
+        component={MyAppointmentCalendar}
+      />
       <Stack.Screen name="MyAppointment" component={MyAppointment} />
       <Stack.Screen name="AddSessionScreen" component={AddSessionScreen} />
-      <Stack.Screen name="CreateSessionHomeScreen" component={CreateSessionHomeScreen} />
-      <Stack.Screen name="NewRequestSupportScreen" component={NewRequestSupportScreen} />
+      <Stack.Screen
+        name="CreateSessionHomeScreen"
+        component={CreateSessionHomeScreen}
+      />
+      <Stack.Screen
+        name="NewRequestSupportScreen"
+        component={NewRequestSupportScreen}
+      />
       <Stack.Screen name="CreateEventScreen" component={CreateEventScreen} />
       <Stack.Screen name="MyEventScreen" component={MyEventScreen} />
+      <Stack.Screen name="NewTicket" component={NewTicket} />
+      <Stack.Screen name="TicketSuccess" component={TicketSuccess} />
+      <Stack.Screen name="TicketChat" component={TicketChat} />
     </Stack.Navigator>
   );
 };

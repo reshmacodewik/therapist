@@ -13,6 +13,7 @@ import SettingsScreen from '../Screens/Sidebar/Settings/SettingsScreen';
 import MyAppointment from '../Screens/Sidebar/MyAppointment';
 import CalendarScreen from '../Screens/Sidebar/CalendarScreen';
 import MyAppointmentCalendar from '../Screens/Sidebar/Settings/MyAppointmentCalendar';
+import SupportTicket from '../SupportTicket/Support_Ticket';
 
 const Drawer = createDrawerNavigator();
 
@@ -32,6 +33,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Messages" component={MessagesScreen} />
       <Drawer.Screen name="Payment History" component={PaymentHistoryScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
+      <Drawer.Screen name="Support_Ticket" component={SupportTicket} />
     </Drawer.Navigator>
   );
 }

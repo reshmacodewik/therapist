@@ -15,11 +15,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
     return focusedRoute === routeName;
   };
 
-  const renderDrawerItem = (
-    label: string,
-    route: string,
-    iconSource: any,
-  ) => (
+  const renderDrawerItem = (label: string, route: string, iconSource: any) => (
     <DrawerItem
       style={[
         styles.item,
@@ -106,14 +102,19 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
         'Payment History',
         require('../../assets/Image/Vector4.png'),
       )}
-      
+
       <View style={styles.divider} />
       {renderDrawerItem(
         'Settings',
         'Settings',
         require('../../assets/Image/Vector4.png'),
       )}
-
+      <View style={styles.divider} />
+      {renderDrawerItem(
+        'Support_Ticket',
+        'Support_Ticket',
+        require('../../assets/Image/Vector4.png'),
+      )}
       <View style={styles.divider} />
 
       {/* Logout */}
@@ -172,7 +173,12 @@ const styles = StyleSheet.create({
   },
 
   footer: { marginTop: 20, paddingHorizontal: 20 },
-  logoutRow: { flexDirection: 'row', alignItems: 'center', marginBottom: -8, marginLeft: -8 },
+  logoutRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: -8,
+    marginLeft: -8,
+  },
   logoutText: { marginLeft: 10, color: 'red', fontWeight: 'bold' },
 });
 

@@ -59,4 +59,8 @@ export type RootStackParamList = {
   NewRequestSupportScreen: undefined;
   CreateEventScreen: undefined;
   MyEventScreen: undefined;
+  SupportTicket: undefined;
+  NewTicket: undefined;
+  TicketSuccess: undefined;
+  TicketChat: undefined;
 };
