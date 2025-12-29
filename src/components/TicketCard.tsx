@@ -51,7 +51,7 @@ const TicketCard: React.FC<Props> = ({
       <View style={styles.footer}>
         <Text style={styles.reply}>Last reply: {lastReply}</Text>
         <TouchableOpacity onPress={onPress}>
-        <Ionicons name="chevron-forward" size={20} color="#9CA3AF"  />
+        <Ionicons name="chevron-forward" size={20} color="#000"  />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   ImageBackground,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
@@ -16,6 +17,10 @@ import { styles } from '../../../style/profileEditStyles';
 import Header from '../../components/Header';
 import { Picker } from '@react-native-picker/picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useQuery } from '@tanstack/react-query';
+import { apiPost, getApiWithOutQuery } from '../../utils/api/common';
+import { API_PROFILE_LIST, API_UPDATE_PROFILE } from '../../utils/api/APIConstant';
+import ShowToast from '../../utils/ShowToast';
 
 const ProfileEditScreen = ({ navigation }: any) => {
   const [name, setName] = useState('');
@@ -28,14 +33,62 @@ const ProfileEditScreen = ({ navigation }: any) => {
   const handleBackPress = () => {
     navigation.goBack();
   };
+  const { data, isLoading, refetch, isRefetching } = useQuery({
+    queryKey: ['profile-info'], // pass id as dependency
+    queryFn: () => getApiWithOutQuery({ url: API_PROFILE_LIST }),
+  });
 
+  useEffect(() => {
+    if (data?.data) {
+      const profile = data.data;
+      console.log(profile);
+      setName(profile.fullName || '');
+      setEmail(profile.email || '');
+      setPhone(profile.phoneNo || '');
+      setCc(profile.countryCode || '+91');
+    }
+  }, [data]);
+  const formatDob = () => {
+  if (!year || !month || !day) return null;
+
+  const mm = month.toString().padStart(2, '0');
+  const dd = day.toString().padStart(2, '0');
+
+  return `${year}-${mm}-${dd}`;
+};
+
+  const handleUpdateProfile = async () => {
+    const dob = formatDob();
+
+    const payload = {
+      fullname: name,
+      email: email,
+      phoneNo: phone,
+      dob: dob, 
+    };
+
+    const res = await apiPost({
+      url: API_UPDATE_PROFILE,
+      values: payload,
+    });
+
+    if (res?.success) {
+      ShowToast('Profile updated successfully', res?.message || '');
+      navigation.goBack();
+    }
+  };
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}
       style={styles.bgimg}
     >
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+          }
+        >
           <View style={styles.header}>
             <TouchableOpacity
               onPress={handleBackPress}
@@ -144,18 +197,20 @@ const ProfileEditScreen = ({ navigation }: any) => {
             <Text style={styles.labelph}>Phone Number</Text>
             <View style={styles.phoneRow}>
               <View style={styles.codeBox}>
-                <Text>+91</Text>
+                <Text>{cc}</Text>
               </View>
               <TextInput
                 style={styles.phoneInput}
                 placeholder="5265 3625 231"
                 keyboardType="phone-pad"
                 placeholderTextColor="#999"
+                value={phone}
+                onChangeText={setPhone}
               />
             </View>
           </View>
 
-          <Pressable style={styles.cta}>
+          <Pressable style={styles.cta} onPress={handleUpdateProfile}>
             <Text style={styles.ctaText}>Edit</Text>
           </Pressable>
         </ScrollView>

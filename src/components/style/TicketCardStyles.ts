@@ -55,7 +55,7 @@ export default StyleSheet.create({
   meta: {
     marginTop: hp(0.6),
     fontSize: wp(3.4),
-    color: '#6B7280',
+    color: '#000000',
   },
 
   bold: {
@@ -72,6 +72,6 @@ export default StyleSheet.create({
 
   reply: {
     fontSize: wp(3.2),
-    color: '#9CA3AF',
+    color: '#000',
   },
 });

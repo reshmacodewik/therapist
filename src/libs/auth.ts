@@ -10,6 +10,7 @@ export const handleLogin = async ({ token, user }: any) => {
   try {
     await AsyncStorage.setItem(StorageKeys.AUTH_TOKEN, token);
     await AsyncStorage.setItem(StorageKeys.USER_DATA, JSON.stringify(user));
+    console.log(user, 'User logged in and data stored successfully.');
   } catch (e) {
     throw new Error('Login failed! Please check your credentials.');
   }

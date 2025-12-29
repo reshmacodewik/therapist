@@ -90,7 +90,7 @@ const SessionsScreen: React.FC = () => {
           <Header showWelcomeText={true} />
 
           <View style={eventStyles(wp, hp).mainContainer}>
-            <Text style={eventStyles(wp, hp).headerText}>My Event</Text>
+            <Text style={eventStyles(wp, hp).headerText}>My Events</Text>
 
             <View style={eventStyles(wp, hp).tabsContainer}>
               <TouchableOpacity

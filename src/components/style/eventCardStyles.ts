@@ -20,7 +20,6 @@ const eventCardStyles = (wp: any, hp: any) =>
     content: {
       flex: 1,
       marginLeft: wp(4),
-
     },
 
     title: {
@@ -45,7 +44,7 @@ const eventCardStyles = (wp: any, hp: any) =>
     approvedBadge: {
       backgroundColor: '#22c55e',
       alignSelf: 'flex-start',
-     width: wp(25),
+      width: wp(25),
       paddingVertical: hp(0.5),
       borderRadius: wp(6),
       marginBottom: hp(1),
@@ -98,7 +97,7 @@ const eventCardStyles = (wp: any, hp: any) =>
       borderWidth: 1,
       borderColor: '#14532d',
       paddingVertical: hp(0.2),
-      width: wp(25),     
+      width: wp(23),
       height: hp(3),
       borderRadius: wp(6),
       marginRight: wp(3),
@@ -111,8 +110,8 @@ const eventCardStyles = (wp: any, hp: any) =>
 
     conductBtn: {
       backgroundColor: '#14532d',
-     paddingVertical: hp(0.2),
-      width: wp(25),     
+      paddingVertical: hp(0.2),
+      width: wp(23),
       height: hp(3),
       borderRadius: wp(6),
     },
@@ -121,13 +120,16 @@ const eventCardStyles = (wp: any, hp: any) =>
       fontWeight: '600',
       textAlign: 'center',
     },
+    
 
     disabledBtn: {
       backgroundColor: '#d1d5db',
-      paddingVertical: hp(0.8),
+      paddingVertical: hp(0.2),
       paddingHorizontal: wp(6),
       borderRadius: wp(6),
       marginRight: wp(3),
+      width: wp(23),
+      height: hp(3),
     },
     disabledText: {
       color: '#9ca3af',

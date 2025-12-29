@@ -26,12 +26,12 @@ export const eventStyles = (wp: any, hp: any) =>
       marginTop: hp(2),
     },
     headerText: {
-      fontSize: 18,
+      fontSize: 16,
       fontFamily: 'Poppins-Bold',
       color: '#000',
       marginTop: hp(0),
       marginBottom: hp(1),
-      fontWeight: '600',
+      fontWeight: '700',
     },
     innercontainer: {
       flexDirection: 'column',
@@ -45,10 +45,12 @@ export const eventStyles = (wp: any, hp: any) =>
     },
     tabButton: {
       flex: 1,
-      paddingVertical: hp(1.1),
+      paddingVertical: hp(1),
       borderRadius: wp(8),
       alignItems: 'center',
       justifyContent: 'center',
+      height: hp(5),
+      width: wp(40),
     },
     activeTabButton: {
       backgroundColor: '#264734',
