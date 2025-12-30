@@ -16,6 +16,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import styles from '../../../../style/setRegularHoursStyles';
+import { apiPost } from '../../../utils/api/common';
+import { CREATE_SLOT } from '../../../utils/api/APIConstant';
+import ShowToast from '../../../utils/ShowToast';
 
 const days = [
   'Monday',
@@ -36,6 +39,32 @@ const SetRegularHoursScreen: React.FC = () => {
 
   const [availability, setAvailability] = useState('15 min');
   const [callType, setCallType] = useState('Chat');
+  const handleNext = async () => {
+    try {
+      const payload = {
+        startTime: '10:00',
+        endTime: '18:00',
+        breakStart: '14:00',
+        breakEnd: '15:00',
+        duration: Number(availability.replace(' min', '')), // converts "30 min" → 30
+        day: expandedDay,
+        callType: callType.toLowerCase(), // chat | audio | video
+        price: 300,
+      };
+
+      const res = await apiPost({ url: CREATE_SLOT, values: payload });
+
+      ShowToast(res?.message || 'Regular hours saved successfully', 'success');
+      console.log('Set regular hours response:', res);
+      navigation.goBack();
+    } catch (error: any) {
+      console.log('Set regular hours error:', error);
+      ShowToast(
+        error?.response?.data?.message || 'Something went wrong',
+        'error',
+      );
+    }
+  };
 
   return (
     <ImageBackground
@@ -217,7 +246,7 @@ const SetRegularHoursScreen: React.FC = () => {
         </ScrollView>
 
         {/* Next Button */}
-        <TouchableOpacity style={styles.nextBtn}>
+        <TouchableOpacity style={styles.nextBtn} onPress={handleNext}>
           <Text style={styles.nextBtnText}>Next</Text>
         </TouchableOpacity>
       </View>

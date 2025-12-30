@@ -73,7 +73,7 @@ const ProfileEditScreen = ({ navigation }: any) => {
     });
 
     if (res?.success) {
-      ShowToast('Profile updated successfully', res?.message || '');
+      ShowToast(res?.message || 'Profile updated successfully', 'success');
       navigation.goBack();
     }
   };

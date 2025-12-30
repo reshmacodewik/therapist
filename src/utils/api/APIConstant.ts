@@ -17,6 +17,7 @@ export const API_PROFILE_LIST :string = '/auth/profile';
 export const API_UPDATE_PROFILE :string = '/auth/edit-profile';
 export const API_VERIFY_DETAILS :string = '/auth/update-info-others';
 export const API_VERIFY_DETAILS_PEER :string = '/auth/update-info-peer';
+export const CREATE_SLOT :string = '/auth/slot/create';
 
 //RESET PASSWORD
 export const API_VALET_RESET_SEND_OTP: string = '/reset-password';
