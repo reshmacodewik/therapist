@@ -37,6 +37,7 @@ export default (wp: any, hp: any) =>
       padding: wp(4),
       height: hp(14),
       marginBottom: hp(2),
+      textAlignVertical: 'top',
     },
 
     row: { flexDirection: 'row', justifyContent: 'space-between' },
@@ -53,6 +54,10 @@ export default (wp: any, hp: any) =>
     },
 
     placeholder: { color: '#6A8F7A' },
+    valueText: {
+      color: '#111827', // dark text when value selected
+      fontSize: 14,
+    },
 
     speakerBox: {
       flexDirection: 'row',
@@ -80,11 +85,17 @@ export default (wp: any, hp: any) =>
       alignItems: 'center',
       marginBottom: hp(2),
     },
+    uploadedImage: {
+      width: '100%',
+      height: '100%',
+      borderRadius: 12,
+    },
 
     faqBox: {
       backgroundColor: '#fff',
       borderRadius: wp(3),
       padding: wp(3),
+      marginBottom: hp(2),
     },
 
     faqInput: { paddingVertical: hp(1.5) },
@@ -94,12 +105,11 @@ export default (wp: any, hp: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       marginBottom: hp(1.5),
-      marginTop: hp(0.5),
-         justifyContent: 'flex-end',
 
+      justifyContent: 'flex-end',
     },
     addMoreBtn: {
-      textAlign: 'center',  
+      textAlign: 'center',
       justifyContent: 'flex-end',
     },
     addMoreText: { marginLeft: wp(2), color: '#000' },
@@ -107,46 +117,58 @@ export default (wp: any, hp: any) =>
     checkboxRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginBottom: hp(3),
+      marginTop: 2,
     },
+
     checkbox: {
-      width: wp(4),
-      height: wp(4),
-      borderWidth: 1,
-      borderRadius: wp(1),
-      marginRight: wp(2),
+      width: 22,
+      height: 22,
+      borderRadius: 6,
+      backgroundColor: '#D9D9D9',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    checkboxChecked: { backgroundColor: '#264734' },
-    checkboxText: { fontSize: wp(3.6) },
+
+    checkboxChecked: {
+      backgroundColor: '#264734',
+    },
+
+    checkboxText: {
+      marginLeft: 12,
+      fontSize: 14,
+      color: '#333',
+    },
 
     disabled: { backgroundColor: '#EAEAEA' },
     labelnote: {
       fontSize: wp(3),
       marginBottom: hp(0.6),
       color: '#979797',
-      marginTop: hp(12),
+      marginTop: hp(2),
     },
-        
+
     footer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginTop: hp(0),
+      marginTop: hp(1),
     },
 
     cancelBtn: {
       backgroundColor: '#E6EFEA',
-      padding: wp(4),
+      padding: wp(3),
       borderRadius: wp(6),
-      width: '45%',
+      width: '35%',
+      height: hp(5),
       alignItems: 'center',
     },
     cancelText: { color: '#000' },
 
     createBtn: {
       backgroundColor: '#264734',
-      padding: wp(4),
+      padding: wp(3),
       borderRadius: wp(6),
-      width: '45%',
+      width: '35%',
+      height: hp(5),
       alignItems: 'center',
     },
     createText: { color: '#fff' },

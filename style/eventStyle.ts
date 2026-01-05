@@ -32,6 +32,7 @@ export const eventStyles = (wp: any, hp: any) =>
       marginTop: hp(0),
       marginBottom: hp(1),
       fontWeight: '700',
+      marginLeft: wp(2),
     },
     innercontainer: {
       flexDirection: 'column',

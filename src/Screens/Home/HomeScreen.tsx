@@ -473,8 +473,7 @@ const HomeScreen = () => {
 
             {/* Calendar & Earnings Row */}
             <View style={styles(wp, hp).gridRow}>
-              {/* Calendar card */}
-              <View style={styles(wp, hp).calendarHeader}>
+              {/* <View style={styles(wp, hp).calendarHeader}>
                 <Text style={styles(wp, hp).sectionTitle}>Calendar</Text>
                 <TouchableOpacity
                   style={{
@@ -486,7 +485,7 @@ const HomeScreen = () => {
                 >
                   <Ionicons name="chevron-forward" size={wp(7)} color="#000" />
                 </TouchableOpacity>
-              </View>
+              </View> */}
 
               <View style={styles(wp, hp).sectionHeaderWeek}>
                 <View style={styles(wp, hp).rowStart}>
@@ -504,12 +503,12 @@ const HomeScreen = () => {
                 </TouchableOpacity>
               </View>
 
-              <View style={styles(wp, hp).gridItem}>
+              {/* <View style={styles(wp, hp).gridItem}>
                 <View style={styles(wp, hp).calendarCard}>
                   <Text style={styles(wp, hp).calendarTitle}></Text>
                   {renderCalendar()}
                 </View>
-              </View>
+              </View> */}
 
               {/* Earnings card */}
               <View style={styles(wp, hp).gridItem}>

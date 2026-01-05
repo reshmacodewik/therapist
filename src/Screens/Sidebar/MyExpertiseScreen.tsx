@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,17 @@ import {
   ImageBackground,
   Pressable,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Feather';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { styles } from '../../../style/myExpertiseStyles';
+import { useQuery } from '@tanstack/react-query';
+import { apiPost, getApiWithOutQuery } from '../../utils/api/common';
+import { API_OTHERS_PROFILE_DETAILS, API_VERIFY_DETAILS } from '../../utils/api/APIConstant';
+import ShowToast from '../../utils/ShowToast';
 
 type Updater<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -40,6 +45,50 @@ const MyExpertiseScreen = ({ navigation }: any) => {
   const [years, setYears] = useState<string[]>(['']);               // numeric rows
   const [proficiency, setProficiency] = useState<string>('');       // single picker
   const [bio, setBio] = useState('');
+  const {
+  data,
+  isLoading,
+  refetch,
+  isRefetching,
+} = useQuery({
+  queryKey: ['other-info_profile'],
+  queryFn: () => getApiWithOutQuery({ url:API_OTHERS_PROFILE_DETAILS }),
+});
+useEffect(() => {
+  if (data?.data) {
+    setProfileTags(data.data.profiletag || ['']);
+    setSpecializations(data.data.areaOfSpecialization || ['']);
+    setConcerns(data.data.commonconcernsaddressed || ['']);
+    setLanguages(data.data.languagesSpoken || ['']);
+    setProficiency(data.data.proficiency?.[0] || '');
+    setBio(data.data.bio || '');
+    setYears([String(data.data.yearsOfExperience || '')]);
+  }
+  refetch();
+}, [data]);
+const handleSubmit = async() => {
+  const payload = {
+    profiletag: profileTags,
+    areaOfSpecialization: specializations,
+    commonconcernsaddressed: concerns,
+    languagesSpoken: languages,
+    proficiency: [proficiency],
+    bio,
+    yearsOfExperience: Number(years[0]),
+  };
+  console.log('Submitting payload:', payload);
+  const res = await apiPost({
+    url: API_VERIFY_DETAILS,
+    values: payload,
+  });
+  if (res?.success) {
+    ShowToast(res?.message || 'Details updated successfully', 'success');
+    navigation.goBack();
+  } else {
+    // Handle error (e.g., show an error message)
+    console.log('Error updating profile:', res?.message);
+  }
+}
 const makeAdder = (setter: React.Dispatch<React.SetStateAction<string[]>>) =>
   () => setter(prev => [...prev, '']);   // always add empty string
 
@@ -229,7 +278,7 @@ const makeChanger = (setter: React.Dispatch<React.SetStateAction<string[]>>) =>
           {/* License Number (verified row) */}
           <Text style={[styles.label, styles.mtBlock]}>License Number</Text>
           <View style={styles.licenseRow}>
-            <Text style={styles.licenseText}>3254 2356 4876</Text>
+            <Text style={styles.licenseText}>{data?.data?.licenseNumber || ''}</Text>
             <View style={styles.verifiedPill}>
               <Text style={styles.verifiedText}>Verified</Text>
             </View>
@@ -249,7 +298,8 @@ const makeChanger = (setter: React.Dispatch<React.SetStateAction<string[]>>) =>
           </View>
 
           {/* Submit */}
-          <Pressable style={styles.cta}>
+          <Pressable style={styles.cta} onPress={handleSubmit}>
+            {isLoading ? <ActivityIndicator color="#fff" /> : null}
             <Text style={styles.ctaText}>Submit</Text>
           </Pressable>
         </ScrollView>

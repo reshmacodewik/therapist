@@ -1,13 +1,12 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Pressable } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import eventCardStyles from './style/eventCardStyles';
 
-
-type StatusType = 'approved' | 'requested' | 'rejected';
+type StatusType = 'approved' | 'requested' | 'REJECTED';
 
 interface Props {
   title: string;
@@ -16,6 +15,8 @@ interface Props {
   image: any;
   attendees?: number;
   status: StatusType;
+  isFree: boolean;
+  onPress?: () => void;
   onManage?: () => void;
   onConduct?: () => void;
 }
@@ -27,21 +28,46 @@ const EventCard: React.FC<Props> = ({
   image,
   attendees,
   status,
+  isFree,
+  onPress,
   onManage,
   onConduct,
 }) => {
   const styles = eventCardStyles(wp, hp);
+  const truncateWords = (text: string, wordLimit: number) => {
+    const words = text.split(' ');
+    if (words.length <= wordLimit) return text;
+    return words.slice(0, wordLimit).join(' ') + '...';
+  };
 
   return (
-    <View style={styles.card}>
+    <Pressable style={styles.card} onPress={onPress}>
       {/* Image */}
-      <Image source={image} style={styles.image} />
+      <Image
+        source={typeof image === 'string' ? { uri: image } : image}
+        style={styles.image}
+      />
 
       {/* Content */}
       <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
+        <View style={styles.row}>
+          <Text style={styles.title}>{truncateWords(title, 3)}</Text>
+
+          <View style={[styles.badge]}>
+            <Image
+              source={
+                isFree
+                  ? require('../../assets/icon/free.png')
+                  : require('../../assets/icon/badge.png')
+              }
+              style={styles.badgeImage}
+              resizeMode="contain"
+            />
+          </View>
+        </View>
+
         <Text style={styles.date}>
-          {date}  {'\n'}Onwards {time}
+          {date} {'\n'}Onwards {time}
         </Text>
 
         {/* Attendees */}
@@ -86,7 +112,7 @@ const EventCard: React.FC<Props> = ({
           </>
         )}
 
-        {status === 'rejected' && (
+        {status === 'REJECTED' && (
           <>
             <Text style={styles.rejectedMsg}>
               Event Information is incomplete
@@ -98,7 +124,7 @@ const EventCard: React.FC<Props> = ({
           </>
         )}
       </View>
-    </View>
+    </Pressable>
   );
 };
 

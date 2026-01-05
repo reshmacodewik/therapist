@@ -19,6 +19,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { eventStyles } from '../../../style/eventStyle';
 import EventCard from '../../components/eventCard';
+import { useQuery } from '@tanstack/react-query';
+import { getApiWithOutQuery } from '../../utils/api/common';
+import { API_EVENT_LIST } from '../../utils/api/APIConstant';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'SessionsScreen'>;
 // Sample session data
@@ -70,6 +73,25 @@ const SessionsScreen: React.FC = () => {
   };
   const handleManagePast = () => {
     navigation.navigate('PastSessionScreen' as never); // ✅ simple navigate, no params
+  };
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['eventList'],
+    queryFn: () => getApiWithOutQuery({ url: API_EVENT_LIST }),
+  });
+  const events = data?.data || [];
+
+  const upcomingEvents = events.filter(
+    (e: any) => e.status === 'PENDING' || e.status === 'APPROVED',
+  );
+
+  const pastEvents = events.filter((e: any) => e.status === 'REJECTED');
+  const formatDate = (iso: string) => {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
   };
 
   const handleConduct = (sessionId: string) => {
@@ -139,34 +161,61 @@ const SessionsScreen: React.FC = () => {
 
           {activeTab === 'upcoming' ? (
             <>
-              {upcomingSessions.map(session => (
-                <EventCard
-                  key={session.id}
-                  title={session.title}
-                  date={session.date}
-                  time={session.time}
-                  image={session.image}
-                  status={session.status}
-                  attendees={session.attendees}
-                  onManage={() => handleManage()}
-                  onConduct={() => console.log('Conduct', session.id)}
-                />
-              ))}
+              {upcomingEvents.map(
+                (event: {
+                  isFree: boolean;
+                  _id: React.Key | null | undefined;
+                  name: string;
+                  date: string;
+                  time: string;
+                  image: any;
+                  status: string;
+                  attendees: number | undefined;
+                }) => (
+                  console.log(event, 'event--0000'),
+                  (
+                    <EventCard
+                      key={event._id}
+                      title={event.name}
+                      date={formatDate(event.date)}
+                      time={event.time}
+                      image={event?.image}
+                      status={
+                        event.status.toLowerCase() === 'approved'
+                          ? 'approved'
+                          : 'requested'
+                      }
+                      onPress={() =>
+                        navigation.navigate('EventDetailsScreen', {
+                          eventId: event._id as string,
+                        })
+                      }
+                      
+                      attendees={event.attendees}
+                      isFree={event.isFree}
+                      onManage={() => handleManage()}
+                      onConduct={() => console.log('Conduct', event._id)}
+                    />
+                  )
+                ),
+              )}
             </>
           ) : (
             <>
-              {pastSessions.map(session => (
-                <EventCard
-                  key={session.id}
-                  title={session.title}
-                  date={session.date}
-                  time={session.time}
-                  image={session.image}
-                  status={session.status}
-                  attendees={session.attendees}
-                  onManage={() => handleManagePast()}
-                />
-              ))}
+              {activeTab === 'past' &&
+                pastEvents.map((event: any) => (
+                  <EventCard
+                    key={event._id}
+                    title={event.name}
+                    date={formatDate(event.date)}
+                    time={event.time}
+                    image={event?.image} // just pass the string
+                   status="REJECTED"
+                    attendees={event.attendees}
+                    isFree={event.isFree}
+                    onManage={() => handleManage()}
+                  />
+                ))}
             </>
           )}
         </ScrollView>

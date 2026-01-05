@@ -18,6 +18,10 @@ export const API_UPDATE_PROFILE :string = '/auth/edit-profile';
 export const API_VERIFY_DETAILS :string = '/auth/update-info-others';
 export const API_VERIFY_DETAILS_PEER :string = '/auth/update-info-peer';
 export const CREATE_SLOT :string = '/auth/slot/create';
+export const API_OTHERS_PROFILE_DETAILS :string = '/auth/other-profile';
+export const API_CREATE_EVENT :string = '/event/create';
+export const API_EVENT_LIST :string = '/event/list';
+export const API_DETAILSLIST_EVENTS :string = '/event/geteventdetail';
 
 //RESET PASSWORD
 export const API_VALET_RESET_SEND_OTP: string = '/reset-password';

@@ -8,8 +8,10 @@ import {
   Switch,
   ImageBackground,
   Image,
+  Platform,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
@@ -32,33 +34,79 @@ const days = [
 
 const SetRegularHoursScreen: React.FC = () => {
   const navigation = useNavigation();
+const CALL_TYPES: { label: string; value: 'chat' | 'audio' | 'video' }[] = [
+  { label: 'Chat', value: 'chat' },
+  { label: 'Audio Call', value: 'audio' },
+  { label: 'Video Call', value: 'video' },
+];
+
+  /* ---------------- DAY ENABLE ---------------- */
   const [expandedDay, setExpandedDay] = useState('Monday');
-  const [dayEnabled, setDayEnabled] = useState<{ [key: string]: boolean }>({
+  const [dayEnabled, setDayEnabled] = useState<Record<string, boolean>>({
     Monday: true,
+    Tuesday: true,
+    Wednesday: false,
+    Thursday: false,
+    Friday: false,
+    Saturday: false,
+    Sunday: false,
   });
 
-  const [availability, setAvailability] = useState('15 min');
-  const [callType, setCallType] = useState('Chat');
+  const [schedule, setSchedule] = useState({
+    startTime: '',
+    endTime: '',
+    breakStart: '',
+    breakEnd: '',
+    duration: '15 min',
+    callType: 'chat' as 'chat' | 'audio' | 'video',
+    price: '',
+  });
+
+  const [pickerField, setPickerField] = useState<null | keyof typeof schedule>(
+    null,
+  );
+  const [showPicker, setShowPicker] = useState(false);
+
+  const openPicker = (field: keyof typeof schedule) => {
+    setPickerField(field);
+    setShowPicker(true);
+  };
+
+  const onTimeChange = (_: any, date?: Date) => {
+    setShowPicker(false);
+    if (!date || !pickerField) return;
+
+    const time = date.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    setSchedule(prev => ({ ...prev, [pickerField]: time }));
+  };
+
+  /* ---------------- SAVE ---------------- */
   const handleNext = async () => {
     try {
-      const payload = {
-        startTime: '10:00',
-        endTime: '18:00',
-        breakStart: '14:00',
-        breakEnd: '15:00',
-        duration: Number(availability.replace(' min', '')), // converts "30 min" → 30
-        day: expandedDay,
-        callType: callType.toLowerCase(), // chat | audio | video
-        price: 300,
-      };
+      const enabledDays = days.filter(d => dayEnabled[d]);
 
-      const res = await apiPost({ url: CREATE_SLOT, values: payload });
+      for (const day of enabledDays) {
+        const payload = {
+          day,
+          startTime: schedule.startTime,
+          endTime: schedule.endTime,
+          breakStart: schedule.breakStart,
+          breakEnd: schedule.breakEnd,
+          duration: Number(schedule.duration.replace(' min', '')),
+          callType: schedule.callType,
+          price: Number(schedule.price),
+        };
 
-      ShowToast(res?.message || 'Regular hours saved successfully', 'success');
-      console.log('Set regular hours response:', res);
+        await apiPost({ url: CREATE_SLOT, values: payload });
+      }
+
+      ShowToast('Regular hours saved successfully', 'success');
       navigation.goBack();
     } catch (error: any) {
-      console.log('Set regular hours error:', error);
       ShowToast(
         error?.response?.data?.message || 'Something went wrong',
         'error',
@@ -68,159 +116,251 @@ const SetRegularHoursScreen: React.FC = () => {
 
   return (
     <ImageBackground
-      source={require('../../../../assets/Image/background.png')} // gradient bg image
+      source={require('../../../../assets/Image/background.png')}
       style={styles.bgImage}
     >
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="chevron-back" size={wp('6%')} color="#000" />
+            <Ionicons name="chevron-back" size={wp('6%')} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Set Regular Hours</Text>
         </View>
 
-        {/* Days list */}
         <ScrollView showsVerticalScrollIndicator={false}>
           {days.map(day => (
             <View key={day} style={styles.dayContainer}>
               <TouchableOpacity
                 style={styles.dayHeader}
-                onPress={() => setExpandedDay(expandedDay === day ? '' : day)}
+                onPress={() => setExpandedDay(day)}
               >
                 <Text style={styles.dayTitle}>{day}</Text>
                 <Switch
-                  value={dayEnabled[day] || false}
-                  onValueChange={val =>
-                    setDayEnabled({ ...dayEnabled, [day]: val })
-                  }
+                  value={dayEnabled[day]}
+                  onValueChange={val => {
+                    setDayEnabled(prev => ({ ...prev, [day]: val }));
+                    if (val) setExpandedDay(day); // 👈 IMPORTANT
+                  }}
                 />
               </TouchableOpacity>
 
               {expandedDay === day && dayEnabled[day] && (
                 <View style={styles.dayContent}>
-                  {/* Start & End Time */}
+                  {/* Start & End */}
                   <View style={styles.row}>
                     <View style={styles.inputBox}>
                       <Text style={styles.label}>Start Time</Text>
-                      <TextInput style={styles.input} value="10:00 AM" />
-                      <Ionicons
-                        name="close-circle-outline"
-                        size={wp('5%')}
-                        style={styles.inputIcon}
-                      />
+
+                      <View style={{ position: 'relative' }}>
+                        {/* Open picker */}
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={() => openPicker('startTime')}
+                        >
+                          <TextInput
+                            style={styles.input}
+                            editable={false}
+                            pointerEvents="none"
+                            value={schedule.startTime}
+                            placeholder="Select Start Time"
+                            placeholderTextColor="#999"
+                          />
+                        </TouchableOpacity>
+
+                        {/* Clear icon */}
+                        {schedule.startTime ? (
+                          <TouchableOpacity
+                            style={styles.clearIcon}
+                            onPress={e => {
+                              e.stopPropagation();
+                              setSchedule(prev => ({ ...prev, startTime: '' }));
+                            }}
+                          >
+                            <Ionicons
+                              name="close-circle"
+                              size={wp('5%')}
+                              color="#999"
+                            />
+                          </TouchableOpacity>
+                        ) : null}
+                      </View>
                     </View>
+
                     <View style={styles.inputBox}>
-                      <Text style={styles.label}>Start Time</Text>
-                      <TextInput style={styles.input} value="06:00 PM" />
-                      <Ionicons
-                        name="close-circle-outline"
-                        size={wp('5%')}
-                        style={styles.inputIcon}
-                      />
+                      <Text style={styles.label}>End Time</Text>
+
+                      <View style={{ position: 'relative' }}>
+                        {/* Open picker ONLY when pressing input */}
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={() => openPicker('endTime')}
+                        >
+                          <TextInput
+                            style={styles.input}
+                            editable={false}
+                            pointerEvents="none"
+                            value={schedule.endTime}
+                            placeholder="Select End Time"
+                            placeholderTextColor="#999"
+                          />
+                        </TouchableOpacity>
+
+                        {/* Clear button (does NOT open picker) */}
+                        {schedule.endTime ? (
+                          <TouchableOpacity
+                            style={styles.clearIcon}
+                            onPress={e => {
+                              e.stopPropagation(); // 🔥 KEY LINE
+                              setSchedule(prev => ({ ...prev, endTime: '' }));
+                            }}
+                          >
+                            <Ionicons
+                              name="close-circle"
+                              size={wp('5%')}
+                              color="#999"
+                            />
+                          </TouchableOpacity>
+                        ) : null}
+                      </View>
                     </View>
                   </View>
 
-                  {/* Break Time */}
-                  <Text style={[styles.mainlabel, { marginTop: hp('0%') }]}>
-                    Break Time
-                  </Text>
+                  {/* Break */}
+                  <Text style={styles.mainlabel}>Break Time</Text>
                   <View style={styles.row}>
                     <View style={styles.inputBox}>
-                      <Text style={styles.label}>Start Time</Text>
-                      <TextInput style={styles.input} value="02:00 PM" />
-                      <Ionicons
-                        name="close-circle-outline"
-                        size={wp('5%')}
-                        style={styles.inputIcon}
-                      />
+                      <Text style={styles.label}>Start</Text>
+
+                      <View style={{ position: 'relative' }}>
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={() => openPicker('breakStart')}
+                        >
+                          <TextInput
+                            style={styles.input}
+                            editable={false}
+                            pointerEvents="none"
+                            value={schedule.breakStart}
+                            placeholder="Select Break Start"
+                            placeholderTextColor="#999"
+                          />
+                        </TouchableOpacity>
+
+                        {schedule.breakStart ? (
+                          <TouchableOpacity
+                            style={styles.clearIcon}
+                            onPress={e => {
+                              e.stopPropagation();
+                              setSchedule(prev => ({
+                                ...prev,
+                                breakStart: '',
+                              }));
+                            }}
+                          >
+                            <Ionicons
+                              name="close-circle"
+                              size={wp('5%')}
+                              color="#999"
+                            />
+                          </TouchableOpacity>
+                        ) : null}
+                      </View>
                     </View>
+
                     <View style={styles.inputBox}>
-                      <Text style={styles.label}>Start Time</Text>
-                      <TextInput style={styles.input} value="03:00 PM" />
-                      <Ionicons
-                        name="close-circle-outline"
-                        size={wp('5%')}
-                        style={styles.inputIcon}
-                      />
+                      <Text style={styles.label}>End</Text>
+
+                      <View style={{ position: 'relative' }}>
+                        {/* Open picker */}
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          onPress={() => openPicker('breakEnd')}
+                        >
+                          <TextInput
+                            style={styles.input}
+                            editable={false}
+                            pointerEvents="none"
+                            value={schedule.breakEnd}
+                            placeholder="Select Break End"
+                            placeholderTextColor="#999"
+                          />
+                        </TouchableOpacity>
+
+                        {/* Clear icon */}
+                        {schedule.breakEnd ? (
+                          <TouchableOpacity
+                            style={styles.clearIcon}
+                            onPress={e => {
+                              e.stopPropagation();
+                              setSchedule(prev => ({ ...prev, breakEnd: '' }));
+                            }}
+                          >
+                            <Ionicons
+                              name="close-circle"
+                              size={wp('5%')}
+                              color="#999"
+                            />
+                          </TouchableOpacity>
+                        ) : null}
+                      </View>
                     </View>
                   </View>
 
                   {/* Availability */}
-                  <Text style={[styles.label, { marginTop: hp('0%') }]}>
-                    Availability
-                  </Text>
-                  <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.optionRow}
-                  >
+                  <Text style={styles.label}>Availability</Text>
+                  <ScrollView horizontal>
                     {['15 min', '20 min', '30 min', '40 min', '60 min'].map(
-                      time => (
+                      t => (
                         <TouchableOpacity
-                          key={time}
+                          key={t}
                           style={[
                             styles.optionBtn,
-                            availability === time && styles.optionBtnActive,
+                            schedule.duration === t && styles.optionBtnActive,
                           ]}
-                          onPress={() => setAvailability(time)}
+                          onPress={() =>
+                            setSchedule(prev => ({
+                              ...prev,
+                              duration: t,
+                            }))
+                          }
                         >
                           <Text
-                            style={[
-                              styles.optionText,
-                              availability === time && styles.optionTextActive,
-                            ]}
+                            style={
+                              styles.optionText &&
+                              schedule.duration === t &&
+                              styles.optionTextActive
+                            }
                           >
-                            {time}
+                            {t}
                           </Text>
                         </TouchableOpacity>
                       ),
                     )}
                   </ScrollView>
 
-                  {/* Call Types */}
-                  <Text style={[styles.label, { marginTop: hp('0%') }]}>
-                    Call Types
-                  </Text>
-                  <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.optionRow}
-                  >
-                    {[
-                      {
-                        label: 'Chat',
-                        image: require('../../../../assets/Image/chat_hour.png'),
-                      },
-                      {
-                        label: 'Audio Call',
-                        image: require('../../../../assets/Image/phone_hour.png'),
-                      },
-                      {
-                        label: 'Video Call',
-                        image: require('../../../../assets/Image/video_hour.png'),
-                      },
-                    ].map(item => (
+                  {/* Call Type */}
+                  <Text style={styles.label}>Call Types</Text>
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    {CALL_TYPES.map(item => (
                       <TouchableOpacity
-                        key={item.label}
+                        key={item.value}
                         style={[
                           styles.callTypeBtn,
-                          callType === item.label && styles.callTypeBtnActive,
+                          schedule.callType === item.value &&
+                            styles.callTypeBtnActive,
                         ]}
-                        onPress={() => setCallType(item.label)}
+                        onPress={() =>
+                          setSchedule(prev => ({
+                            ...prev,
+                            callType: item.value,
+                          }))
+                        }
                       >
-                        <Image
-                          source={item.image}
-                          style={[
-                            styles.callTypeImg,
-                            callType === item.label && styles.callTypeImgActive,
-                          ]}
-                          resizeMode="contain"
-                        />
                         <Text
                           style={[
                             styles.callTypeText,
-                            callType === item.label &&
+                            schedule.callType === item.value &&
                               styles.callTypeTextActive,
                           ]}
                         >
@@ -231,13 +371,15 @@ const SetRegularHoursScreen: React.FC = () => {
                   </ScrollView>
 
                   {/* Price */}
-                  <Text style={[styles.label, { marginTop: hp('0%') }]}>
-                    Price
-                  </Text>
+                  <Text style={styles.label}>Price</Text>
                   <TextInput
                     style={styles.priceInput}
+                    keyboardType="numeric"
+                    value={schedule.price}
+                    onChangeText={text =>
+                      setSchedule(prev => ({ ...prev, price: text }))
+                    }
                     placeholder="Enter Amount"
-                    placeholderTextColor="#999"
                   />
                 </View>
               )}
@@ -245,11 +387,19 @@ const SetRegularHoursScreen: React.FC = () => {
           ))}
         </ScrollView>
 
-        {/* Next Button */}
         <TouchableOpacity style={styles.nextBtn} onPress={handleNext}>
           <Text style={styles.nextBtnText}>Next</Text>
         </TouchableOpacity>
       </View>
+
+      {showPicker && (
+        <DateTimePicker
+          value={new Date()}
+          mode="time"
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          onChange={onTimeChange}
+        />
+      )}
     </ImageBackground>
   );
 };

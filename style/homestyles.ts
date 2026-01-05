@@ -33,7 +33,7 @@ const styles = (wp: any, hp: any) =>
     container: {
       flex: 0,
       padding: 14,
-      marginTop: hp(1),
+      marginTop: hp(2),
     },
     header: {
       flexDirection: 'row',
@@ -171,10 +171,7 @@ const styles = (wp: any, hp: any) =>
     },
     /* ---------------- Calendar & Earnings Grid ---------------- */
     gridRow: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
-      rowGap: hp(2), // use rowGap/columnGap instead of gap
+     
     },
     gridItem: {
       width: '48%',

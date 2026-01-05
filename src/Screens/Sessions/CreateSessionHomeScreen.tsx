@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import {
   View,
   Text,
@@ -21,6 +20,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const CreateSessionScreen = () => {
   const { wp, hp } = useResponsive();
   const navigation = useNavigation();
+
+  // 🔹 NEW: session mode
+  const [sessionMode, setSessionMode] = useState<'client' | 'feature'>('client');
+
   const [sessionType, setSessionType] = useState('');
   const [client, setClient] = useState('');
   const [imageUri, setImageUri] = useState<string | null>(null);
@@ -29,6 +32,7 @@ const CreateSessionScreen = () => {
   const [showDate, setShowDate] = useState(false);
   const [showTime, setShowTime] = useState(false);
   const [isFree, setIsFree] = useState(false);
+
   const sessionTypeData = [
     { label: 'Individual', value: 'individual' },
     { label: 'Group', value: 'group' },
@@ -38,9 +42,10 @@ const CreateSessionScreen = () => {
     { label: 'Client A', value: '1' },
     { label: 'Client B', value: '2' },
   ];
+
   const pickImage = () => {
     launchImageLibrary({ mediaType: 'photo', quality: 0.7 }, response => {
-      if (response.assets && response.assets[0].uri) {
+      if (response.assets?.[0]?.uri) {
         setImageUri(response.assets[0].uri);
       }
     });
@@ -64,25 +69,52 @@ const CreateSessionScreen = () => {
           <Text style={styles(wp, hp).headerTitle}>Create Session</Text>
         </View>
 
-        {/* Toggle Buttons */}
+        {/* 🔹 TOGGLE BUTTONS */}
         <View style={styles(wp, hp).toggleRow}>
-          <TouchableOpacity style={styles(wp, hp).activeToggle}>
-            <Text style={styles(wp, hp).activeToggleText}>
+          <TouchableOpacity
+            style={
+              sessionMode === 'client'
+                ? styles(wp, hp).activeToggle
+                : styles(wp, hp).inactiveToggle
+            }
+            onPress={() => setSessionMode('client')}
+          >
+            <Text
+              style={
+                sessionMode === 'client'
+                  ? styles(wp, hp).activeToggleText
+                  : styles(wp, hp).inactiveToggleText
+              }
+            >
               Client - Based Session
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles(wp, hp).inactiveToggle}>
-            <Text style={styles(wp, hp).inactiveToggleText}>
+          <TouchableOpacity
+            style={
+              sessionMode === 'feature'
+                ? styles(wp, hp).activeToggle
+                : styles(wp, hp).inactiveToggle
+            }
+            onPress={() => setSessionMode('feature')}
+          >
+            <Text
+              style={
+                sessionMode === 'feature'
+                  ? styles(wp, hp).activeToggleText
+                  : styles(wp, hp).inactiveToggleText
+              }
+            >
               Feature Session
             </Text>
           </TouchableOpacity>
         </View>
 
-        {/* Input Fields */}
+        {/* Session Name */}
         <Text style={styles(wp, hp).label}>Session Name</Text>
         <TextInput placeholder="enter" style={styles(wp, hp).input} />
 
+        {/* Date & Time */}
         <View style={styles(wp, hp).row}>
           <View style={styles(wp, hp).halfInput}>
             <Text style={styles(wp, hp).label}>Date</Text>
@@ -93,11 +125,7 @@ const CreateSessionScreen = () => {
               <Text style={styles(wp, hp).placeholder}>
                 {date ? date.toDateString() : 'Date'}
               </Text>
-              <MaterialIcons
-                name="calendar-today"
-                size={wp(5)}
-                color="#6A8F7A"
-              />
+              <MaterialIcons name="calendar-today" size={wp(5)} color="#6A8F7A" />
             </TouchableOpacity>
           </View>
 
@@ -114,14 +142,14 @@ const CreateSessionScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
+
         {showDate && (
           <DateTimePicker
             value={date || new Date()}
             mode="date"
-            display="default"
-            onChange={(e, selectedDate) => {
+            onChange={(_, d) => {
               setShowDate(false);
-              if (selectedDate) setDate(selectedDate);
+              if (d) setDate(d);
             }}
           />
         )}
@@ -130,14 +158,14 @@ const CreateSessionScreen = () => {
           <DateTimePicker
             value={time || new Date()}
             mode="time"
-            display="default"
-            onChange={(e, selectedTime) => {
+            onChange={(_, t) => {
               setShowTime(false);
-              if (selectedTime) setTime(selectedTime);
+              if (t) setTime(t);
             }}
           />
         )}
 
+        {/* Session Type */}
         <Text style={styles(wp, hp).label}>Session Type</Text>
         <UniversalDropdown
           value={sessionType}
@@ -147,21 +175,29 @@ const CreateSessionScreen = () => {
           showBorder={false}
         />
 
+        {/* Focus Areas */}
         <Text style={styles(wp, hp).label}>Focus Areas</Text>
         <TextInput placeholder="enter" style={styles(wp, hp).input} />
 
+        {/* Notes */}
         <Text style={styles(wp, hp).label}>Session Notes</Text>
         <TextInput multiline style={styles(wp, hp).notesInput} />
 
-        <Text style={styles(wp, hp).label}>Add your Clients</Text>
-        <UniversalDropdown
-          value={client}
-          setValue={setClient}
-          data={clientData}
-          variant="square"
-          showBorder={false}
-        />
+        {/* 🔹 CONDITIONAL CLIENT FIELD */}
+        {sessionMode === 'client' && (
+          <>
+            <Text style={styles(wp, hp).label}>Add your Clients</Text>
+            <UniversalDropdown
+              value={client}
+              setValue={setClient}
+              data={clientData}
+              variant="square"
+              showBorder={false}
+            />
+          </>
+        )}
 
+        {/* Upload */}
         <Text style={styles(wp, hp).label}>Upload Picture</Text>
         <TouchableOpacity style={styles(wp, hp).uploadBox} onPress={pickImage}>
           {imageUri ? (
@@ -174,9 +210,11 @@ const CreateSessionScreen = () => {
           )}
         </TouchableOpacity>
 
+        {/* Price */}
         <Text style={styles(wp, hp).label}>Price</Text>
         <TextInput placeholder="enter" style={styles(wp, hp).input} />
 
+        {/* Free */}
         <TouchableOpacity
           style={styles(wp, hp).checkboxRow}
           onPress={() => setIsFree(!isFree)}
@@ -192,7 +230,7 @@ const CreateSessionScreen = () => {
           </Text>
         </TouchableOpacity>
 
-        {/* Footer Buttons */}
+        {/* Footer */}
         <View style={styles(wp, hp).footer}>
           <TouchableOpacity style={styles(wp, hp).cancelBtn}>
             <Text style={styles(wp, hp).cancelText}>Cancel</Text>

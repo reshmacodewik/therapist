@@ -77,6 +77,14 @@ const styles = StyleSheet.create({
     color: '#111',
     backgroundColor: '#fff',
   },
+  clearIcon: {
+  position: 'absolute',
+  right: wp('3%'),
+  top: '50%',
+  transform: [{ translateY: -10 }],
+  zIndex: 10,
+},
+
   inputIcon: {
     position: 'absolute',
     right: wp('3%'),
@@ -131,6 +139,7 @@ const styles = StyleSheet.create({
   },
   callTypeBtnActive: {
     backgroundColor: '#0a3d2f',
+  
   },
   callTypeText: {
     marginLeft: wp('0%'),

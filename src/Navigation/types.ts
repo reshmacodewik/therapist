@@ -63,4 +63,7 @@ export type RootStackParamList = {
   NewTicket: undefined;
   TicketSuccess: undefined;
   TicketChat: undefined;
+  EventDetailsScreen: {
+    eventId: string;
+  };
 };

@@ -61,6 +61,7 @@ import NewTicket from '../SupportTicket/NewTicket';
 import TicketSuccess from '../SupportTicket/TicketSuccess';
 import TicketChat from '../SupportTicket/TicketChat';
 import { useAuth } from '../Screens/Auth/AuthContext';
+import EventDetailsScreen from '../Screens/Event/EventDetailsScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const PublicStack = () => (
@@ -78,55 +79,108 @@ const PublicStack = () => (
 );
 const PrivateStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="HomeScreen" component={DrawerNavigator} />
+   <Stack.Screen name="HomeScreen" component={DrawerNavigator} />
+      <Stack.Screen
+        name="CreateSessionScreen"
+        component={CreateSessionScreen}
+      />
+      <Stack.Screen name="SessionsScreen" component={SessionsScreen} />
+      <Stack.Screen
+        name="SessionPaymentScreen"
+        component={SessionPaymentScreen}
+      />
+      <Stack.Screen name="SendPaymentLink" component={SendPaymentLink} />
+      <Stack.Screen name="TransactionHistory" component={TransactionHistory} />
+      <Stack.Screen
+        name="RefundPaymentScreen"
+        component={RefundPaymentScreen}
+      />
+      <Stack.Screen name="GrantAccess" component={GrantAccess} />
+      <Stack.Screen name="NoteScreen" component={NoteScreen} />
+      <Stack.Screen name="UploadScreen" component={UploadScreen} />
+      <Stack.Screen name="ShareProgress" component={ShareProgress} />
+      <Stack.Screen name="PastSessionScreen" component={PastSessionScreen} />
+      <Stack.Screen name="SessionDetails" component={SessionDetails} />
+      <Stack.Screen name="Breakout" component={Breakout} />
+      <Stack.Screen name="BreakoutRooms" component={BreakoutRooms} />
+      <Stack.Screen name="RescheduleSession" component={RescheduleSession} />
+      <Stack.Screen name="EditSession" component={EditSession} />
+      <Stack.Screen name="SessionCancel" component={SessionCancel} />
+      <Stack.Screen
+        name="PaymentDetailsScreen"
+        component={PaymentDetailsScreen}
+      />
+      <Stack.Screen name="WithdrawalScreen" component={WithdrawalScreen} />
+      <Stack.Screen name="BankDetailsScreen" component={BankDetailsScreen} />
+      <Stack.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+      />
+      <Stack.Screen
+        name="NotificationsScreen"
+        component={NotificationsScreen}
+      />
+      <Stack.Screen name="HelpScreen" component={HelpScreen} />
+      <Stack.Screen
+        name="SetRegularHoursScreen"
+        component={SetRegularHoursScreen}
+      />
+      <Stack.Screen name="SessionshomeScreen" component={SessionshomeScreen} />
+      <Stack.Screen name="ClientScreen" component={ClientScreen} />
+      <Stack.Screen name="AppointmentDetails" component={AppointmentDetails} />
 
-    <Stack.Screen name="CreateSessionScreen" component={CreateSessionScreen} />
-    <Stack.Screen name="SessionsScreen" component={SessionsScreen} />
-    <Stack.Screen name="SessionPaymentScreen" component={SessionPaymentScreen} />
-
-    <Stack.Screen name="SendPaymentLink" component={SendPaymentLink} />
-    <Stack.Screen name="TransactionHistory" component={TransactionHistory} />
-    <Stack.Screen name="RefundPaymentScreen" component={RefundPaymentScreen} />
-    <Stack.Screen name="GrantAccess" component={GrantAccess} />
-
-    <Stack.Screen name="NoteScreen" component={NoteScreen} />
-    <Stack.Screen name="UploadScreen" component={UploadScreen} />
-    <Stack.Screen name="ShareProgress" component={ShareProgress} />
-    <Stack.Screen name="PastSessionScreen" component={PastSessionScreen} />
-    <Stack.Screen name="SessionDetails" component={SessionDetails} />
-
-    <Stack.Screen name="Breakout" component={Breakout} />
-    <Stack.Screen name="BreakoutRooms" component={BreakoutRooms} />
-    <Stack.Screen name="RescheduleSession" component={RescheduleSession} />
-    <Stack.Screen name="EditSession" component={EditSession} />
-    <Stack.Screen name="SessionCancel" component={SessionCancel} />
-
-    {/* Sidebar / Drawer screens */}
-    <Stack.Screen name="PaymentDetailsScreen" component={PaymentDetailsScreen} />
-    <Stack.Screen name="WithdrawalScreen" component={WithdrawalScreen} />
-    <Stack.Screen name="BankDetailsScreen" component={BankDetailsScreen} />
-    <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-    <Stack.Screen name="NotificationsScreen" component={NotificationsScreen} />
-    <Stack.Screen name="HelpScreen" component={HelpScreen} />
-    <Stack.Screen name="SetRegularHoursScreen" component={SetRegularHoursScreen} />
-
-    {/* Peer */}
-    <Stack.Screen name="VerifyCredentialsPeer" component={VerifyCredentialsPeer} />
-    <Stack.Screen name="HomeScreenPeer" component={PeerDrawerNavigator} />
-    <Stack.Screen name="RequestApprovalScreen" component={RequestApprovalScreen} />
-    <Stack.Screen name="CreatePeerGroupScreen" component={CreatePeerGroupScreen} />
-
-    {/* Support */}
-    <Stack.Screen name="NewTicket" component={NewTicket} />
-    <Stack.Screen name="TicketSuccess" component={TicketSuccess} />
-    <Stack.Screen name="TicketChat" component={TicketChat} />
+      <Stack.Screen
+        name="VerifyCredentialsPeer"
+        component={VerifyCredentialsPeer}
+      />
+      <Stack.Screen name="HomeScreenPeer" component={PeerDrawerNavigator} />
+      <Stack.Screen
+        name="RequestApprovalScreen"
+        component={RequestApprovalScreen}
+      />
+      <Stack.Screen
+        name="CreatePeerGroupScreen"
+        component={CreatePeerGroupScreen}
+      />
+      <Stack.Screen name="ProgressScreen" component={ProgressScreen} />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen
+        name="SecurityPrivacyScreen"
+        component={SecurityPrivacyScreen}
+      />
+      <Stack.Screen name="RescheduleScreen" component={RescheduleScreen} />
+      <Stack.Screen
+        name="RequestApproveScreen"
+        component={RequestApproveScreen}
+      />
+      <Stack.Screen name="AddGoalScreen" component={AddGoalScreen} />
+      <Stack.Screen
+        name="MyAppointmentCalendar"
+        component={MyAppointmentCalendar}
+      />
+      <Stack.Screen name="MyAppointment" component={MyAppointment} />
+      <Stack.Screen name="AddSessionScreen" component={AddSessionScreen} />
+      <Stack.Screen
+        name="CreateSessionHomeScreen"
+        component={CreateSessionHomeScreen}
+      />
+      <Stack.Screen
+        name="NewRequestSupportScreen"
+        component={NewRequestSupportScreen}
+      />
+      <Stack.Screen name="CreateEventScreen" component={CreateEventScreen} />
+      <Stack.Screen name="MyEventScreen" component={MyEventScreen} />
+      <Stack.Screen name="NewTicket" component={NewTicket} />
+      <Stack.Screen name="TicketSuccess" component={TicketSuccess} />
+      <Stack.Screen name="TicketChat" component={TicketChat} />
+      <Stack.Screen name="EventDetailsScreen" component={EventDetailsScreen} />
   </Stack.Navigator>
 );
 const RootStack: React.FC = () => {
   const { loading, token } = useAuth();
 
   if (loading) {
-    return <SplashScreen />; // token check
+    return <SplashScreen />;
   }
 
   return token ? <PrivateStack /> : <PublicStack />;

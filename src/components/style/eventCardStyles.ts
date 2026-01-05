@@ -21,6 +21,23 @@ const eventCardStyles = (wp: any, hp: any) =>
       flex: 1,
       marginLeft: wp(4),
     },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    badge: {
+      padding: 4, // smaller padding since it's an image
+      borderRadius: 12,
+      alignSelf: 'flex-start',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+
+    badgeImage: {
+      width: wp(4), // width of the icon
+      height: wp(4), // height of the icon (make it square)
+    },
 
     title: {
       fontSize: wp(3.1),
@@ -120,12 +137,11 @@ const eventCardStyles = (wp: any, hp: any) =>
       fontWeight: '600',
       textAlign: 'center',
     },
-    
 
     disabledBtn: {
       backgroundColor: '#d1d5db',
       paddingVertical: hp(0.2),
-      paddingHorizontal: wp(6),
+  
       borderRadius: wp(6),
       marginRight: wp(3),
       width: wp(23),
@@ -134,6 +150,7 @@ const eventCardStyles = (wp: any, hp: any) =>
     disabledText: {
       color: '#9ca3af',
       fontWeight: '600',
+      textAlign:'center'
     },
   });
 
