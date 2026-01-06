@@ -25,45 +25,7 @@ import { API_EVENT_LIST } from '../../utils/api/APIConstant';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'SessionsScreen'>;
 // Sample session data
-const upcomingSessions = [
-  {
-    id: '1',
-    title: 'Wellness & Mental Health workshop',
-    date: '15th July, 2025',
-    time: '8:00 AM',
-    attendees: 50,
-    image: require('../../../assets/Image/yoga.png'),
-    status: 'approved',
-  },
-  {
-    id: '2',
-    title: 'Mindfulness Session',
-    date: '20th July, 2025',
-    time: '6:00 PM',
-    image: require('../../../assets/Image/group.png'),
-    status: 'requested',
-  },
-  {
-    id: '3',
-    title: 'Self Growth Workshop',
-    date: '22nd July, 2025',
-    time: '7:00 PM',
-    image: require('../../../assets/Image/photo.png'),
-    status: 'rejected',
-  },
-];
 
-const pastSessions = [
-  {
-    id: '4',
-    title: 'Healthy Boundaries',
-    date: '10th July, 2025',
-    time: '5:00 PM',
-    image: require('../../../assets/Image/writer.png'),
-    status: 'approved',
-    attendees: 30,
-  },
-];
 
 const SessionsScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState('upcoming');
@@ -79,12 +41,39 @@ const SessionsScreen: React.FC = () => {
     queryFn: () => getApiWithOutQuery({ url: API_EVENT_LIST }),
   });
   const events = data?.data || [];
+  const onlyDate = (d: string | Date) => {
+    const date = new Date(d);
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  };
+const mapStatus = (status: string): string => {
+  switch (status.toLowerCase()) {
+    case 'approved':
+      return 'approved';
+    case 'requested':
+      return 'requested';
+    case 'rejected':
+      return 'REJECTED';
+    default:
+      return 'requested'; // fallback if API sends unexpected value
+  }
+};
 
-  const upcomingEvents = events.filter(
-    (e: any) => e.status === 'PENDING' || e.status === 'APPROVED',
-  );
+  const todayDate = onlyDate(new Date());
 
-  const pastEvents = events.filter((e: any) => e.status === 'REJECTED');
+  const upcomingEvents = events
+    .filter((e: any) => onlyDate(e.date) >= todayDate)
+    .sort(
+      (a: any, b: any) =>
+        onlyDate(a.date).getTime() - onlyDate(b.date).getTime(),
+    );
+
+  const pastEvents = events
+    .filter((e: any) => onlyDate(e.date) < todayDate)
+    .sort(
+      (a: any, b: any) =>
+        onlyDate(b.date).getTime() - onlyDate(a.date).getTime(),
+    );
+
   const formatDate = (iso: string) => {
     const d = new Date(iso);
     return d.toLocaleDateString('en-GB', {
@@ -170,6 +159,7 @@ const SessionsScreen: React.FC = () => {
                   time: string;
                   image: any;
                   status: string;
+                  adminRejectReason?: string;
                   attendees: number | undefined;
                 }) => (
                   console.log(event, 'event--0000'),
@@ -180,19 +170,15 @@ const SessionsScreen: React.FC = () => {
                       date={formatDate(event.date)}
                       time={event.time}
                       image={event?.image}
-                      status={
-                        event.status.toLowerCase() === 'approved'
-                          ? 'approved'
-                          : 'requested'
-                      }
+                      status={mapStatus(event?.status)}
                       onPress={() =>
                         navigation.navigate('EventDetailsScreen', {
                           eventId: event._id as string,
                         })
                       }
-                      
                       attendees={event.attendees}
                       isFree={event.isFree}
+                      adminRejectReason={event?.adminRejectReason}
                       onManage={() => handleManage()}
                       onConduct={() => console.log('Conduct', event._id)}
                     />
@@ -210,9 +196,10 @@ const SessionsScreen: React.FC = () => {
                     date={formatDate(event.date)}
                     time={event.time}
                     image={event?.image} // just pass the string
-                   status="REJECTED"
+                    status={mapStatus(event?.status)}
                     attendees={event.attendees}
                     isFree={event.isFree}
+                    adminRejectReason={event.adminRejectReason}
                     onManage={() => handleManage()}
                   />
                 ))}

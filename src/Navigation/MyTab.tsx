@@ -108,7 +108,7 @@ const BottomTabs = () => {
 
       <Tab.Screen
         name="wallet"
-        component={() => null} // ok to return null
+        component={RefundPaymentScreen} // ok to return null
         options={{
            tabBarIcon: ({ focused }: { focused: boolean }) => (
             <Image

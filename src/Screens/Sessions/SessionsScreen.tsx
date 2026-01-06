@@ -17,102 +17,50 @@ import SessionCard from '../../components/SessionCard';
 // adjust path
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
-
+import { useQuery } from '@tanstack/react-query';
+import { getApiWithOutQuery } from '../../utils/api/common';
+import { API_SESSION_DETAILS } from '../../utils/api/APIConstant';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'SessionsScreen'>;
-// Sample session data
-const upcomingSessions = [
-  {
-    id: '1',
-    title: 'Mindfulness Practices',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/yoga.png'),
-  },
-  {
-    id: '2',
-    title: 'LGBTQ+ Support Group',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/group.png'),
-  },
-  {
-    id: '3',
-    title: 'Building Self-Esteem',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/photo.png'),
-  },
-  {
-    id: '4',
-    title: 'Healthy Boundaries',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/writer.png'),
-  },
-];
-
-const pastSessions = [
-  {
-    id: '1',
-    title: 'Mindfulness Practices',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/yoga.png'),
-  },
-  {
-    id: '2',
-    title: 'LGBTQ+ Support Group',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/group.png'),
-  },
-  {
-    id: '3',
-    title: 'Building Self-Esteem',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/photo.png'),
-  },
-  {
-    id: '4',
-    title: 'Healthy Boundaries',
-    description: 'Share and learn mindfulness techniques',
-    date: 'April 25',
-    time: '5:00pm',
-    attendees: 5,
-    image: require('../../../assets/Image/writer.png'),
-  },
-];
 
 const SessionsScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState('upcoming');
   const navigation = useNavigation<Nav>();
-  const handleManage = () => {
-    navigation.navigate('SessionPaymentScreen'); // ✅ simple navigate, no params
-  };
-   const handleManagePast = () => {
-    navigation.navigate('PastSessionScreen' as never); // ✅ simple navigate, no params
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['my-sessions'],
+    queryFn: () =>
+      getApiWithOutQuery({
+        url: `${API_SESSION_DETAILS}`,
+      }),
+  });
+  const today = new Date();
+
+  const sessions = data?.data ?? [];
+
+  const upcomingSessions = sessions.filter((s: any) => {
+    const sessionDate = new Date(`${s.date} ${s.time}`);
+    return sessionDate >= today;
+  });
+
+  const pastSessions = sessions.filter((s: any) => {
+    const sessionDate = new Date(`${s.date} ${s.time}`);
+    return sessionDate < today;
+  });
+
+  const handleManage = (session: any) => {
+    navigation.navigate('SessionPaymentScreen', {
+      sessionId: session.id,
+    });
   };
 
+  const handleManagePast = (session: any) => {
+    navigation.navigate('SessionPaymentScreen', {
+     sessionId: session.id,
+    });
+  };
 
-  const handleConduct = (sessionId: string) => {
-    // Handle conduct session
-    console.log('Conduct session:', sessionId);
+  const handleConduct = (session: any) => {
+    console.log('Conduct session:', { sessionId: session.id });
   };
 
   return (
@@ -177,36 +125,52 @@ const SessionsScreen: React.FC = () => {
 
           {activeTab === 'upcoming' ? (
             <>
-              {upcomingSessions.map(session => (
-                <SessionCard
-                  key={session.id}
-                  title={session.title}
-                  description={session.description}
-                  date={session.date}
-                  time={session.time}
-                  attendees={session.attendees}
-                  image={session.image}
-                  showConductButton={true}
-                  onManage={handleManage}
-                  onConduct={() => handleConduct(session.id)}
-                />
-              ))}
+              {isLoading ? (
+                <Text>Loading...</Text>
+              ) : upcomingSessions.length === 0 ? (
+                <Text>No upcoming sessions</Text>
+              ) : (
+                upcomingSessions.map((session: any, index: number) => (
+                  <SessionCard
+                    key={`${session.sessionId}-${index}`}
+                    title={session.sessionName || 'Session'}
+                    description={session.notes}
+                    date={session.date}
+                    time={session.time}
+                    isFree={session.isFree || false}
+                    attendees={session.registeredCount || 0}
+                    sessionType={session.sessionType}
+                    image={require('../../../assets/Image/yoga.png')}
+                    showConductButton={true}
+                    onManage={() => handleManage(session)}
+                    onConduct={() => handleConduct(session)}
+                  />
+                ))
+              )}
             </>
           ) : (
             <>
-              {pastSessions.map(session => (
-                <SessionCard
-                  key={session.id}
-                  title={session.title}
-                  description={session.description}
-                  date={session.date}
-                  time={session.time}
-                  attendees={session.attendees}
-                  image={session.image}
-                  showConductButton={false}
-                  onManage={handleManagePast}
-                />
-              ))}
+              {isLoading ? (
+                <Text>Loading...</Text>
+              ) : pastSessions.length === 0 ? (
+                <Text>No past sessions</Text>
+              ) : (
+                pastSessions.map((session: any, index: number) => (
+                  <SessionCard
+                    key={`${session.sessionName}-${index}`}
+                    title={session.sessionName || 'Session'}
+                    description={session.notes}
+                    date={session.date}
+                    time={session.time}
+                    attendees={session.registeredCount || 0}
+                    sessionType={session.sessionType}
+                    image={require('../../../assets/Image/group.png')}
+                    isFree={session.isFree || false}
+                    showConductButton={false}
+                    onManage={() => handleManagePast(session.sessionId)}
+                  />
+                ))
+              )}
             </>
           )}
         </ScrollView>

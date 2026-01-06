@@ -97,8 +97,8 @@ export const sessionsStyles = (wp: any, hp: any) =>
     justifyContent: 'space-between',
     },
     freeicon: {
-      width: wp(5),
-      height: wp(5),
+      width: wp(4),
+      height: wp(4),
       marginRight: wp(1),
     },
     sessionTitle: {

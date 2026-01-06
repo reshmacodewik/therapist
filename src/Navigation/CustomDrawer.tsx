@@ -6,10 +6,11 @@ import {
   DrawerContentComponentProps,
 } from '@react-navigation/drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useAuth } from '../Screens/Auth/AuthContext';
 
 const CustomDrawer = (props: DrawerContentComponentProps) => {
   const { state, navigation } = props;
-
+  const { signOut } = useAuth();
   const isActive = (routeName: string) => {
     const focusedRoute = state.routeNames[state.index];
     return focusedRoute === routeName;
@@ -119,7 +120,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
 
       {/* Logout */}
       <View style={styles.footer}>
-        <TouchableOpacity onPress={() => console.log('Logout Pressed')}>
+        <TouchableOpacity onPress={signOut}>
           <View style={styles.logoutRow}>
             <AntDesign name="logout" size={22} color="red" />
             <Text style={styles.logoutText}>Logout</Text>

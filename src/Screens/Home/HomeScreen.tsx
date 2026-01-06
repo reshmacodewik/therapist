@@ -573,7 +573,7 @@ const HomeScreen = () => {
                 <TouchableOpacity
                   style={styles(wp, hp).createSessionBtn}
                   onPress={() =>
-                    navigation.navigate('CreateSessionScreen' as never)
+                    navigation.navigate('SessionsScreen' as never)
                   }
                 >
                   <Text style={styles(wp, hp).sessionBtnText}>

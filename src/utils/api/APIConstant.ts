@@ -22,7 +22,12 @@ export const API_OTHERS_PROFILE_DETAILS :string = '/auth/other-profile';
 export const API_CREATE_EVENT :string = '/event/create';
 export const API_EVENT_LIST :string = '/event/list';
 export const API_DETAILSLIST_EVENTS :string = '/event/geteventdetail';
-
-//RESET PASSWORD
+export const API_CILENT_LIST :string = '/auth/my-clients';
+export const API_CREATE_SESSION :string = '/event/session/create';
+export const API_SESSION_DETAILS :string = '/event/my-sessions';
+export const API_UPDATE_SESSION :string = '/event/session/update';
+export const API_GET_SESSION_DETAILS :string = '/event/session';
+export const API_SESSION_CANCEL :string = '/event/session/cancel';
+export const API_SESSION_RESECHUDLE :string = '/event/session/reschedule';
 export const API_VALET_RESET_SEND_OTP: string = '/reset-password';
 export const API_VALET_PASSWORD_RESET: string = '/new-password';

@@ -14,10 +14,17 @@ export type RootStackParamList = {
   };
   VerifyCredentials: undefined;
   CredentialsSuccess: undefined;
-  HomeScreen: undefined; 
+  HomeScreen: undefined;
   CreateSessionScreen: undefined;
   SessionsScreen: undefined;
-  SessionPaymentScreen: undefined;
+  SessionPaymentScreen: {
+    sessionId: string;
+  };
+
+  PastSessionScreen: {
+    sessionId: string;
+  };
+
   SendPaymentLink: undefined;
   TransactionHistory: undefined;
   RefundPaymentScreen: undefined;
@@ -25,13 +32,17 @@ export type RootStackParamList = {
   NoteScreen: undefined;
   UploadScreen: undefined;
   ShareProgress: undefined;
-  PastSessionScreen: undefined;
   SessionDetails: undefined;
   Breakout: undefined;
   BreakoutRooms: undefined;
-  RescheduleSession: undefined;
+  RescheduleSession: {
+    sessionId: string;
+  };
+
   EditSession: undefined;
-  SessionCancel: undefined;
+  SessionCancel: {
+    sessionId: string;
+  };
   PaymentDetailsScreen: undefined;
   WithdrawalScreen: undefined;
   BankDetailsScreen: undefined;

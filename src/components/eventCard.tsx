@@ -16,6 +16,7 @@ interface Props {
   attendees?: number;
   status: StatusType;
   isFree: boolean;
+  adminRejectReason?: string;
   onPress?: () => void;
   onManage?: () => void;
   onConduct?: () => void;
@@ -29,6 +30,7 @@ const EventCard: React.FC<Props> = ({
   attendees,
   status,
   isFree,
+  adminRejectReason,
   onPress,
   onManage,
   onConduct,
@@ -115,7 +117,7 @@ const EventCard: React.FC<Props> = ({
         {status === 'REJECTED' && (
           <>
             <Text style={styles.rejectedMsg}>
-              Event Information is incomplete
+              {adminRejectReason }
             </Text>
 
             <View style={styles.rejectedBadge}>

@@ -16,7 +16,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import { mdiAccount } from '@mdi/js';
 
-
 import {
   Menu,
   MenuOptions,
@@ -27,22 +26,35 @@ import s from './sessionPaymentStyles';
 import { useResponsive } from 'react-native-responsive-hook';
 import Header from '../../components/Header';
 import Icon from 'react-native-vector-icons/Feather';
-
+import { RootStackParamList } from '../../Navigation/types';
+import { useQuery } from '@tanstack/react-query';
+import { getApiWithOutQuery } from '../../utils/api/common';
+import { formatMonthYear, formatTime } from '../../utils/hooks/helper';
+import { API_GET_SESSION_DETAILS } from '../../utils/api/APIConstant';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+type RouteProps = RouteProp<RootStackParamList, 'SessionPaymentScreen'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'SessionsScreen',
+  'SessionPaymentScreen'
+>;
 const SessionPaymentScreen = () => {
   const { wp, hp } = useResponsive();
   const styles = s(wp, hp);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
+  const { sessionId } = useRoute<RouteProps>().params;
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ['session-detail', sessionId],
+    queryFn: () =>
+      getApiWithOutQuery({
+        url: `${API_GET_SESSION_DETAILS}/${sessionId}`,
+      }),
 
-  const handleConfirm = () => {
-
-    console.log('Confirm payment');
-  };
-
-  const handleMenuSelect = (value: any) => {
-    // Handle menu selection
-    console.log('Selected menu item:', value);
-  };
-
+    enabled: !!sessionId,
+  });
+  console.log(data, '6777-----------------------');
+  const session = data?.data;
+  console.log(session, '6777-----------------------');
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}
@@ -64,7 +76,14 @@ const SessionPaymentScreen = () => {
           </View>
           <View style={styles.tagcardContainer}>
             <View style={styles.tagContainer}>
-              <Image source={require('../../../assets/icon/badge.png')} />
+              <Image
+                source={
+                  session?.isFree
+                    ? require('../../../assets/icon/free.png')
+                    : require('../../../assets/icon/badge.png')
+                }
+                style={{ width: wp(7.8), height: hp(3.5) }}
+              />
             </View>
             <Image
               source={require('../../../assets/Image/yoga.png')}
@@ -73,10 +92,8 @@ const SessionPaymentScreen = () => {
 
             {/* Session Info */}
             <View style={styles.sessionInfoContainer}>
-              <Text style={styles.sessionTitle}>Mindfulness Practices</Text>
-              <Text style={styles.sessionDescription}>
-                Share and learn mindfulness techniques
-              </Text>
+              <Text style={styles.sessionTitle}>{session?.sessionName}</Text>
+              <Text style={styles.sessionDescription}>{session?.notes}</Text>
 
               {/* Date and Time */}
               <View style={styles.dateTimeContainer}>
@@ -86,14 +103,18 @@ const SessionPaymentScreen = () => {
                   color="#000"
                   style={styles.dateTimeIcon}
                 />
-                <Text style={styles.dateTimeText}>April 25, 5:00pm</Text>
+                <Text style={styles.dateTimeText}>
+                  {formatMonthYear(session?.date)} • {formatTime(session?.time)}
+                </Text>
               </View>
             </View>
             {/* Format and Registered Count */}
             <View style={styles.formatContainer}>
-              <Text style={styles.formatLabel}>Format: Chat sessions</Text>
+              <Text style={styles.formatLabel}>
+                Format: {session?.sessionType}
+              </Text>
               <Text style={styles.registeredCount}>
-                5 Attending (3 paid client )
+                {session?.registeredCount} Attending (3 paid client )
               </Text>
             </View>
           </View>
@@ -126,7 +147,12 @@ const SessionPaymentScreen = () => {
             <View style={styles.actionButtonsContainer}>
               {/* Send Payment Link */}
               <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.primaryButton} onPress={()=>navigation.navigate('SendPaymentLink' as never)}>
+                <TouchableOpacity
+                  style={styles.primaryButton}
+                  onPress={() =>
+                    navigation.navigate('SendPaymentLink' as never)
+                  }
+                >
                   <Text style={styles.primaryButtonText}>
                     Send Payment Link
                   </Text>
@@ -139,7 +165,12 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
 
                 {/* Refund Participant */}
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('RefundPaymentScreen' as never)}>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() =>
+                    navigation.navigate('RefundPaymentScreen' as never)
+                  }
+                >
                   <Text style={styles.outlineButtonText}>
                     Refund Participant
                   </Text>
@@ -153,7 +184,10 @@ const SessionPaymentScreen = () => {
               </View>
               {/* Grant Access */}
               <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('GrantAccess' as never)}>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() => navigation.navigate('GrantAccess' as never)}
+                >
                   <Text style={styles.outlineButtonText}>Grant Access</Text>
                   <Feather
                     name="check"
@@ -164,7 +198,12 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
 
                 {/* View All Transactions */}
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('TransactionHistory' as never)}>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() =>
+                    navigation.navigate('TransactionHistory' as never)
+                  }
+                >
                   <Text style={styles.outlineButtonText}>
                     View All Transactions
                   </Text>
@@ -199,7 +238,10 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
 
                 {/* Refund Participant */}
-                <TouchableOpacity style={styles.outlineButton}onPress={()=>navigation.navigate('NoteScreen' as never)}>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() => navigation.navigate('NoteScreen' as never)}
+                >
                   <Text style={styles.outlineButtonText}>Add Notes</Text>
                   <Ionicons
                     name="bookmark-outline"
@@ -211,7 +253,10 @@ const SessionPaymentScreen = () => {
               </View>
               {/* Grant Access */}
               <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('UploadScreen' as never)}>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() => navigation.navigate('UploadScreen' as never)}
+                >
                   <Text style={styles.outlineButtonText}>Upload Resources</Text>
                   <Feather
                     name="upload"
@@ -222,7 +267,10 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
 
                 {/* View All Transactions */}
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('SessionDetails' as never)}>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() => navigation.navigate('SessionDetails' as never)}
+                >
                   <Text style={styles.outlineButtonText}>Start Sessions</Text>
                   <MaterialIcons
                     name="arrow-right"
@@ -287,13 +335,16 @@ const SessionPaymentScreen = () => {
           <View style={styles.accessPaymentContainer}>
             <Text style={styles.sectionTitle}>Session Settings</Text>
             <Text style={styles.paymentLabel}>
-              Manage your sessions at one place 
+              Manage your sessions at one place
             </Text>
             {/* Action Buttons Section */}
             <View style={styles.actionButtonsContainer}>
               {/* Send Payment Link */}
               <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.primaryButton}  onPress={()=>navigation.navigate('EditSession' as never)}>
+                <TouchableOpacity
+                  style={styles.primaryButton}
+                  onPress={() => navigation.navigate('EditSession' as never)}
+                >
                   <Text style={styles.primaryButtonText}>Edit Sessions</Text>
                   <Feather
                     name="edit-2"
@@ -304,10 +355,16 @@ const SessionPaymentScreen = () => {
                 </TouchableOpacity>
 
                 {/* Refund Participant */}
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('RescheduleSession' as never)} >
-                  <Text style={styles.outlineButtonText}>
-                   Reschedule
-                  </Text>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() => {
+                    console.log('Session ID:', sessionId); 
+                    navigation.navigate('RescheduleSession', {
+                      sessionId: sessionId,
+                    });
+                  }}
+                >
+                  <Text style={styles.outlineButtonText}>Reschedule</Text>
                   <MaterialIcons
                     name="groups"
                     size={wp(4.5)}
@@ -318,10 +375,16 @@ const SessionPaymentScreen = () => {
               </View>
               {/* Grant Access */}
               <View style={styles.actionButtonsinnerContainer}>
-                <TouchableOpacity style={styles.outlineButton} onPress={()=>navigation.navigate('SessionCancel' as never)}>
-                  <Text style={styles.outlineButtonText}>
-                  Cancel Session
-                  </Text>
+                <TouchableOpacity
+                  style={styles.outlineButton}
+                  onPress={() => {
+                    console.log('Session ID:', sessionId); 
+                    navigation.navigate('SessionCancel', {
+                      sessionId: sessionId,
+                    });
+                  }}
+                >
+                  <Text style={styles.outlineButtonText}>Cancel Session</Text>
                   <Fontisto
                     name="arrow-return-left"
                     size={wp(4.5)}

@@ -13,6 +13,8 @@ interface SessionCardProps {
   time: string;
   attendees: number;
   image: any;
+  sessionType: 'Voice Call' | 'Video Call' | 'Chat';
+  isFree: boolean;
   showConductButton?: boolean;
   onManage: () => void;
   onConduct?: () => void;
@@ -25,7 +27,9 @@ const SessionCard: React.FC<SessionCardProps> = ({
   time,
   attendees,
   image,
+  isFree,
   showConductButton = false,
+  sessionType,
   onManage,
   onConduct,
 }) => {
@@ -36,14 +40,33 @@ const SessionCard: React.FC<SessionCardProps> = ({
       </View>
       <View style={sessionsStyles(wp, hp).sessionContent}>
         <View style={sessionsStyles(wp, hp).sessionTitleContainer}>
-          <Text style={sessionsStyles(wp, hp).sessionTitle}>{title}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center',marginLeft: wp(3) }}>
+          <Text style={sessionsStyles(wp, hp).sessionTitle}>
+            {(() => {
+              const words = title.split(' ');
+              return words.length > 1
+                ? words.slice(0, 2).join(' ') + '\n' + words.slice(2).join(' ')
+                : title;
+            })()}
+          </Text>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginLeft: wp(3),
+            }}
+          >
             <Image
-              source={require('../../assets/icon/chat.png')}
+              source={sessionType === 'Chat' ? require('../../assets/icon/chat1.png') : require('../../assets/icon/video.png')}
               style={sessionsStyles(wp, hp).freeicon}
             />
+
             <Image
-              source={require('../../assets/icon/free.png')}
+              source={
+                isFree
+                  ? require('../../assets/icon/free.png')
+                  : require('../../assets/icon/badge.png')
+              }
               style={sessionsStyles(wp, hp).freeicon}
             />
           </View>
