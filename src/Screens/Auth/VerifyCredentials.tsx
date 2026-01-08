@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  Image,
 } from 'react-native';
-import { useResponsive } from '../../../components/Responsive/useResponsive';
+
 import { styles } from '../../../style/VerifyCredentialstyles';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
@@ -15,20 +16,46 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { Formik } from 'formik';
 import { verifyCredentialsSchema } from '../../validation/signupSchema';
-import { apiPost } from '../../utils/api/common';
+import { apiPost, apiPostWithMultiForm } from '../../utils/api/common';
 import { API_VERIFY_DETAILS } from '../../utils/api/APIConstant';
 import ShowToast from '../../utils/ShowToast';
 import { getCurrentUserInfo } from '../../libs/auth';
-
+import { launchImageLibrary } from 'react-native-image-picker';
+import Ionicons from '@react-native-vector-icons/ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const VerifyCredentials = () => {
   const navigation =
     useNavigation<
       NativeStackNavigationProp<RootStackParamList, 'VerifyCredentials'>
     >();
-  const { fontSize } = useResponsive();
   const [year, setYear] = useState('');
   const [Specialization, setSpecialization] = useState('');
   const [Language, setLanguage] = useState('');
+  const [documents, setDocuments] = useState<any[]>([]);
+  const pickDocument = () => {
+    launchImageLibrary(
+      {
+        mediaType: 'mixed',
+        selectionLimit: 1,
+        includeBase64: false,
+      },
+      response => {
+        if (response.didCancel || response.errorCode) return;
+
+        const file = response.assets?.[0];
+        if (!file) return;
+
+        const fixedFile = {
+          ...file,
+          uri: file.uri?.startsWith('content://')
+            ? file.uri.replace('content://', 'file://')
+            : file.uri,
+        };
+
+        setDocuments(prev => [...prev, fixedFile]);
+      },
+    );
+  }; // ✅ ONLY this brace
 
   const specializations = [
     'Cardiology',
@@ -66,7 +93,7 @@ const VerifyCredentials = () => {
           initialValues={{
             licenseNumber: '',
             year: '',
-            specialization: '',
+            specialization: [] as string[],
             language: '',
             bio: '',
           }}
@@ -74,27 +101,37 @@ const VerifyCredentials = () => {
           onSubmit={async values => {
             const user = await getCurrentUserInfo();
 
-            const payload = {
-              userId: user?._id,
-              licenseNumber: values.licenseNumber,
-              yearsOfExperience: values.year,
-              areaOfSpecialization: values.specialization,
-              languages: [values.language],
-              bio: values.bio,
-            };
+            const formData = new FormData();
 
-            console.log('final payload →', payload);
+            // text fields
+            formData.append('userId', user?._id);
+            formData.append('licenseNumber', values.licenseNumber);
+            formData.append('yearsOfExperience', values.year);
+            formData.append('areaOfSpecialization', values.specialization);
+            formData.append('bio', values.bio);
 
-            const res = await apiPost({
-              url: API_VERIFY_DETAILS,
-              values: payload,
+            // array field
+            formData.append('languages[]', values.language);
+
+            // files
+            documents.forEach((doc, index) => {
+              formData.append('files', {
+                uri: doc.uri,
+                name: doc.fileName || `document-${index}.jpg`,
+                type: doc.type || 'application/octet-stream',
+              } as any);
             });
-            console.log(res?.data, 'res--------res-------------------');
+
+            console.log('Submitting formData with files:', documents.length);
+
+            const res = await apiPostWithMultiForm({
+              url: API_VERIFY_DETAILS,
+              values: formData,
+            });
+
             if (res?.success) {
               ShowToast(
-                'message' in res
-                  ? res.message
-                  : 'Details submitted successfully',
+                res.message || 'Details submitted successfully',
                 'success',
               );
               navigation.navigate('CredentialsSuccess');
@@ -219,6 +256,68 @@ const VerifyCredentials = () => {
                   {touched.bio && errors.bio && (
                     <Text style={styles.error}>{errors.bio}</Text>
                   )}
+                </View>
+                <View style={styles.uploadSection}>
+                  <Text style={styles.uploadTitle}>Upload your document</Text>
+
+                  {/* Upload Box (always visible) */}
+                  <TouchableOpacity
+                    style={styles.uploadBox}
+                    onPress={pickDocument}
+                    activeOpacity={0.8}
+                  >
+                    <View style={styles.uploadInner}>
+                      <MaterialIcons
+                        name="upload-file"
+                        size={24}
+                        color="#1F3D2B"
+                      />
+                      <Text style={styles.uploadText}>
+                        Upload your Document
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+
+                  {/* Uploaded Files List */}
+                  {documents.map((doc, index) => {
+                    const isImage = doc.type?.startsWith('image/');
+
+                    return (
+                      <View key={index} style={styles.uploadedContainer}>
+                        {isImage ? (
+                          <Image
+                            source={{ uri: doc.uri }}
+                            style={styles.previewImage}
+                            resizeMode="cover"
+                          />
+                        ) : (
+                          <MaterialIcons
+                            name="picture-as-pdf"
+                            size={28}
+                            color="#FFFFFF"
+                          />
+                        )}
+
+                        <Text style={styles.fileName} numberOfLines={1}>
+                          {doc.fileName}
+                        </Text>
+
+                        <TouchableOpacity
+                          onPress={() =>
+                            setDocuments(prev =>
+                              prev.filter((_, i) => i !== index),
+                            )
+                          }
+                        >
+                          <MaterialIcons
+                            name="delete-outline"
+                            size={22}
+                            color="#FFFFFF"
+                          />
+                        </TouchableOpacity>
+                      </View>
+                    );
+                  })}
                 </View>
               </View>
 

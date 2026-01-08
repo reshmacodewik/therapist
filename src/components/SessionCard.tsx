@@ -12,7 +12,8 @@ interface SessionCardProps {
   date: string;
   time: string;
   attendees: number;
-  image: any;
+  image?: string | null;
+
   sessionType: 'Voice Call' | 'Video Call' | 'Chat';
   isFree: boolean;
   showConductButton?: boolean;
@@ -33,10 +34,18 @@ const SessionCard: React.FC<SessionCardProps> = ({
   onManage,
   onConduct,
 }) => {
+  const imageSource =
+    image && image.startsWith('http')
+      ? { uri: encodeURI(image) } // ✅ ENCODE URL
+      : require('../../assets/Image/yoga.png'); // fallback
+
   return (
     <View style={sessionsStyles(wp, hp).sessionCard}>
       <View style={sessionsStyles(wp, hp).sessionImageContainer}>
-        <Image source={image} style={sessionsStyles(wp, hp).sessionImage} />
+        <Image
+          source={imageSource}
+          style={sessionsStyles(wp, hp).sessionImage}
+        />
       </View>
       <View style={sessionsStyles(wp, hp).sessionContent}>
         <View style={sessionsStyles(wp, hp).sessionTitleContainer}>
@@ -57,7 +66,11 @@ const SessionCard: React.FC<SessionCardProps> = ({
             }}
           >
             <Image
-              source={sessionType === 'Chat' ? require('../../assets/icon/chat1.png') : require('../../assets/icon/video.png')}
+              source={
+                sessionType === 'Chat'
+                  ? require('../../assets/icon/chat1.png')
+                  : require('../../assets/icon/video.png')
+              }
               style={sessionsStyles(wp, hp).freeicon}
             />
 

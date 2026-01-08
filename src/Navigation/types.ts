@@ -39,7 +39,9 @@ export type RootStackParamList = {
     sessionId: string;
   };
 
-  EditSession: undefined;
+  EditSession: {
+    sessionId: string;
+  };
   SessionCancel: {
     sessionId: string;
   };

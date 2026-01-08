@@ -33,7 +33,7 @@ const SignUpScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const [loading, setLoading] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
-  
+
   useEffect(() => {
     console.log('User selected role:', role);
   }, [role]);
@@ -45,6 +45,7 @@ const SignUpScreen = () => {
       email: '',
       gender: '',
       password: '',
+      confirmPassword: '',
       phoneNo: '',
       countryCode: '+254',
       countryIso2: 'KE',
@@ -62,7 +63,7 @@ const SignUpScreen = () => {
           url: API_REGISTER,
           values: { ...values, dob },
         });
-        console.log(res ,values ,"============res========================")
+        console.log(res, values, '============res========================');
 
         if (res?.success) {
           ShowToast(res?.message, 'success');
@@ -253,7 +254,19 @@ const SignUpScreen = () => {
         {formik.touched.password && formik.errors.password && (
           <Text style={styles.errorText}>{formik.errors.password}</Text>
         )}
-
+        <Text style={styles.label}> Confirm Password</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Confirm password"
+          secureTextEntry
+          placeholderTextColor="#999"
+          onChangeText={formik.handleChange('confirmPassword')}
+          onBlur={formik.handleBlur('confirmPassword')}
+          value={formik.values.confirmPassword}
+        />
+        {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+          <Text style={styles.errorText}>{formik.errors.confirmPassword}</Text>
+        )}
         {/* Terms */}
         <View style={styles.termsRow}>
           <CheckBox
@@ -287,7 +300,7 @@ const SignUpScreen = () => {
         <Text
           style={[styles.signupPrompt, { fontSize: wp(3.5), marginTop: hp(2) }]}
         >
-          Don’t have an account?{' '}
+          Already have an account?{' '}
           <Text
             style={styles.signupLink}
             onPress={() => navigation.navigate('LoginScreen')}

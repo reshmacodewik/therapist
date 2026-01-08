@@ -343,7 +343,12 @@ const SessionPaymentScreen = () => {
               <View style={styles.actionButtonsinnerContainer}>
                 <TouchableOpacity
                   style={styles.primaryButton}
-                  onPress={() => navigation.navigate('EditSession' as never)}
+                  onPress={() => {
+                    console.log('Session ID:', sessionId); 
+                    navigation.navigate('EditSession', {
+                      sessionId: sessionId,
+                    });
+                  }}
                 >
                   <Text style={styles.primaryButtonText}>Edit Sessions</Text>
                   <Feather

@@ -114,7 +114,7 @@ const MyAppointment = () => {
 
   const onPressCard = useCallback(
     (item: Appointment) => {
-      navigation.navigate('AppointmentDetails'); // ✅ now typed
+      navigation.navigate('AppointmentDetails');
     },
     [navigation],
   );

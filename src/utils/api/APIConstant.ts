@@ -31,3 +31,4 @@ export const API_SESSION_CANCEL :string = '/event/session/cancel';
 export const API_SESSION_RESECHUDLE :string = '/event/session/reschedule';
 export const API_VALET_RESET_SEND_OTP: string = '/reset-password';
 export const API_VALET_PASSWORD_RESET: string = '/new-password';
+export const API_GET_SESSION_BY_ID :string = '/event/session-by-id';

@@ -75,6 +75,22 @@ export const createEditSessionStyles = (wp: any, hp: any) =>
       justifyContent: "space-between",
       marginTop: hp(1),
     },
+    
+  dropdownList: {
+    marginTop: hp(1),
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+  },
+
+  dropdownItem: {
+    paddingVertical: hp(1.5),
+    paddingHorizontal: wp(3),
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
     datePicker: {
       flex: 1,
       flexDirection: "row",
@@ -126,14 +142,15 @@ export const createEditSessionStyles = (wp: any, hp: any) =>
       marginTop: hp(1.5),
     },
     priceInput: {
-      marginTop: hp(1),
+      marginTop: hp(0),
       borderWidth: 1,
       borderColor: "#ddd",
       borderRadius: wp(3),
       padding: wp(3),
       fontSize: wp(3.8),
       textAlign: "center",
-      backgroundColor: "#fff",
+      height: hp(4.5),
+      
     },
     saveButton: {
       marginTop: hp(4),

@@ -12,7 +12,7 @@ interface Props {
   title: string;
   date: string;
   time: string;
-  image: any;
+  image?: string | null;
   attendees?: number;
   status: StatusType;
   isFree: boolean;
@@ -41,12 +41,15 @@ const EventCard: React.FC<Props> = ({
     if (words.length <= wordLimit) return text;
     return words.slice(0, wordLimit).join(' ') + '...';
   };
-
+  const imageSource =
+    image && image.startsWith('http')
+      ? { uri: encodeURI(image) } // ✅ ENCODE URL
+      : require('../../assets/Image/yoga.png'); // fallback
   return (
     <Pressable style={styles.card} onPress={onPress}>
       {/* Image */}
       <Image
-        source={typeof image === 'string' ? { uri: image } : image}
+        source={imageSource}
         style={styles.image}
       />
 

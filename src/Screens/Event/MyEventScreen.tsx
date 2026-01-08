@@ -31,7 +31,7 @@ const SessionsScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState('upcoming');
   const navigation = useNavigation<Nav>();
   const handleManage = () => {
-    navigation.navigate('SessionPaymentScreen'); // ✅ simple navigate, no params
+    navigation.navigate('SessionPaymentScreen'as never); // ✅ simple navigate, no params
   };
   const handleManagePast = () => {
     navigation.navigate('PastSessionScreen' as never); // ✅ simple navigate, no params
@@ -40,7 +40,8 @@ const SessionsScreen: React.FC = () => {
     queryKey: ['eventList'],
     queryFn: () => getApiWithOutQuery({ url: API_EVENT_LIST }),
   });
-  const events = data?.data || [];
+  const events = data?.data?.data || [];
+  
   const onlyDate = (d: string | Date) => {
     const date = new Date(d);
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -166,9 +167,9 @@ const mapStatus = (status: string): string => {
                   (
                     <EventCard
                       key={event._id}
-                      title={event.name}
-                      date={formatDate(event.date)}
-                      time={event.time}
+                      title={event?.name}
+                      date={formatDate(event?.date)}
+                      time={event?.time}
                       image={event?.image}
                       status={mapStatus(event?.status)}
                       onPress={() =>
@@ -176,8 +177,8 @@ const mapStatus = (status: string): string => {
                           eventId: event._id as string,
                         })
                       }
-                      attendees={event.attendees}
-                      isFree={event.isFree}
+                      attendees={event?.attendees}
+                      isFree={event?.isFree}
                       adminRejectReason={event?.adminRejectReason}
                       onManage={() => handleManage()}
                       onConduct={() => console.log('Conduct', event._id)}

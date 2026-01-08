@@ -34,8 +34,13 @@ const SessionsScreen: React.FC = () => {
       }),
   });
   const today = new Date();
+  const sessions = Array.isArray(data?.data?.data)
+    ? data.data.data
+    : Array.isArray(data?.data)
+      ? data?.data
+      : [];
 
-  const sessions = data?.data ?? [];
+  console.log(sessions);
 
   const upcomingSessions = sessions.filter((s: any) => {
     const sessionDate = new Date(`${s.date} ${s.time}`);
@@ -55,7 +60,7 @@ const SessionsScreen: React.FC = () => {
 
   const handleManagePast = (session: any) => {
     navigation.navigate('SessionPaymentScreen', {
-     sessionId: session.id,
+      sessionId: session.id,
     });
   };
 
@@ -140,7 +145,7 @@ const SessionsScreen: React.FC = () => {
                     isFree={session.isFree || false}
                     attendees={session.registeredCount || 0}
                     sessionType={session.sessionType}
-                    image={require('../../../assets/Image/yoga.png')}
+                    image={session.image}
                     showConductButton={true}
                     onManage={() => handleManage(session)}
                     onConduct={() => handleConduct(session)}
@@ -164,7 +169,7 @@ const SessionsScreen: React.FC = () => {
                     time={session.time}
                     attendees={session.registeredCount || 0}
                     sessionType={session.sessionType}
-                    image={require('../../../assets/Image/group.png')}
+                    image={session.image}
                     isFree={session.isFree || false}
                     showConductButton={false}
                     onManage={() => handleManagePast(session.sessionId)}
