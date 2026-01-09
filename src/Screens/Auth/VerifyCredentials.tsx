@@ -94,7 +94,7 @@ const VerifyCredentials = () => {
             licenseNumber: '',
             year: '',
             specialization: [] as string[],
-            language: '',
+            language: [] as string[],
             bio: '',
           }}
           validationSchema={verifyCredentialsSchema}
@@ -103,15 +103,18 @@ const VerifyCredentials = () => {
 
             const formData = new FormData();
 
-            // text fields
             formData.append('userId', user?._id);
             formData.append('licenseNumber', values.licenseNumber);
             formData.append('yearsOfExperience', values.year);
-            formData.append('areaOfSpecialization', values.specialization);
+            formData.append(
+              'areaOfSpecialization',
+              JSON.stringify(values.specialization),
+            );
             formData.append('bio', values.bio);
-
-            // array field
-            formData.append('languages[]', values.language);
+            formData.append(
+              'languagesSpoken',
+              JSON.stringify(values.language),
+            );
 
             // files
             documents.forEach((doc, index) => {
@@ -121,7 +124,7 @@ const VerifyCredentials = () => {
                 type: doc.type || 'application/octet-stream',
               } as any);
             });
-
+            console.log(formData,"formData---------------------------------------")
             console.log('Submitting formData with files:', documents.length);
 
             const res = await apiPostWithMultiForm({

@@ -43,6 +43,49 @@ export const styles = StyleSheet.create({
     paddingHorizontal: spacing(5),
     marginVertical: hp(1),
   },
+  addBtn: {
+  backgroundColor: '#0A5735',
+  paddingHorizontal: 14,
+  paddingVertical: 10,
+  borderRadius: 8,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+
+addBtnText: {
+  color: '#FFFFFF',
+  fontSize: 14,
+  fontWeight: '600',
+},
+
+chipContainer: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  marginTop: 10,
+  gap: 8,
+},
+
+chip: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  backgroundColor: '#E6F2EC',
+  paddingHorizontal: 12,
+  paddingVertical: 6,
+  borderRadius: 20,
+},
+
+chipText: {
+  color: '#0A5735',
+  fontSize: 13,
+  fontWeight: '500',
+  marginRight: 6,
+},
+
+chipRemove: {
+  color: '#0A5735',
+  fontSize: 16,
+  fontWeight: '700',
+},
   multiOption: {
   flexDirection: 'row',
   alignItems: 'center',
@@ -225,4 +268,27 @@ multiOptionTextActive: {
     fontSize: 18,
     color: '#FFFFFF',
   },
+  tagContainer: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  gap: 8,
+  marginTop: 10,
+},
+tag: {
+  paddingHorizontal: 14,
+  paddingVertical: 8,
+  borderRadius: 20,
+  borderWidth: 1,
+  borderColor: '#1F3D2B',
+},
+tagSelected: {
+  backgroundColor: '#1F3D2B',
+},
+tagText: {
+  color: '#1F3D2B',
+},
+tagTextSelected: {
+  color: '#FFFFFF',
+},
+
 });

@@ -40,6 +40,18 @@ const EditSession = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [showFocusDropdown, setShowFocusDropdown] = useState(false);
+  const mapSessionTypeToFormat = (type?: string) => {
+    switch (type) {
+      case 'Video Call':
+        return 'Video';
+      case 'Audio Call':
+        return 'Audio';
+      case 'Chat':
+        return 'Chat';
+      default:
+        return 'Chat';
+    }
+  };
 
   const { data, isLoading } = useQuery({
     queryKey: ['session-by-id', sessionId],
@@ -50,11 +62,10 @@ const EditSession = () => {
         url: `${API_GET_SESSION_BY_ID}/${sessionId}`,
       }),
   });
-
   useEffect(() => {
-    if (!data?.data?.data) return;
+    if (!data?.data) return;
 
-    const s = data.data.data;
+    const s = data.data;
     console.log('SESSION API DATA 👉', s);
 
     setSessionTitle(s.sessionName ?? '');
@@ -63,6 +74,9 @@ const EditSession = () => {
     setPaid(!s.isFree);
     setPrice(s.price ? String(s.price) : '');
 
+    if (s.sessionType) {
+      setFormat(mapSessionTypeToFormat(s.sessionType));
+    }
     if (s.date) {
       setDate(new Date(s.date));
     }
