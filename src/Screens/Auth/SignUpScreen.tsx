@@ -63,7 +63,6 @@ const SignUpScreen = () => {
           url: API_REGISTER,
           values: { ...values, dob },
         });
-        console.log(res, values, '============res========================');
 
         if (res?.success) {
           ShowToast(res?.message, 'success');
@@ -88,10 +87,12 @@ const SignUpScreen = () => {
     label: `${i + 1}`,
     value: `${i + 1}`,
   }));
+
   const days = Array.from({ length: 31 }, (_, i) => ({
     label: `${i + 1}`,
     value: `${i + 1}`,
   }));
+
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 50 }, (_, i) => ({
     label: `${currentYear - i}`,

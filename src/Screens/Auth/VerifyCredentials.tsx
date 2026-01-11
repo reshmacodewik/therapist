@@ -16,22 +16,20 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { Formik } from 'formik';
 import { verifyCredentialsSchema } from '../../validation/signupSchema';
-import { apiPost, apiPostWithMultiForm } from '../../utils/api/common';
+import { apiPostWithMultiForm } from '../../utils/api/common';
 import { API_VERIFY_DETAILS } from '../../utils/api/APIConstant';
 import ShowToast from '../../utils/ShowToast';
 import { getCurrentUserInfo } from '../../libs/auth';
 import { launchImageLibrary } from 'react-native-image-picker';
-import Ionicons from '@react-native-vector-icons/ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const VerifyCredentials = () => {
   const navigation =
     useNavigation<
       NativeStackNavigationProp<RootStackParamList, 'VerifyCredentials'>
     >();
-  const [year, setYear] = useState('');
-  const [Specialization, setSpecialization] = useState('');
-  const [Language, setLanguage] = useState('');
+
   const [documents, setDocuments] = useState<any[]>([]);
+
   const pickDocument = () => {
     launchImageLibrary(
       {
@@ -55,7 +53,7 @@ const VerifyCredentials = () => {
         setDocuments(prev => [...prev, fixedFile]);
       },
     );
-  }; // ✅ ONLY this brace
+  }; 
 
   const specializations = [
     'Cardiology',
@@ -69,6 +67,7 @@ const VerifyCredentials = () => {
     'Radiology',
     'General Surgery',
   ];
+
   const languages = [
     'English',
     'Spanish',
@@ -78,8 +77,9 @@ const VerifyCredentials = () => {
     'Japanese',
     'Arabic',
     'Portuguese',
-    'Hindi',
+    'Kiswahili',
   ];
+
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}
@@ -124,8 +124,7 @@ const VerifyCredentials = () => {
                 type: doc.type || 'application/octet-stream',
               } as any);
             });
-            console.log(formData,"formData---------------------------------------")
-            console.log('Submitting formData with files:', documents.length);
+
 
             const res = await apiPostWithMultiForm({
               url: API_VERIFY_DETAILS,

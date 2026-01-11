@@ -34,7 +34,7 @@ const VerificationCode = () => {
   const [otpArray, setOtpArray] = useState(['', '', '', '']);
   const [resendCoolDown, setResendCoolDown] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  console.log(email, phoneNo, role, 'params---------------------');
+
 
   const setInputRef = useCallback((idx: number) => {
     return (el: RNTextInput | null): void => {

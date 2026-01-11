@@ -33,6 +33,5 @@ export const getToken = async () => {
 export const getCurrentUserInfo = async (): Promise<UserData | null> => {
 
   const userData = await AsyncStorage.getItem(StorageKeys.USER_DATA);
-  console.log(userData, 'userData-----------------');
   return userData ? JSON.parse(userData) : null;
 };
