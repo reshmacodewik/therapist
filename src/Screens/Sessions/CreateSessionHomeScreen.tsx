@@ -138,13 +138,13 @@ const CreateSessionScreen = () => {
             .filter(Boolean),
         ),
       );
-      // if (imageUri) {
-      //   formData.append('file', {
-      //     uri: imageUri,
-      //     name: `session-${Date.now()}.jpg`,
-      //     type: 'image/jpeg',
-      //   } as any);
-      // }
+      if (imageUri) {
+        formData.append('file', {
+          uri: imageUri,
+          name: `session-${Date.now()}.jpg`,
+          type: 'image/jpeg',
+        } as any);
+      }
 
       const res = await apiPostWithMultiForm({
         url: API_CREATE_SESSION,

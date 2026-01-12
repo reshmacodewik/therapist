@@ -35,7 +35,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 type RouteProps = RouteProp<RootStackParamList, 'SessionPaymentScreen'>;
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
-  'SessionsScreen',
   'SessionPaymentScreen'
 >;
 const SessionPaymentScreen = () => {
@@ -49,7 +48,7 @@ const SessionPaymentScreen = () => {
       getApiWithOutQuery({
         url: `${API_GET_SESSION_DETAILS}/${sessionId}`,
       }),
-
+  
     enabled: !!sessionId,
   });
   console.log(data, '6777-----------------------');
@@ -82,11 +81,11 @@ const SessionPaymentScreen = () => {
                     ? require('../../../assets/icon/free.png')
                     : require('../../../assets/icon/badge.png')
                 }
-                style={{ width: wp(7.8), height: hp(3.5) }}
+                style={{ width: wp(4.5), height: hp(2) }}
               />
             </View>
             <Image
-              source={require('../../../assets/Image/yoga.png')}
+              source={{ uri: session?.image }}
               style={styles.sessionImage}
             />
 

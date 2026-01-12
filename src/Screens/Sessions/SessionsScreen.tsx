@@ -40,7 +40,7 @@ const SessionsScreen: React.FC = () => {
       ? data?.data
       : [];
 
-  console.log(sessions);
+  console.log(sessions, 'sessions');
 
   const upcomingSessions = sessions.filter((s: any) => {
     const sessionDate = new Date(`${s.date} ${s.time}`);
@@ -54,18 +54,20 @@ const SessionsScreen: React.FC = () => {
 
   const handleManage = (session: any) => {
     navigation.navigate('SessionPaymentScreen', {
-      sessionId: session.id,
+      sessionId: session._id, // ✅ CORRECT
     });
+
+    console.log(session._id, 'sessionId sent ✅');
   };
 
   const handleManagePast = (session: any) => {
     navigation.navigate('SessionPaymentScreen', {
-      sessionId: session.id,
+      sessionId: session._id, // ✅ CORRECT
     });
   };
 
   const handleConduct = (session: any) => {
-    console.log('Conduct session:', { sessionId: session.id });
+    console.log('Conduct session:', { sessionId: session._id }); // ✅ CORRECT
   };
 
   return (
