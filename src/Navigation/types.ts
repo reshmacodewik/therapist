@@ -32,7 +32,6 @@ export type RootStackParamList = {
   NoteScreen: undefined;
   UploadScreen: undefined;
   ShareProgress: undefined;
-  SessionDetails: undefined;
   Breakout: undefined;
   BreakoutRooms: undefined;
   RescheduleSession: {
@@ -76,6 +75,9 @@ export type RootStackParamList = {
   NewTicket: undefined;
   TicketSuccess: undefined;
   TicketChat: undefined;
+  SessionDetails: {
+    sessionId: string;
+  };
   EventDetailsScreen: {
     eventId: string;
   };

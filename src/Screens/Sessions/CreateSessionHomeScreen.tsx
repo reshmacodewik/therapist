@@ -11,14 +11,17 @@ import {
 import { useResponsive } from 'react-native-responsive-hook';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { useQuery } from '@tanstack/react-query';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
 import styles from '../../../style/createSessionAddStyles';
 import UniversalDropdown from '../../components/AgeDropdown';
-import { launchImageLibrary } from 'react-native-image-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { useQuery } from '@tanstack/react-query';
 import {
-  apiPost,
   apiPostWithMultiForm,
   getApiWithOutQuery,
 } from '../../utils/api/common';
@@ -27,155 +30,74 @@ import {
   API_CREATE_SESSION,
 } from '../../utils/api/APIConstant';
 import ShowToast from '../../utils/ShowToast';
-import Icon from 'react-native-vector-icons/Ionicons';
+import MultiSelectDropdown from '../../../components/MultiSelectDropdown';
+
 export enum SessionMode {
   CLIENT_BASED = 'CLIENT_BASED',
   FEATURED = 'FEATURED',
 }
+
 export enum SessionTypes {
   VoiceCall = 'Voice Call',
   VideoCall = 'Video Call',
   Chat = 'Chat',
 }
 
+type SessionFormValues = {
+  sessionName: string;
+  sessionMode: SessionMode;
+  sessionType: string;
+  date: Date | null;
+  time: Date | null;
+  focusAreas: string;
+  notes: string;
+  clients: string[];
+  isFree: boolean;
+  price: string;
+};
+
+const validationSchema = Yup.object().shape({
+  sessionName: Yup.string().required('Session name is required'),
+  date: Yup.date().required(),
+  time: Yup.date().required(),
+  price: Yup.string().when('isFree', {
+    is: false,
+    then: s => s.required('Price is required'),
+  }),
+});
+
 const CreateSessionScreen = () => {
   const { wp, hp } = useResponsive();
+  const s = styles(wp, hp);
   const navigation = useNavigation();
-  const [sessionType, setSessionType] = useState('');
-  const [client, setClient] = useState('');
-  const [imageUri, setImageUri] = useState<string | null>(null);
-  const [date, setDate] = useState<Date | null>(null);
-  const [time, setTime] = useState<Date | null>(null);
+
   const [showDate, setShowDate] = useState(false);
   const [showTime, setShowTime] = useState(false);
-  const [isFree, setIsFree] = useState(false);
-  const [sessionMode, setSessionMode] = useState<SessionMode>(
-    SessionMode.CLIENT_BASED,
-  );
-  const [sessionName, setSessionName] = useState('');
-  const [focusAreas, setFocusAreas] = useState('');
-  const [notes, setNotes] = useState('');
-  const [price, setPrice] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const handleFreeToggle = () => {
-    setIsFree(prev => {
-      const next = !prev;
+  const [imageUri, setImageUri] = useState<string | null>(null);
 
-      if (next) {
-        setPrice('');
-      }
-
-      return next;
-    });
-  };
-  const {
-    data: clientRes,
-    isLoading: isClientLoading,
-    refetch: refetchClients,
-  } = useQuery({
+  const { data: clientRes } = useQuery({
     queryKey: ['clients-list'],
     queryFn: () =>
       getApiWithOutQuery({
-        url: `${API_CILENT_LIST}`,
+        url: API_CILENT_LIST,
       }),
   });
+
+  const clientItems =
+    clientRes?.data?.map((item: any) => ({
+      label: item.fullName,
+      value: item._id,
+    })) || [];
+
   const sessionTypeData = [
     { label: 'Voice Call', value: SessionTypes.VoiceCall },
     { label: 'Video Call', value: SessionTypes.VideoCall },
     { label: 'Chat', value: SessionTypes.Chat },
   ];
 
-  const formatTime = (date: Date) =>
-    `${String(date.getHours()).padStart(2, '0')}:${String(
-      date.getMinutes(),
-    ).padStart(2, '0')}`;
-
-  const handleCreateSession = async () => {
-    try {
-      if (!sessionName.trim())
-        return ShowToast('Session name is required', 'error');
-
-      if (!date || !time)
-        return ShowToast('Please select date & time', 'error');
-
-      if (sessionMode === SessionMode.CLIENT_BASED && !client)
-        return ShowToast('Please select client', 'error');
-
-      if (!isFree && !price) return ShowToast('Please enter price', 'error');
-
-      setIsLoading(true);
-
-      const formData = new FormData();
-
-      formData.append('sessionName', sessionName.trim());
-      formData.append('sessionMode', sessionMode);
-      formData.append('sessionType', sessionType);
-
-      formData.append('date', date.toISOString().split('T')[0]);
-
-      const formattedTime = `${String(time.getHours()).padStart(2, '0')}:${String(
-        time.getMinutes(),
-      ).padStart(2, '0')}`;
-
-      formData.append('time', formattedTime);
-
-      formData.append('notes', notes || '');
-      formData.append('isFree', String(isFree));
-      formData.append('price', String(isFree ? 0 : Number(price)));
-      formData.append(
-        'clients',
-        JSON.stringify(
-          sessionMode === SessionMode.CLIENT_BASED ? [client] : [],
-        ),
-      );
-
-      formData.append(
-        'focusAreas',
-        JSON.stringify(
-          focusAreas
-            .split(',')
-            .map(i => i.trim())
-            .filter(Boolean),
-        ),
-      );
-      if (imageUri) {
-        formData.append('file', {
-          uri: imageUri,
-          name: `session-${Date.now()}.jpg`,
-          type: 'image/jpeg',
-        } as any);
-      }
-
-      const res = await apiPostWithMultiForm({
-        url: API_CREATE_SESSION,
-        values: formData,
-      });
-      console.log('res---------------------------------', res);
-      console.log('formData---------------------------------', formData);
-      if (res?.success) {
-        ShowToast(res.message || 'Session created successfully', 'success');
-        navigation.goBack();
-      } else {
-        ShowToast(res?.message || 'Failed to create session', 'error');
-      }
-    } catch (err) {
-      ShowToast('Something went wrong', 'error');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const clientData =
-    clientRes?.data?.map((item: any) => ({
-      label: item.fullName,
-      value: item._id,
-    })) || [];
-
   const pickImage = () => {
-    launchImageLibrary({ mediaType: 'photo', quality: 0.7 }, response => {
-      if (response.assets?.[0]?.uri) {
-        setImageUri(response.assets[0].uri);
-      }
+    launchImageLibrary({ mediaType: 'photo', quality: 0.7 }, res => {
+      if (res.assets?.[0]?.uri) setImageUri(res.assets[0].uri);
     });
   };
 
@@ -184,219 +106,283 @@ const CreateSessionScreen = () => {
       source={require('../../../assets/Image/background.png')}
       style={{ flex: 1 }}
     >
-      <ScrollView
-        style={styles(wp, hp).container}
-        contentContainerStyle={styles(wp, hp).content}
-        showsVerticalScrollIndicator={false}
+      <Formik<SessionFormValues>
+        initialValues={{
+          sessionName: '',
+          sessionMode: SessionMode.CLIENT_BASED,
+          sessionType: '',
+          date: null,
+          time: null,
+          focusAreas: '',
+          notes: '',
+          clients: [],
+          isFree: false,
+          price: '',
+        }}
+        validationSchema={validationSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            setSubmitting(true);
+            const formData = new FormData();
+            formData.append('sessionName', values.sessionName);
+            formData.append('sessionMode', values.sessionMode);
+            formData.append('sessionType', values.sessionType);
+            formData.append('date', values.date!.toISOString().split('T')[0]);
+            const h = values.time!.getHours().toString().padStart(2, '0');
+            const m = values.time!.getMinutes().toString().padStart(2, '0');
+            formData.append('time', `${h}:${m}`);
+            formData.append('notes', values.notes || '');
+            formData.append('isFree', String(values.isFree));
+
+            formData.append(
+              'price',
+              values.isFree ? '0' : String(values.price),
+            );
+
+            formData.append(
+              'clients',
+              JSON.stringify(
+                values.sessionMode === SessionMode.CLIENT_BASED
+                  ? values.clients
+                  : [],
+              ),
+            );
+
+            formData.append(
+              'focusAreas',
+              JSON.stringify(
+                values.focusAreas
+                  .split(',')
+                  .map(i => i.trim())
+                  .filter(Boolean),
+              ),
+            );
+
+            if (imageUri) {
+              formData.append('file', {
+                uri: imageUri,
+                name: `session-${Date.now()}.jpg`,
+                type: 'image/jpeg',
+              } as any);
+            }
+
+            const res = await apiPostWithMultiForm({
+              url: API_CREATE_SESSION,
+              values: formData,
+            });
+
+            if (res?.success) {
+              ShowToast(res.message, 'success');
+              navigation.goBack();
+            } else {
+              ShowToast(res?.error || 'Failed', 'error');
+            }
+          } catch {
+            ShowToast('Something went wrong', 'error');
+          } finally {
+            setSubmitting(false);
+          }
+        }}
       >
-        {/* Header */}
-        <View style={styles(wp, hp).header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="chevron-back" size={wp(7)} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles(wp, hp).headerTitle}>Create Session</Text>
-        </View>
-
-        {/* 🔹 TOGGLE BUTTONS */}
-        <View style={styles(wp, hp).toggleRow}>
-          <TouchableOpacity
-            style={
-              sessionMode === SessionMode.CLIENT_BASED
-                ? styles(wp, hp).activeToggle
-                : styles(wp, hp).inactiveToggle
-            }
-            onPress={() => setSessionMode(SessionMode.CLIENT_BASED)}
-          >
-            <Text
-              style={
-                sessionMode === SessionMode.CLIENT_BASED
-                  ? styles(wp, hp).activeToggleText
-                  : styles(wp, hp).inactiveToggleText
-              }
-            >
-              Client - Based Session
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={
-              sessionMode === SessionMode.FEATURED
-                ? styles(wp, hp).activeToggle
-                : styles(wp, hp).inactiveToggle
-            }
-            onPress={() => setSessionMode(SessionMode.FEATURED)}
-          >
-            <Text
-              style={
-                sessionMode === SessionMode.FEATURED
-                  ? styles(wp, hp).activeToggleText
-                  : styles(wp, hp).inactiveToggleText
-              }
-            >
-              Feature Session
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Session Name */}
-        <Text style={styles(wp, hp).label}>Session Name</Text>
-        <TextInput
-          placeholder="enter"
-          style={styles(wp, hp).input}
-          value={sessionName}
-          onChangeText={setSessionName}
-        />
-
-        {/* Date & Time */}
-        <View style={styles(wp, hp).row}>
-          <View style={styles(wp, hp).halfInput}>
-            <Text style={styles(wp, hp).label}>Date</Text>
-            <TouchableOpacity
-              style={styles(wp, hp).iconInput}
-              onPress={() => setShowDate(true)}
-            >
-              <Text style={styles(wp, hp).placeholder}>
-                {date ? date.toDateString() : 'Date'}
-              </Text>
-              <MaterialIcons
-                name="calendar-today"
-                size={wp(5)}
-                color="#6A8F7A"
-              />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles(wp, hp).halfInput}>
-            <Text style={styles(wp, hp).label}>Time</Text>
-            <TouchableOpacity
-              style={styles(wp, hp).iconInput}
-              onPress={() => setShowTime(true)}
-            >
-              <Text style={styles(wp, hp).placeholder}>
-                {time ? time.toLocaleTimeString() : 'Time'}
-              </Text>
-              <MaterialIcons name="access-time" size={wp(5)} color="#6A8F7A" />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {showDate && (
-          <DateTimePicker
-            value={date || new Date()}
-            mode="date"
-            onChange={(_, d) => {
-              setShowDate(false);
-              if (d) setDate(d);
-            }}
-          />
-        )}
-
-        {showTime && (
-          <DateTimePicker
-            value={time || new Date()}
-            mode="time"
-            onChange={(_, t) => {
-              setShowTime(false);
-              if (t) setTime(t);
-            }}
-          />
-        )}
-
-        {/* Session Type */}
-        <Text style={styles(wp, hp).label}>Session Type</Text>
-        <UniversalDropdown
-          value={sessionType}
-          setValue={setSessionType}
-          data={sessionTypeData}
-          variant="square"
-          showBorder={false}
-        />
-
-        <Text style={styles(wp, hp).label}>Focus Areas</Text>
-        <TextInput
-          placeholder="enter"
-          style={styles(wp, hp).input}
-          value={focusAreas}
-          onChangeText={setFocusAreas}
-        />
-
-        <Text style={styles(wp, hp).label}>Session Notes</Text>
-        <TextInput
-          multiline
-          style={styles(wp, hp).notesInput}
-          value={notes}
-          onChangeText={setNotes}
-        />
-
-        {sessionMode === SessionMode.CLIENT_BASED && (
+        {({
+          values,
+          handleChange,
+          handleSubmit,
+          setFieldValue,
+          isSubmitting,
+        }) => (
           <>
-            <Text style={styles(wp, hp).label}>Add your Clients</Text>
-            <UniversalDropdown
-              value={client}
-              setValue={setClient}
-              data={clientData}
-              variant="square"
-              showBorder={false}
-            />
+            <ScrollView
+              style={s.container}
+              contentContainerStyle={s.content}
+              showsVerticalScrollIndicator={false}
+            >
+              {/* Header */}
+              <View style={s.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Ionicons name="chevron-back" size={wp(7)} />
+                </TouchableOpacity>
+                <Text style={s.headerTitle}>Create Session</Text>
+              </View>
+
+              {/* Toggle */}
+              <View style={s.toggleRow}>
+                {[SessionMode.CLIENT_BASED, SessionMode.FEATURED].map(mode => (
+                  <TouchableOpacity
+                    key={mode}
+                    style={
+                      values.sessionMode === mode
+                        ? s.activeToggle
+                        : s.inactiveToggle
+                    }
+                    onPress={() => setFieldValue('sessionMode', mode)}
+                  >
+                    <Text
+                      style={
+                        values.sessionMode === mode
+                          ? s.activeToggleText
+                          : s.inactiveToggleText
+                      }
+                    >
+                      {mode === SessionMode.CLIENT_BASED
+                        ? 'Client - Based Session'
+                        : 'Feature Session'}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+
+              <Text style={s.label}>Session Name</Text>
+              <TextInput
+                style={s.input}
+                value={values.sessionName}
+                onChangeText={handleChange('sessionName')}
+              />
+
+              {/* Date & Time */}
+              <View style={s.row}>
+                <View style={s.halfInput}>
+                  <Text style={s.label}>Date</Text>
+                  <TouchableOpacity
+                    style={s.iconInput}
+                    onPress={() => setShowDate(true)}
+                  >
+                    <Text style={s.placeholder}>
+                      {values.date ? values.date.toDateString() : 'Date'}
+                    </Text>
+                    <MaterialIcons name="calendar-today" size={wp(5)} />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={s.halfInput}>
+                  <Text style={s.label}>Time</Text>
+                  <TouchableOpacity
+                    style={s.iconInput}
+                    onPress={() => setShowTime(true)}
+                  >
+                    <Text style={s.placeholder}>
+                      {values.time ? values.time.toLocaleTimeString() : 'Time'}
+                    </Text>
+                    <MaterialIcons name="access-time" size={wp(5)} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <Text style={s.label}>Session Type</Text>
+              <UniversalDropdown
+                value={values.sessionType}
+                setValue={v => setFieldValue('sessionType', v)}
+                data={sessionTypeData}
+                variant="square"
+                showBorder={false}
+              />
+
+              <Text style={s.label}>Focus Areas</Text>
+              <TextInput
+                style={s.input}
+                value={values.focusAreas}
+                onChangeText={handleChange('focusAreas')}
+              />
+
+              <Text style={s.label}>Session Notes</Text>
+              <TextInput
+                multiline
+                style={s.notesInput}
+                value={values.notes}
+                onChangeText={handleChange('notes')}
+              />
+
+              {values.sessionMode === SessionMode.CLIENT_BASED && (
+                <>
+                  <Text style={s.label}>Add your Clients</Text>
+                  <MultiSelectDropdown
+                    label=""
+                    placeholder="Select clients"
+                    items={clientItems}
+                    value={values.clients}
+                    onChange={val => setFieldValue('clients', val)}
+                  />
+                </>
+              )}
+
+              <Text style={s.label}>Upload Picture</Text>
+              <TouchableOpacity style={s.uploadBox} onPress={pickImage}>
+                {imageUri ? (
+                  <Image
+                    source={{ uri: imageUri }}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                ) : (
+                  <Ionicons name="cloud-upload-outline" size={wp(8)} />
+                )}
+              </TouchableOpacity>
+
+              <Text style={s.label}>Price</Text>
+              <TextInput
+                style={s.input}
+                editable={!values.isFree}
+                keyboardType="numeric"
+                value={values.price}
+                onChangeText={handleChange('price')}
+              />
+
+              <TouchableOpacity
+                style={s.checkboxRow}
+                onPress={() => {
+                  setFieldValue('isFree', !values.isFree);
+                  if (!values.isFree) setFieldValue('price', '');
+                }}
+              >
+                <View style={[s.checkbox, values.isFree && s.checkboxChecked]}>
+                  {values.isFree && (
+                    <Icon name="checkmark" size={16} color="#fff" />
+                  )}
+                </View>
+                <Text style={s.checkboxText}>This is a free session</Text>
+              </TouchableOpacity>
+
+              <View style={s.footer}>
+                <TouchableOpacity style={s.cancelBtn}>
+                  <Text style={s.cancelText}>Cancel</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={s.createBtn}
+                  onPress={handleSubmit}
+                  disabled={isSubmitting}
+                >
+                  <Text style={s.createText}>
+                    {isSubmitting ? 'Creating...' : 'Create Session'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+
+            {showDate && (
+              <DateTimePicker
+                value={values.date || new Date()}
+                mode="date"
+                minimumDate={new Date()}
+                onChange={(_, d) => {
+                  setShowDate(false);
+                  if (d) setFieldValue('date', d);
+                }}
+              />
+            )}
+
+            {showTime && (
+              <DateTimePicker
+                value={values.time || new Date()}
+                mode="time"
+                onChange={(_, t) => {
+                  setShowTime(false);
+                  if (t) setFieldValue('time', t);
+                }}
+              />
+            )}
           </>
         )}
-
-        <Text style={styles(wp, hp).label}>Upload Picture</Text>
-        <TouchableOpacity style={styles(wp, hp).uploadBox} onPress={pickImage}>
-          {imageUri ? (
-            <Image
-              source={{ uri: imageUri }}
-              style={{ width: '100%', height: '100%', borderRadius: wp(3) }}
-            />
-          ) : (
-            <Ionicons name="cloud-upload-outline" size={wp(8)} />
-          )}
-        </TouchableOpacity>
-
-        <Text style={styles(wp, hp).label}>Price</Text>
-        <TextInput
-          placeholder="enter"
-          style={styles(wp, hp).input}
-          value={price}
-          onChangeText={setPrice}
-          editable={!isFree}
-          keyboardType="numeric"
-        />
-
-        <TouchableOpacity
-          style={styles(wp, hp).checkboxRow}
-          onPress={handleFreeToggle}
-          activeOpacity={0.7}
-        >
-          <View
-            style={[
-              styles(wp, hp).checkbox,
-              isFree && styles(wp, hp).checkboxChecked,
-            ]}
-          >
-            {isFree && <Icon name="checkmark" size={16} color="#fff" />}
-          </View>
-
-          <Text style={styles(wp, hp).checkboxText}>
-            This is a free session
-          </Text>
-        </TouchableOpacity>
-        <View style={styles(wp, hp).footer}>
-          <TouchableOpacity style={styles(wp, hp).cancelBtn}>
-            <Text style={styles(wp, hp).cancelText}>Cancel</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles(wp, hp).createBtn}
-            onPress={handleCreateSession}
-            disabled={isLoading}
-          >
-            <Text style={styles(wp, hp).createText}>
-              {isLoading ? 'Creating...' : 'Create Session'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      </Formik>
     </ImageBackground>
   );
 };

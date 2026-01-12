@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   Image,
   ImageBackground,
-} from "react-native";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { styles } from "../../style/WelcomeScreenstyles";
+} from 'react-native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { styles } from '../../style/WelcomeScreenstyles';
 
 // Define roles with numeric constants
 const ROLES = {
@@ -23,33 +23,33 @@ const WelcomeScreen = () => {
 
   const welcomeSlides = [
     {
-      key: "welcome1",
-      titleLine1: "Welcome To",
-      titleLine2: "Tuliar",
-      image: require("../../assets/Image/doctor.png"),
+      key: 'welcome1',
+      titleLine1: 'Welcome To',
+      titleLine2: 'Tuliar',
+      image: require('../../assets/Image/doctor.png'),
       options: [
         {
           key: 2,
-          label: "Therapist",
-          icon: require("../../assets/icon/therapist.png"),
+          label: 'Therapist',
+          icon: require('../../assets/icon/therapist.png'),
           role: ROLES.THERAPIST,
         },
         {
           key: 5,
-          label: "Coach",
-          icon: require("../../assets/icon/coach.png"),
+          label: 'Coach',
+          icon: require('../../assets/icon/coach.png'),
           role: ROLES.COACH,
         },
         {
           key: 3,
-          label: "Mentor",
-          icon: require("../../assets/icon/coach.png"),
+          label: 'Mentor',
+          icon: require('../../assets/icon/coach.png'),
           role: ROLES.MENTOR,
         },
         {
           key: 4,
-          label: "Peer",
-          icon: require("../../assets/icon/peer.png"),
+          label: 'Peer',
+          icon: require('../../assets/icon/peer.png'),
           role: ROLES.PEER,
         },
       ],
@@ -59,12 +59,12 @@ const WelcomeScreen = () => {
   const slide = welcomeSlides[0];
 
   const handlePress = (role: number) => {
-    navigation.navigate("SignUpScreen", { role });
+    navigation.navigate('SignUpScreen', { role });
   };
 
   return (
     <ImageBackground
-      source={require("../../assets/Image/background.png")}
+      source={require('../../assets/Image/background.png')}
       style={styles.container}
       resizeMode="cover"
     >
@@ -81,7 +81,7 @@ const WelcomeScreen = () => {
 
       {/* Role Options */}
       <View style={styles.buttonContainer}>
-        {slide.options.map((option) => (
+        {slide.options.map(option => (
           <TouchableOpacity
             key={option.key}
             style={styles.button}

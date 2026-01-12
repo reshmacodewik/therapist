@@ -112,8 +112,6 @@ export const apiPATCH = async ({ url, values }: postParams): Promise<any> => {
         Accept: 'application/json',
       },
     });
-    console.log(res, 'res--0000000');
-    // ShowToast(res.data?.message, "success");
     return res.data;
   } catch (err: any) {
     ShowToast(err?.response?.data?.message, 'error');

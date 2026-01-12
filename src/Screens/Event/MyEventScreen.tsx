@@ -13,8 +13,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import Header from '../../components/Header';
-import SessionCard from '../../components/SessionCard';
-// adjust path
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../Navigation/types';
 import { eventStyles } from '../../../style/eventStyle';
@@ -24,17 +22,12 @@ import { getApiWithOutQuery } from '../../utils/api/common';
 import { API_EVENT_LIST } from '../../utils/api/APIConstant';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'SessionsScreen'>;
-// Sample session data
-
-
+type StatusType = 'approved' | 'requested' | 'REJECTED';
 const SessionsScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState('upcoming');
   const navigation = useNavigation<Nav>();
   const handleManage = () => {
-    navigation.navigate('SessionPaymentScreen'as never); // ✅ simple navigate, no params
-  };
-  const handleManagePast = () => {
-    navigation.navigate('PastSessionScreen' as never); // ✅ simple navigate, no params
+    navigation.navigate('SessionPaymentScreen'as never);
   };
   const { data, isLoading, error } = useQuery({
     queryKey: ['eventList'],
@@ -46,7 +39,7 @@ const SessionsScreen: React.FC = () => {
     const date = new Date(d);
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   };
-const mapStatus = (status: string): string => {
+const mapStatus = (status: string): StatusType => {
   switch (status.toLowerCase()) {
     case 'approved':
       return 'approved';
@@ -55,7 +48,7 @@ const mapStatus = (status: string): string => {
     case 'rejected':
       return 'REJECTED';
     default:
-      return 'requested'; // fallback if API sends unexpected value
+      return 'requested';
   }
 };
 
@@ -172,15 +165,12 @@ const mapStatus = (status: string): string => {
                       time={event?.time}
                       image={event?.image}
                       status={mapStatus(event?.status)}
-                      onPress={() =>
-                        navigation.navigate('EventDetailsScreen', {
-                          eventId: event._id as string,
-                        })
-                      }
                       attendees={event?.attendees}
                       isFree={event?.isFree}
                       adminRejectReason={event?.adminRejectReason}
-                      onManage={() => handleManage()}
+                      onManage={() => navigation.navigate('EventDetailsScreen', {
+                          eventId: event._id as string,
+                        })}
                       onConduct={() => console.log('Conduct', event._id)}
                     />
                   )

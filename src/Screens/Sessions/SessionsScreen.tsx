@@ -174,7 +174,12 @@ const SessionsScreen: React.FC = () => {
                     image={session.image}
                     isFree={session.isFree || false}
                     showConductButton={false}
-                    onManage={() => handleManagePast(session.sessionId)}
+                    onManage={() =>
+                      navigation.navigate('SessionDetails', {
+                        sessionId: session._id as string,
+                      })
+                    }
+                    onConduct={() => handleManagePast(session.sessionId)}
                   />
                 ))
               )}
