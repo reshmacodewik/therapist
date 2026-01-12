@@ -40,21 +40,6 @@ const SessionDetails = () => {
   const navigation = useNavigation();
   const styles = createStyles(wp, hp);
   const route = useRoute<RouteProp<RouteParams, 'SessionDetails'>>();
-  console.log(route.params ,"event=======sessionId===========" );
-  const { sessionId } = route.params;
-
-  const { data, isLoading, refetch, isRefetching } = useQuery({
-    queryKey: ['session-detail', sessionId],
-    queryFn: () =>
-      getApiWithOutQuery({
-        url: `${API_SESSION_DETAILS}/${sessionId}`,
-      }),
-    enabled: !!sessionId,
-  });
-
-  const event = data?.data;
-
-  console.log(event ,"event==================" ,sessionId);
 
   return (
     <ImageBackground

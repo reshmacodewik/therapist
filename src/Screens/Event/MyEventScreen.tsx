@@ -27,30 +27,30 @@ const SessionsScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState('upcoming');
   const navigation = useNavigation<Nav>();
   const handleManage = () => {
-    navigation.navigate('SessionPaymentScreen'as never);
+    navigation.navigate('SessionPaymentScreen' as never);
   };
   const { data, isLoading, error } = useQuery({
     queryKey: ['eventList'],
     queryFn: () => getApiWithOutQuery({ url: API_EVENT_LIST }),
   });
   const events = data?.data?.data || [];
-  
+
   const onlyDate = (d: string | Date) => {
     const date = new Date(d);
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   };
-const mapStatus = (status: string): StatusType => {
-  switch (status.toLowerCase()) {
-    case 'approved':
-      return 'approved';
-    case 'requested':
-      return 'requested';
-    case 'rejected':
-      return 'REJECTED';
-    default:
-      return 'requested';
-  }
-};
+  const mapStatus = (status: string): StatusType => {
+    switch (status.toLowerCase()) {
+      case 'approved':
+        return 'approved';
+      case 'requested':
+        return 'requested';
+      case 'rejected':
+        return 'REJECTED';
+      default:
+        return 'requested';
+    }
+  };
 
   const todayDate = onlyDate(new Date());
 
@@ -78,7 +78,6 @@ const mapStatus = (status: string): StatusType => {
   };
 
   const handleConduct = (sessionId: string) => {
-    // Handle conduct session
     console.log('Conduct session:', sessionId);
   };
 
@@ -168,9 +167,11 @@ const mapStatus = (status: string): StatusType => {
                       attendees={event?.attendees}
                       isFree={event?.isFree}
                       adminRejectReason={event?.adminRejectReason}
-                      onManage={() => navigation.navigate('EventDetailsScreen', {
+                      onManage={() =>
+                        navigation.navigate('EventDetailsScreen', {
                           eventId: event._id as string,
-                        })}
+                        })
+                      }
                       onConduct={() => console.log('Conduct', event._id)}
                     />
                   )
@@ -191,7 +192,11 @@ const mapStatus = (status: string): StatusType => {
                     attendees={event.attendees}
                     isFree={event.isFree}
                     adminRejectReason={event.adminRejectReason}
-                    onManage={() => handleManage()}
+                    onManage={() =>
+                      navigation.navigate('EventDetailsScreen', {
+                        eventId: event._id as string,
+                      })
+                    }
                   />
                 ))}
             </>

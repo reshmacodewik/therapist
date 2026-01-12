@@ -55,20 +55,12 @@ const SessionsScreen: React.FC = () => {
   const handleManage = (session: any) => {
     navigation.navigate('SessionPaymentScreen', {
       sessionId: session._id,
-      
-    });
-
-    console.log(session._id, 'sessionId sent ✅');
-  };
-
-  const handleManagePast = (session: any) => {
-    navigation.navigate('SessionPaymentScreen', {
-      sessionId: session._id, 
     });
   };
+
 
   const handleConduct = (session: any) => {
-    console.log('Conduct session:', { sessionId: session._id }); 
+    console.log('Conduct session:', { sessionId: session._id });
   };
 
   return (
@@ -175,12 +167,8 @@ const SessionsScreen: React.FC = () => {
                     image={session.image}
                     isFree={session.isFree || false}
                     showConductButton={false}
-                    onManage={() =>
-                      navigation.navigate('SessionDetails', {
-                        sessionId: session._id as string,
-                      })
-                    }
-                    onConduct={() => handleManagePast(session.sessionId)}
+                    onManage={() => handleManage(session)}
+                    onConduct={() => handleConduct(session)}
                   />
                 ))
               )}

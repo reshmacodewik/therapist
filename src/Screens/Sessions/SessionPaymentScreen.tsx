@@ -48,12 +48,12 @@ const SessionPaymentScreen = () => {
       getApiWithOutQuery({
         url: `${API_GET_SESSION_DETAILS}/${sessionId}`,
       }),
-  
+
     enabled: !!sessionId,
   });
-  console.log(data, '6777-----------------------');
+
   const session = data?.data;
-  console.log(session, '6777-----------------------');
+
   return (
     <ImageBackground
       source={require('../../../assets/Image/background.png')}
@@ -113,7 +113,7 @@ const SessionPaymentScreen = () => {
                 Format: {session?.sessionType}
               </Text>
               <Text style={styles.registeredCount}>
-                {session?.registeredCount} Attending (3 paid client )
+                {session?.registeredCount} Attending (0 paid client )
               </Text>
             </View>
           </View>
@@ -130,15 +130,15 @@ const SessionPaymentScreen = () => {
             <View style={styles.paymentInfoContainer}>
               <View style={styles.paymentRow}>
                 <Text style={styles.paymentLabel}>Collected:</Text>
-                <Text style={styles.paymentValue}>KES 2,500</Text>
+                <Text style={styles.paymentValue}> {session?.isFree ? `KES ${session?.price}` || 0 : "Free"}</Text>
               </View>
               <View style={styles.paymentRow}>
                 <Text style={styles.paymentLabel}>Platform Fee:</Text>
-                <Text style={styles.paymentValue}>KES 2,500</Text>
+                <Text style={styles.paymentValue}>KES 0</Text>
               </View>
               <View style={styles.paymentRow}>
                 <Text style={styles.paymentLabel}>Net Payout:</Text>
-                <Text style={styles.paymentValue}>KES 2,500</Text>
+                <Text style={styles.paymentValue}>KES {session?.price || 0}</Text>
               </View>
             </View>
 
@@ -343,7 +343,7 @@ const SessionPaymentScreen = () => {
                 <TouchableOpacity
                   style={styles.primaryButton}
                   onPress={() => {
-                    console.log('Session ID:', sessionId); 
+                    console.log('Session ID:', sessionId);
                     navigation.navigate('EditSession', {
                       sessionId: sessionId,
                     });
@@ -362,7 +362,7 @@ const SessionPaymentScreen = () => {
                 <TouchableOpacity
                   style={styles.outlineButton}
                   onPress={() => {
-                    console.log('Session ID:', sessionId); 
+                    console.log('Session ID:', sessionId);
                     navigation.navigate('RescheduleSession', {
                       sessionId: sessionId,
                     });
@@ -382,7 +382,7 @@ const SessionPaymentScreen = () => {
                 <TouchableOpacity
                   style={styles.outlineButton}
                   onPress={() => {
-                    console.log('Session ID:', sessionId); 
+                    console.log('Session ID:', sessionId);
                     navigation.navigate('SessionCancel', {
                       sessionId: sessionId,
                     });

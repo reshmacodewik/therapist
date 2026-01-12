@@ -41,17 +41,16 @@ const EventCard: React.FC<Props> = ({
     if (words.length <= wordLimit) return text;
     return words.slice(0, wordLimit).join(' ') + '...';
   };
+
   const imageSource =
     image && image.startsWith('http')
-      ? { uri: encodeURI(image) } // ✅ ENCODE URL
-      : require('../../assets/Image/yoga.png'); // fallback
+      ? { uri: encodeURI(image) }
+      : require('../../assets/Image/yoga.png');
+
   return (
     <Pressable style={styles.card} onPress={onPress}>
       {/* Image */}
-      <Image
-        source={imageSource}
-        style={styles.image}
-      />
+      <Image source={imageSource} style={styles.image} />
 
       {/* Content */}
       <View style={styles.content}>
@@ -86,48 +85,33 @@ const EventCard: React.FC<Props> = ({
             <View style={styles.approvedBadge}>
               <Text style={styles.approvedText}>Approved</Text>
             </View>
-
-            <View style={styles.buttonRow}>
-              <TouchableOpacity style={styles.manageBtn} onPress={onManage}>
-                <Text style={styles.manageText}>Manage</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.conductBtn} onPress={onConduct}>
-                <Text style={styles.conductText}>Conduct</Text>
-              </TouchableOpacity>
-            </View>
           </>
         )}
 
         {status === 'requested' && (
-          <>
-            <View style={styles.requestedBadge}>
-              <Text style={styles.requestedText}>Requested</Text>
-            </View>
-
-            <View style={styles.buttonRow}>
-              <TouchableOpacity style={styles.disabledBtn}>
-                <Text style={styles.disabledText}>Manage</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.disabledBtn}>
-                <Text style={styles.disabledText}>Conduct</Text>
-              </TouchableOpacity>
-            </View>
-          </>
+          <View style={styles.requestedBadge}>
+            <Text style={styles.requestedText}>Requested</Text>
+          </View>
         )}
 
         {status === 'REJECTED' && (
           <>
-            <Text style={styles.rejectedMsg}>
-              {adminRejectReason }
-            </Text>
+            <Text style={styles.rejectedMsg}>{adminRejectReason}</Text>
 
             <View style={styles.rejectedBadge}>
               <Text style={styles.rejectedText}>Rejected</Text>
             </View>
           </>
         )}
+        <View style={styles.buttonRow}>
+          <TouchableOpacity style={styles.manageBtn} onPress={onManage}>
+            <Text style={styles.manageText}>Manage</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.conductBtn} onPress={onConduct}>
+            <Text style={styles.conductText}>Conduct</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </Pressable>
   );

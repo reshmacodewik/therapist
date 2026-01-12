@@ -63,6 +63,7 @@ const EventDetailsScreen = () => {
   const themedStyles = styles(wp, hp);
   const route = useRoute<RouteProp<RouteParams, 'EventDetailsScreen'>>();
   const { eventId } = route.params;
+
   const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ['event-detail', eventId],
     queryFn: () =>
@@ -71,7 +72,9 @@ const EventDetailsScreen = () => {
       }),
     enabled: !!eventId,
   });
+
   const event = data?.data;
+  console.log(event, '-----------ccc----------------');
 
   const renderLoading = () => (
     <View
@@ -306,89 +309,83 @@ const EventDetailsScreen = () => {
             </>
           )}
         </View>
-        {!event?.isFree && (
-          <View style={themedStyles.accessPaymentContainer}>
-            <Text style={themedStyles.sectionTitlePayment}>Payout Summary</Text>
-            <View style={themedStyles.paymentInfoContainer}>
-              <View style={themedStyles.paymentRow}>
-                <Text style={themedStyles.paymentLabel}>Collected:</Text>
-                <Text style={themedStyles.paymentValue}>
-                  KES {event?.price}
-                </Text>
-              </View>
-              <View style={themedStyles.paymentRow}>
-                <Text style={themedStyles.paymentLabel}>Platform Fee:</Text>
-                <Text style={themedStyles.paymentValue}>KES 0</Text>
-              </View>
-              <View style={themedStyles.paymentRow}>
-                <Text style={themedStyles.paymentLabel}>Net Payout:</Text>
-                <Text style={themedStyles.paymentValue}>
-                  KES {event?.price}
-                </Text>
-              </View>
+        <View style={themedStyles.accessPaymentContainer}>
+          <Text style={themedStyles.sectionTitlePayment}>Payout Summary</Text>
+          <View style={themedStyles.paymentInfoContainer}>
+            <View style={themedStyles.paymentRow}>
+              <Text style={themedStyles.paymentLabel}>Collected:</Text>
+              <Text style={themedStyles.paymentValue}>
+                {!event?.isFree ? `KES ${event?.price}` || 0 : 'Free'}
+              </Text>
             </View>
-
-            {/* Action Buttons Section */}
-            <View style={themedStyles.actionButtonsContainer}>
-              {/* Send Payment Link */}
-              <View style={themedStyles.actionButtonsinnerContainer}>
-                <TouchableOpacity
-                  style={themedStyles.primaryButton}
-                  onPress={() =>
-                    navigation.navigate('SendPaymentLink' as never)
-                  }
-                >
-                  <Text style={themedStyles.primaryButtonText}>
-                    Send Payment Link
-                  </Text>
-                  <Feather
-                    name="link-2"
-                    size={wp(4.5)}
-                    color="#fff"
-                    style={{ marginLeft: wp(2) }}
-                  />
-                </TouchableOpacity>
-
-                {/* Refund Participant */}
-                <TouchableOpacity
-                  style={themedStyles.outlineButton}
-                  onPress={() =>
-                    navigation.navigate('RefundPaymentScreen' as never)
-                  }
-                >
-                  <Text style={themedStyles.outlineButtonText}>
-                    Refund Participant
-                  </Text>
-                  <MaterialIcons
-                    name="arrow-u-right-top"
-                    size={wp(4.5)}
-                    color="#14532d"
-                    style={{ marginLeft: wp(2) }}
-                  />
-                </TouchableOpacity>
-              </View>
-              {/* Grant Access */}
-              <View style={themedStyles.actionButtonsinnerContainer}>
-                <TouchableOpacity
-                  style={themedStyles.outlineButton}
-                  onPress={() =>
-                    navigation.navigate('TransactionHistory' as never)
-                  }
-                >
-                  <Text style={themedStyles.outlineButtonText}>
-                    View All Transactions
-                  </Text>
-                  <Ionicons
-                    name="eye"
-                    size={wp(4.5)}
-                    color="#14532d"
-                    style={{ marginLeft: wp(2) }}
-                  />
-                </TouchableOpacity>
-              </View>
+            <View style={themedStyles.paymentRow}>
+              <Text style={themedStyles.paymentLabel}>Platform Fee:</Text>
+              <Text style={themedStyles.paymentValue}>KES 0</Text>
+            </View>
+            <View style={themedStyles.paymentRow}>
+              <Text style={themedStyles.paymentLabel}>Net Payout:</Text>
+              <Text style={themedStyles.paymentValue}>KES {event?.price}</Text>
             </View>
           </View>
-        )}
+
+          {/* Action Buttons Section */}
+          <View style={themedStyles.actionButtonsContainer}>
+            {/* Send Payment Link */}
+            <View style={themedStyles.actionButtonsinnerContainer}>
+              <TouchableOpacity
+                style={themedStyles.primaryButton}
+                onPress={() => navigation.navigate('SendPaymentLink' as never)}
+              >
+                <Text style={themedStyles.primaryButtonText}>
+                  Send Payment Link
+                </Text>
+                <Feather
+                  name="link-2"
+                  size={wp(4.5)}
+                  color="#fff"
+                  style={{ marginLeft: wp(2) }}
+                />
+              </TouchableOpacity>
+
+              {/* Refund Participant */}
+              <TouchableOpacity
+                style={themedStyles.outlineButton}
+                onPress={() =>
+                  navigation.navigate('RefundPaymentScreen' as never)
+                }
+              >
+                <Text style={themedStyles.outlineButtonText}>
+                  Refund Participant
+                </Text>
+                <MaterialIcons
+                  name="arrow-u-right-top"
+                  size={wp(4.5)}
+                  color="#14532d"
+                  style={{ marginLeft: wp(2) }}
+                />
+              </TouchableOpacity>
+            </View>
+            {/* Grant Access */}
+            <View style={themedStyles.actionButtonsinnerContainer}>
+              <TouchableOpacity
+                style={themedStyles.outlineButton}
+                onPress={() =>
+                  navigation.navigate('TransactionHistory' as never)
+                }
+              >
+                <Text style={themedStyles.outlineButtonText}>
+                  View All Transactions
+                </Text>
+                <Ionicons
+                  name="eye"
+                  size={wp(4.5)}
+                  color="#14532d"
+                  style={{ marginLeft: wp(2) }}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
         <View style={themedStyles.accessPaymentContainer}>
           <Text style={themedStyles.sectionTitlePayment}> Resources</Text>
           <Text style={themedStyles.paymentLabelresource}>
