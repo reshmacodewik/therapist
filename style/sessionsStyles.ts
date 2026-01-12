@@ -112,7 +112,7 @@ export const sessionsStyles = (wp: any, hp: any) =>
       fontSize: wp(3.5),
       fontFamily: 'Poppins-Medium',
       color: '#0000',
-      marginBottom: hp(1.5),
+      marginBottom: hp(0.5),
     },
     sessionInfo: {
       fontSize: wp(3.5),

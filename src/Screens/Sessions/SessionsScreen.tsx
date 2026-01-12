@@ -54,7 +54,8 @@ const SessionsScreen: React.FC = () => {
 
   const handleManage = (session: any) => {
     navigation.navigate('SessionPaymentScreen', {
-      sessionId: session._id, // ✅ CORRECT
+      sessionId: session._id,
+      
     });
 
     console.log(session._id, 'sessionId sent ✅');
@@ -62,12 +63,12 @@ const SessionsScreen: React.FC = () => {
 
   const handleManagePast = (session: any) => {
     navigation.navigate('SessionPaymentScreen', {
-      sessionId: session._id, // ✅ CORRECT
+      sessionId: session._id, 
     });
   };
 
   const handleConduct = (session: any) => {
-    console.log('Conduct session:', { sessionId: session._id }); // ✅ CORRECT
+    console.log('Conduct session:', { sessionId: session._id }); 
   };
 
   return (
@@ -139,7 +140,7 @@ const SessionsScreen: React.FC = () => {
               ) : (
                 upcomingSessions.map((session: any, index: number) => (
                   <SessionCard
-                    key={`${session.sessionId}-${index}`}
+                    key={`${session._id}-${index}`}
                     title={session.sessionName || 'Session'}
                     description={session.notes}
                     date={session.date}
@@ -164,7 +165,7 @@ const SessionsScreen: React.FC = () => {
               ) : (
                 pastSessions.map((session: any, index: number) => (
                   <SessionCard
-                    key={`${session.sessionName}-${index}`}
+                    key={`${session._id}-${index}`}
                     title={session.sessionName || 'Session'}
                     description={session.notes}
                     date={session.date}

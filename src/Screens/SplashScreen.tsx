@@ -5,12 +5,12 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 const SplashScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<any>>();
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     navigation.navigate('OnboardingScreen');
-  //   }, 1000);
-  //   return () => clearTimeout(timer);
-  // }, [navigation]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate('OnboardingScreen');
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
