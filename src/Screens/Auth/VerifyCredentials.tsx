@@ -22,6 +22,33 @@ import ShowToast from '../../utils/ShowToast';
 import { getCurrentUserInfo } from '../../libs/auth';
 import { launchImageLibrary } from 'react-native-image-picker';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MultiSelectDropdown from '../../../components/MultiSelectDropdown';
+
+const specializations = [
+  'Cardiology',
+  'Dermatology',
+  'Pediatrics',
+  'Psychiatry',
+  'Neurology',
+  'Orthopedics',
+  'Gynecology',
+  'Oncology',
+  'Radiology',
+  'General Surgery',
+];
+
+const languages = [
+  'English',
+  'Spanish',
+  'French',
+  'German',
+  'Chinese',
+  'Japanese',
+  'Arabic',
+  'Portuguese',
+  'Kiswahili',
+];
+
 const VerifyCredentials = () => {
   const navigation =
     useNavigation<
@@ -29,6 +56,16 @@ const VerifyCredentials = () => {
     >();
 
   const [documents, setDocuments] = useState<any[]>([]);
+
+  const specializationItems = specializations.map(item => ({
+    label: item,
+    value: item,
+  }));
+
+  const languageItems = languages.map(item => ({
+    label: item,
+    value: item,
+  }));
 
   const pickDocument = () => {
     launchImageLibrary(
@@ -53,32 +90,7 @@ const VerifyCredentials = () => {
         setDocuments(prev => [...prev, fixedFile]);
       },
     );
-  }; 
-
-  const specializations = [
-    'Cardiology',
-    'Dermatology',
-    'Pediatrics',
-    'Psychiatry',
-    'Neurology',
-    'Orthopedics',
-    'Gynecology',
-    'Oncology',
-    'Radiology',
-    'General Surgery',
-  ];
-
-  const languages = [
-    'English',
-    'Spanish',
-    'French',
-    'German',
-    'Chinese',
-    'Japanese',
-    'Arabic',
-    'Portuguese',
-    'Kiswahili',
-  ];
+  };
 
   return (
     <ImageBackground
@@ -100,7 +112,6 @@ const VerifyCredentials = () => {
           validationSchema={verifyCredentialsSchema}
           onSubmit={async values => {
             const user = await getCurrentUserInfo();
-
             const formData = new FormData();
 
             formData.append('userId', user?._id);
@@ -111,10 +122,7 @@ const VerifyCredentials = () => {
               JSON.stringify(values.specialization),
             );
             formData.append('bio', values.bio);
-            formData.append(
-              'languagesSpoken',
-              JSON.stringify(values.language),
-            );
+            formData.append('languagesSpoken', JSON.stringify(values.language));
 
             // files
             documents.forEach((doc, index) => {
@@ -124,7 +132,6 @@ const VerifyCredentials = () => {
                 type: doc.type || 'application/octet-stream',
               } as any);
             });
-
 
             const res = await apiPostWithMultiForm({
               url: API_VERIFY_DETAILS,
@@ -199,48 +206,29 @@ const VerifyCredentials = () => {
 
                 {/* Specialization */}
                 <View style={styles.section}>
-                  <Text style={styles.verifytext}>Area of Specialization</Text>
-                  <View style={styles.dateRow}>
-                    <View style={styles.datePicker}>
-                      <Picker
-                        selectedValue={values.specialization}
-                        onValueChange={value =>
-                          setFieldValue('specialization', value)
-                        }
-                      >
-                        <Picker.Item label="Select" value="" />
-                        {specializations.map((item, index) => (
-                          <Picker.Item key={index} label={item} value={item} />
-                        ))}
-                      </Picker>
-                    </View>
-                  </View>
-                  {touched.specialization && errors.specialization && (
-                    <Text style={styles.error}>{errors.specialization}</Text>
-                  )}
+                  {/* <Text style={styles.verifytext}>Area of Specialization</Text> */}
+                  <MultiSelectDropdown
+                    label="Area of Specialization"
+                    placeholder="Select specialization"
+                    items={specializationItems}
+                    value={values.specialization}
+                    touched={touched.specialization}
+                    error={errors.specialization as string}
+                    onChange={val => setFieldValue('specialization', val)}
+                  />
                 </View>
 
                 {/* Languages */}
                 <View style={styles.section}>
-                  <Text style={styles.verifytext}>Languages Spoken</Text>
-                  <View style={styles.dateRow}>
-                    <View style={styles.datePicker}>
-                      <Picker
-                        selectedValue={values.language}
-                        onValueChange={value =>
-                          setFieldValue('language', value)
-                        }
-                      >
-                        <Picker.Item label="Select" value="" />
-                        {languages.map((item, index) => (
-                          <Picker.Item key={index} label={item} value={item} />
-                        ))}
-                      </Picker>
-                    </View>
-                  </View>
-                  {touched.language && errors.language && (
-                    <Text style={styles.error}>{errors.language}</Text>
-                  )}
+                  <MultiSelectDropdown
+                    label="Languages Spoken"
+                    placeholder="Select languages"
+                    value={values.language}
+                    items={languageItems}
+                    touched={touched.language}
+                    error={errors.language as string}
+                    onChange={val => setFieldValue('language', val)}
+                  />
                 </View>
 
                 {/* Bio */}

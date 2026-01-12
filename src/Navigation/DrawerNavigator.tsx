@@ -1,8 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
 import CustomDrawer from './CustomDrawer';
-import HomeScreen from '../Screens/Home/HomeScreen';
 import BottomTabs from './MyTab';
 import ProfileEditScreen from '../Screens/Sidebar/ProfileEditScreen';
 import MyExpertiseScreen from '../Screens/Sidebar/MyExpertiseScreen';
@@ -10,7 +8,6 @@ import MessagesScreen from '../Screens/Sidebar/MessagesScreen';
 import PaymentHistoryScreen from '../Screens/Sidebar/PaymentHistoryScreen';
 import WalletScreen from '../Screens/Sidebar/WalletScreen';
 import SettingsScreen from '../Screens/Sidebar/Settings/SettingsScreen';
-import MyAppointment from '../Screens/Sidebar/MyAppointment';
 import CalendarScreen from '../Screens/Sidebar/CalendarScreen';
 import MyAppointmentCalendar from '../Screens/Sidebar/Settings/MyAppointmentCalendar';
 import SupportTicket from '../SupportTicket/Support_Ticket';

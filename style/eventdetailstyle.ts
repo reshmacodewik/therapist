@@ -168,7 +168,6 @@ const styles = (wp: any, hp: any) =>
       color: '#000',
     },
     listText: {
-      flex: 1,
       color: '#000',
       fontFamily: 'Poppins-Regular',
     },

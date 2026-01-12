@@ -13,17 +13,21 @@ export const signupSchema = Yup.object()
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password')], 'Passwords must match')
       .required('Confirm Password is required'),
-    
+
     // We’ll let the library validate — no fixed length here.
     phoneNo: Yup.string()
       .required('Phone Number is required')
-      .test('valid-phone', 'Invalid phone number for selected country', function (value) {
-        const { countryIso2, countryCode } = this.parent as {
-          countryIso2?: string;
-          countryCode?: string; // dial code like "+91"
-        };
-        return isValidPhoneForCountry(value || '', countryIso2, countryCode);
-      }),
+      .test(
+        'valid-phone',
+        'Invalid phone number for selected country',
+        function (value) {
+          const { countryIso2, countryCode } = this.parent as {
+            countryIso2?: string;
+            countryCode?: string; // dial code like "+91"
+          };
+          return isValidPhoneForCountry(value || '', countryIso2, countryCode);
+        },
+      ),
 
     gender: Yup.string().required('Gender is required'),
     day: Yup.string().required('Day is required'),
@@ -67,40 +71,46 @@ export const changepasswordSchema = Yup.object().shape({
     .oneOf([Yup.ref('newPassword')], 'Passwords must match')
     .required('Confirm password is required'),
 });
+
 export const verifyCredentialsSchema = Yup.object().shape({
-  licenseNumber: Yup.string()
-    .required('License Number is required'),
+  licenseNumber: Yup.string().required('License Number is required'),
 
-  year: Yup.string()
-    .required('Experience is required'),
+  year: Yup.string().required('Experience is required'),
 
-  specialization: Yup.string()
+  specialization: Yup.array()
+    .of(Yup.string())
+    .min(1, 'Select at least one specialization')
     .required('Specialization is required'),
 
-  language: Yup.string()
+  language: Yup.array()
+    .of(Yup.string())
+    .min(1, 'Select at least one language')
     .required('Language is required'),
 
   bio: Yup.string()
     .min(10, 'Bio must be at least 10 characters')
     .required('Bio is required'),
 });
+
 export const peerVerifySchema = Yup.object().shape({
-  fullName: Yup.string().required("Full Name is required"),
+  fullName: Yup.string().required('Full Name is required'),
 
-  age: Yup.string().required("Age is required"),
+  age: Yup.string().required('Age is required'),
 
-  mentalHealthIssue: Yup.string()
-    .required("Please select the issue you have faced"),
+  mentalHealthIssue: Yup.string().required(
+    'Please select the issue you have faced',
+  ),
 
-  yearsFacedProblem: Yup.string()
-    .required("Please select how many years you faced the problem"),
+  yearsFacedProblem: Yup.string().required(
+    'Please select how many years you faced the problem',
+  ),
 
   recoveryJourney: Yup.string()
-    .min(10, "Journey must be at least 10 characters")
-    .required("This field is required"),
+    .min(10, 'Journey must be at least 10 characters')
+    .required('This field is required'),
 
-  yearsWorkedAsPeer: Yup.string()
-    .required("Required"),
+  yearsWorkedAsPeer: Yup.string().required('Required'),
 
-  language: Yup.string().required("Language is required"),
+  language: Yup.string().required('Language is required'),
 });
+

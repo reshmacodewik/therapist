@@ -21,7 +21,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from '../../../style/eventdetailstyle';
 import Header from '../../components/Header';
 import Feather from 'react-native-vector-icons/Feather';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useQuery } from '@tanstack/react-query';
 import { API_DETAILSLIST_EVENTS } from '../../utils/api/APIConstant';
 import { getApiWithOutQuery } from '../../utils/api/common';
@@ -31,11 +30,13 @@ const attendees = [
   { id: 2, image: require('../../../assets/icon/eventuser2.png') }, // Replace with actual image
   { id: 3, image: require('../../../assets/icon/eventuser3.png') },
 ];
+
 type RouteParams = {
   EventDetailsScreen: {
     eventId: string;
   };
 };
+
 interface FAQ {
   _id: string;
   question: string;
@@ -63,7 +64,7 @@ const EventDetailsScreen = () => {
   const route = useRoute<RouteProp<RouteParams, 'EventDetailsScreen'>>();
   const { eventId } = route.params;
   const { data, isLoading, refetch, isRefetching } = useQuery({
-    queryKey: ['event-detail', eventId], // ✅ unique per event
+    queryKey: ['event-detail', eventId],
     queryFn: () =>
       getApiWithOutQuery({
         url: `${API_DETAILSLIST_EVENTS}/${eventId}`,
@@ -73,7 +74,14 @@ const EventDetailsScreen = () => {
   const event = data?.data;
 
   const renderLoading = () => (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+      }}
+    >
       <ActivityIndicator size="large" color="#14532d" />
       <Text style={{ fontSize: wp(4), marginTop: 10 }}>Loading Event...</Text>
     </View>
@@ -116,176 +124,187 @@ const EventDetailsScreen = () => {
           </TouchableOpacity>
           <Text style={themedStyles.titleevent}>Manage Event</Text>
         </View>
-   <View style={themedStyles.innercontainer}>
-          {isLoading || isRefetching
-            ? renderLoading()
-            : !data?.success
-            ? renderError()
-            : (
-              <>
-                {/* Paid / free badge */}
-                <View style={themedStyles.paidEventContainer}>
-                  <Text style={themedStyles.paidEventText}>
-                    {event?.isFree ? 'Free Event' : 'Paid Event'}
-                  </Text>
-                </View>
-          <View style={themedStyles.headerContainer}>
-            <Image
-              source={require('../../../assets/Image/eventdetail.png')}
-              style={[themedStyles.mainImage, { height: hp(15), width: '95%' }]}
-            />
-          </View>
-          <View style={themedStyles.contentContainer}>
-            <View style={themedStyles.titleRow}>
-              <Text style={[themedStyles.title, { fontSize: wp(3.2) }]}>
-                {event?.name}
-              </Text>
-              <Image
-                source={
-                  event?.isFree
-                    ? require('../../../assets/icon/free.png') // FREE image
-                    : require('../../../assets/icon/badge.png') // PAID image
-                }
-                style={themedStyles.freeImage}
-                resizeMode="contain"
-              />
-            </View>
-
-            <Text style={[themedStyles.dateText, { fontSize: wp(3.5) }]}>
-              {formatDate(event?.date)}
-            </Text>
-            <Text style={[themedStyles.timeText, { fontSize: wp(3.5) }]}>
-              {event?.time}
-            </Text>
-
-            <View style={[themedStyles.attendanceRow]}>
-              {attendees.map((item, index) => (
+        <View style={themedStyles.innercontainer}>
+          {isLoading || isRefetching ? (
+            renderLoading()
+          ) : !data?.success ? (
+            renderError()
+          ) : (
+            <>
+              {/* Paid / free badge */}
+              <View style={themedStyles.paidEventContainer}>
+                <Text style={themedStyles.paidEventText}>
+                  {event?.isFree ? 'Free Event' : 'Paid Event'}
+                </Text>
+              </View>
+              <View style={themedStyles.headerContainer}>
                 <Image
-                  key={item.id}
-                  source={item.image}
+                  source={require('../../../assets/Image/eventdetail.png')}
                   style={[
-                    themedStyles.attendeeImage,
-                    {
-                      width: wp(8),
-                      height: wp(8),
-                      marginLeft: index === 0 ? 0 : wp(-3), // tighter overlap
-                    },
+                    themedStyles.mainImage,
+                    { height: hp(15), width: '95%' },
                   ]}
                 />
-              ))}
-              <Text
-                style={[
-                  themedStyles.attendanceText,
-                  { fontSize: wp(3.5), marginLeft: wp(2) }, // REMOVE marginLeft here
-                ]}
-              >
-                +50 Attendance
-              </Text>
-            </View>
-
-            <Text style={[themedStyles.sectionTitle, { fontSize: wp(3.8) }]}>
-              About
-            </Text>
-            <Text style={[themedStyles.descriptionText, { fontSize: wp(3) }]}>
-              {event?.description}
-            </Text>
-
-            <Text style={[themedStyles.sectionTitle, { fontSize: wp(4) }]}>
-              Host Speaker
-            </Text>
-            <View style={themedStyles.speakerRow}>
-              <Image
-                source={
-                  event?.hostSpeakers?.image
-                    ? { uri: event.hostSpeakers?.image }
-                    : require('../../../assets/icon/eventuser.png')
-                }
-                style={[
-                  themedStyles.speakerImage,
-                  { width: wp(15), height: wp(15) },
-                ]}
-              />
-              <View style={themedStyles.speakerInfo}>
-                <Text style={[themedStyles.speakerName, { fontSize: wp(4) }]}>
-                  {event?.hostSpeakers?.[0]?.fullName}
-                </Text>
-                <Text style={[themedStyles.speakerRole, { fontSize: wp(2.8) }]}>
-                  Clinical Psychologist
-                </Text>
               </View>
-            </View>
+              <View style={themedStyles.contentContainer}>
+                <View style={themedStyles.titleRow}>
+                  <Text style={[themedStyles.title, { fontSize: wp(3.2) }]}>
+                    {event?.name}
+                  </Text>
+                  <Image
+                    source={
+                      event?.isFree
+                        ? require('../../../assets/icon/free.png') // FREE image
+                        : require('../../../assets/icon/badge.png') // PAID image
+                    }
+                    style={themedStyles.freeImage}
+                    resizeMode="contain"
+                  />
+                </View>
 
-            <Text style={[themedStyles.sectionTitle, { fontSize: wp(4) }]}>
-              What will be included
-            </Text>
+                <Text style={[themedStyles.dateText, { fontSize: wp(3.5) }]}>
+                  {formatDate(event?.date)}
+                </Text>
+                <Text style={[themedStyles.timeText, { fontSize: wp(3.5) }]}>
+                  {event?.time}
+                </Text>
 
-            {event?.includedItems?.map((item: string, index: number) => (
-              <View key={index} style={themedStyles.listItem}>
-                <Text style={themedStyles.bulletPoint}>•</Text>
-                <Text style={themedStyles.listText}>{item}</Text>
-              </View>
-            ))}
+                <View style={[themedStyles.attendanceRow]}>
+                  {attendees.map((item, index) => (
+                    <Image
+                      key={item.id}
+                      source={item.image}
+                      style={[
+                        themedStyles.attendeeImage,
+                        {
+                          width: wp(8),
+                          height: wp(8),
+                          marginLeft: index === 0 ? 0 : wp(-3), // tighter overlap
+                        },
+                      ]}
+                    />
+                  ))}
+                  <Text
+                    style={[
+                      themedStyles.attendanceText,
+                      { fontSize: wp(3.5), marginLeft: wp(2) }, // REMOVE marginLeft here
+                    ]}
+                  >
+                    +0 Attendance
+                  </Text>
+                </View>
 
-            <TouchableOpacity
-              style={themedStyles.accordionHeader}
-              onPress={() => setShowFAQ(prev => !prev)}
-            >
-              <Text
-                style={[themedStyles.accordionTitle, { fontSize: wp(3.8) }]}
-              >
-                Frequently Asked Questions
-              </Text>
-              <Ionicons
-                name={showFAQ ? 'chevron-up' : 'chevron-down'}
-                size={wp(4)}
-                color="#000"
-                style={{ marginTop: wp(2) }}
-              />
-            </TouchableOpacity>
+                <Text
+                  style={[themedStyles.sectionTitle, { fontSize: wp(3.8) }]}
+                >
+                  About
+                </Text>
+                <Text
+                  style={[themedStyles.descriptionText, { fontSize: wp(3) }]}
+                >
+                  {event?.description}
+                </Text>
 
-            {showFAQ && (
-              <View style={themedStyles.accordionContent}>
-                {event?.faqs?.length ? (
-                  event.faqs.map((faq: FAQ) => (
-                    <View key={faq._id} style={{ marginBottom: hp(1) }}>
+                <Text style={[themedStyles.sectionTitle, { fontSize: wp(4) }]}>
+                  Host Speaker
+                </Text>
+                <View style={themedStyles.speakerRow}>
+                  <Image
+                    source={
+                      event?.hostSpeakers?.image
+                        ? { uri: event.hostSpeakers?.image }
+                        : require('../../../assets/icon/eventuser.png')
+                    }
+                    style={[
+                      themedStyles.speakerImage,
+                      { width: wp(15), height: wp(15) },
+                    ]}
+                  />
+                  <View style={themedStyles.speakerInfo}>
+                    <Text
+                      style={[themedStyles.speakerName, { fontSize: wp(4) }]}
+                    >
+                      {event?.hostSpeakers?.[0]?.fullName}
+                    </Text>
+                    <Text
+                      style={[themedStyles.speakerRole, { fontSize: wp(2.8) }]}
+                    >
+                      Clinical Psychologist
+                    </Text>
+                  </View>
+                </View>
+
+                <Text style={[themedStyles.sectionTitle, { fontSize: wp(4) }]}>
+                  What will be included
+                </Text>
+
+                {event?.includedItems?.map((item: string, index: number) => (
+                  <View key={index} style={themedStyles.listItem}>
+                    <Text style={themedStyles.bulletPoint}>•</Text>
+                    <Text style={themedStyles.listText}>{item}</Text>
+                  </View>
+                ))}
+
+                <TouchableOpacity
+                  style={themedStyles.accordionHeader}
+                  onPress={() => setShowFAQ(prev => !prev)}
+                >
+                  <Text
+                    style={[themedStyles.accordionTitle, { fontSize: wp(3.8) }]}
+                  >
+                    Frequently Asked Questions
+                  </Text>
+                  <Ionicons
+                    name={showFAQ ? 'chevron-up' : 'chevron-down'}
+                    size={wp(4)}
+                    color="#000"
+                    style={{ marginTop: wp(2) }}
+                  />
+                </TouchableOpacity>
+
+                {showFAQ && (
+                  <View style={themedStyles.accordionContent}>
+                    {event?.faqs?.length ? (
+                      event.faqs.map((faq: FAQ) => (
+                        <View key={faq._id} style={{ marginBottom: hp(1) }}>
+                          <Text>• {faq.question}</Text>
+                          <Text>{faq.answer}</Text>
+                        </View>
+                      ))
+                    ) : (
                       <Text style={themedStyles.listText}>
-                        • {faq.question}
+                        No FAQs available
                       </Text>
-                      <Text style={themedStyles.listText}>{faq.answer}</Text>
-                    </View>
-                  ))
-                ) : (
-                  <Text style={themedStyles.listText}>No FAQs available</Text>
+                    )}
+                  </View>
+                )}
+
+                {/* Terms & Conditions Expandable */}
+                <TouchableOpacity
+                  style={themedStyles.accordionHeader}
+                  onPress={() => setShowTerms(!showTerms)}
+                >
+                  <Text
+                    style={[themedStyles.accordionTitle, { fontSize: wp(3.8) }]}
+                  >
+                    Terms & Conditions
+                  </Text>
+                  <Ionicons
+                    name={showTerms ? 'chevron-up' : 'chevron-down'}
+                    size={wp(4)}
+                    color="#000"
+                    style={{ marginTop: wp(2) }}
+                  />
+                </TouchableOpacity>
+
+                {showTerms && (
+                  <Text style={themedStyles.listText}>
+                    {event?.termsAndConditions}
+                  </Text>
                 )}
               </View>
-            )}
-
-            {/* Terms & Conditions Expandable */}
-            <TouchableOpacity
-              style={themedStyles.accordionHeader}
-              onPress={() => setShowTerms(!showTerms)}
-            >
-              <Text
-                style={[themedStyles.accordionTitle, { fontSize: wp(3.8) }]}
-              >
-                Terms & Conditions
-              </Text>
-              <Ionicons
-                name={showTerms ? 'chevron-up' : 'chevron-down'}
-                size={wp(4)}
-                color="#000"
-                style={{ marginTop: wp(2) }}
-              />
-            </TouchableOpacity>
-
-            {showTerms && (
-              <Text style={themedStyles.listText}>
-                {event?.termsAndConditions}
-              </Text>
-            )}
-          </View>
             </>
-            )}
+          )}
         </View>
         {!event?.isFree && (
           <View style={themedStyles.accessPaymentContainer}>
@@ -293,15 +312,19 @@ const EventDetailsScreen = () => {
             <View style={themedStyles.paymentInfoContainer}>
               <View style={themedStyles.paymentRow}>
                 <Text style={themedStyles.paymentLabel}>Collected:</Text>
-                <Text style={themedStyles.paymentValue}>KES 2,500</Text>
+                <Text style={themedStyles.paymentValue}>
+                  KES {event?.price}
+                </Text>
               </View>
               <View style={themedStyles.paymentRow}>
                 <Text style={themedStyles.paymentLabel}>Platform Fee:</Text>
-                <Text style={themedStyles.paymentValue}>KES 2,500</Text>
+                <Text style={themedStyles.paymentValue}>KES 0</Text>
               </View>
               <View style={themedStyles.paymentRow}>
                 <Text style={themedStyles.paymentLabel}>Net Payout:</Text>
-                <Text style={themedStyles.paymentValue}>KES 2,500</Text>
+                <Text style={themedStyles.paymentValue}>
+                  KES {event?.price}
+                </Text>
               </View>
             </View>
 

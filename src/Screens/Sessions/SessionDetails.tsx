@@ -9,11 +9,20 @@ import {
   ImageBackground,
 } from 'react-native';
 import { useResponsive } from 'react-native-responsive-hook';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import createStyles from '../../../style/SessionDetailsStyle';
 import Header from '../../components/Header';
+import { useQuery } from '@tanstack/react-query';
+import { getApiWithOutQuery } from '../../utils/api/common';
+import { API_SESSION_DETAILS } from '../../utils/api/APIConstant';
+
+type RouteParams = {
+  SessionDetails: {
+    sessionId: string;
+  };
+};
 
 const messages = [
   { id: 1, name: 'Brian K.', text: 'Hello Everyone', time: '11:45' },
@@ -30,6 +39,22 @@ const SessionDetails = () => {
   const { wp, hp } = useResponsive();
   const navigation = useNavigation();
   const styles = createStyles(wp, hp);
+  const route = useRoute<RouteProp<RouteParams, 'SessionDetails'>>();
+  console.log(route.params ,"event=======sessionId===========" );
+  const { sessionId } = route.params;
+
+  const { data, isLoading, refetch, isRefetching } = useQuery({
+    queryKey: ['session-detail', sessionId],
+    queryFn: () =>
+      getApiWithOutQuery({
+        url: `${API_SESSION_DETAILS}/${sessionId}`,
+      }),
+    enabled: !!sessionId,
+  });
+
+  const event = data?.data;
+
+  console.log(event ,"event==================" ,sessionId);
 
   return (
     <ImageBackground
@@ -104,7 +129,10 @@ const SessionDetails = () => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.breakoutButton} onPress={()=>navigation.navigate('Breakout' as never)}>
+          <TouchableOpacity
+            style={styles.breakoutButton}
+            onPress={() => navigation.navigate('Breakout' as never)}
+          >
             <Text style={styles.breakoutText}>Breakout Room</Text>
             <Ionicons
               name="chevron-forward"
