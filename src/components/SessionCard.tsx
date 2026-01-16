@@ -38,6 +38,15 @@ const SessionCard: React.FC<SessionCardProps> = ({
     image && image.startsWith('http')
       ? { uri: encodeURI(image) } // ✅ ENCODE URL
       : require('../../assets/Image/yoga.png'); // fallback
+  const formatTitle = (title: string) => {
+    const words = title.trim().split(/\s+/);
+
+    if (words.length <= 4) {
+      return title;
+    }
+
+    return `${words.slice(0, 4).join(' ')}\n${words.slice(4).join(' ')}`;
+  };
 
   return (
     <View style={sessionsStyles(wp, hp).sessionCard}>
@@ -49,20 +58,18 @@ const SessionCard: React.FC<SessionCardProps> = ({
       </View>
       <View style={sessionsStyles(wp, hp).sessionContent}>
         <View style={sessionsStyles(wp, hp).sessionTitleContainer}>
-          <Text style={sessionsStyles(wp, hp).sessionTitle}>
-            {(() => {
-              const words = title.split(' ');
-              return words.length > 1
-                ? words.slice(0, 2).join(' ') + '\n' + words.slice(2).join(' ')
-                : title;
-            })()}
+          <Text
+            style={sessionsStyles(wp, hp).sessionTitle}
+            numberOfLines={1} // important
+          >
+            {formatTitle(title)}
           </Text>
 
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              marginLeft: wp(3),
+              marginLeft: wp(1),
             }}
           >
             <Image
@@ -85,7 +92,10 @@ const SessionCard: React.FC<SessionCardProps> = ({
           </View>
         </View>
 
-        <Text style={sessionsStyles(wp, hp).sessionDescription}>
+        <Text
+          style={sessionsStyles(wp, hp).sessionDescription}
+          numberOfLines={3}
+        >
           {description}
         </Text>
         <Text style={sessionsStyles(wp, hp).sessionInfo}>

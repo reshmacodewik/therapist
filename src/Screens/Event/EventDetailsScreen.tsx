@@ -287,23 +287,28 @@ const EventDetailsScreen = () => {
                   style={themedStyles.accordionHeader}
                   onPress={() => setShowTerms(!showTerms)}
                 >
-                  <Text
-                    style={[themedStyles.accordionTitle, { fontSize: wp(3.8) }]}
-                  >
+                  <Text style={themedStyles.accordionTitle}>
                     Terms & Conditions
                   </Text>
                   <Ionicons
                     name={showTerms ? 'chevron-up' : 'chevron-down'}
                     size={wp(4)}
                     color="#000"
-                    style={{ marginTop: wp(2) }}
                   />
                 </TouchableOpacity>
 
                 {showTerms && (
-                  <Text style={themedStyles.listText}>
-                    {event?.termsAndConditions}
-                  </Text>
+                  <View style={themedStyles.termsCard}>
+                    <ScrollView
+                      nestedScrollEnabled
+                      showsVerticalScrollIndicator
+                      contentContainerStyle={{ paddingBottom: hp(1) }}
+                    >
+                      <Text style={themedStyles.termsText}>
+                        {event?.termsAndConditions}
+                      </Text>
+                    </ScrollView>
+                  </View>
                 )}
               </View>
             </>

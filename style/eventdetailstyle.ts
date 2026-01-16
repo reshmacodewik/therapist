@@ -196,10 +196,24 @@ const styles = (wp: any, hp: any) =>
       marginTop: wp(3.5),
     },
     accordionContent: {
-      paddingVertical: hp(1),
-      paddingHorizontal: wp(2),
- 
- // optional
+      marginTop: hp(0),
+      paddingVertical: hp(1.5),
+      paddingHorizontal: wp(3),
+
+      borderRadius: wp(2),
+    },
+    termsCard: {
+      marginTop: hp(-2),
+      maxHeight: hp(14),
+      borderRadius: wp(3),
+      paddingHorizontal: wp(4),
+      paddingVertical: hp(2),
+     
+    },
+    termsText: {
+      fontSize: wp(3),
+      color: '#374151',
+      lineHeight: hp(2.6),
     },
 
     accessPaymentContainer: {
